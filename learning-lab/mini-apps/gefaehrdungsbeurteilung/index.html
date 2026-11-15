@@ -112,6 +112,7 @@
   </div>
 </section>
 
+<script src="/learning-lab/mini-apps/lead-gate.js?v=1"></script>
 <script>
 (function () {
   var TOP = { S: 'Substitution', T: 'Technisch', O: 'Organisatorisch', P: 'Persönlich' };
@@ -403,7 +404,21 @@
       }
     }
 
-    function go(step, key) { st.step = step; if (step !== 3) st.filter = 'alle'; focusKey = key || null; render(); }
+    function go(step, key) {
+      // Vor dem Ergebnis: Lead-Formular (einmal pro Browser)
+      if (step === 3 && window.zdLeadGate && !zdLeadGate.frei('gefaehrdungsbeurteilung')) {
+        var nRisiken = Object.keys(st.ans).filter(function (k) { return st.ans[k] === 'ja' || st.ans[k] === 'unklar'; }).length;
+        zdLeadGate({
+          slug: 'gefaehrdungsbeurteilung',
+          aktion: 'ergebnis',
+          titel: 'Ihre Gefährdungsbeurteilung ist fertig',
+          text: 'Tragen Sie kurz Ihre Kontaktdaten ein. Danach sehen Sie sofort Ihren Entwurf mit Gefährdungen, Maßnahmen und Rechtsgrundlagen zum Übernehmen.',
+          button: 'Ergebnis anzeigen',
+          extra: { praxisname: st.name || '', anzahl_hinweise: nRisiken }
+        }).then(function () { go(3, key); });
+        return;
+      }
+      st.step = step; if (step !== 3) st.filter = 'alle'; focusKey = key || null; render(); }
 
     root.addEventListener('click', function (e) {
       var b = e.target.closest('button');
