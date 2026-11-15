@@ -92,8 +92,6 @@
 .zdgb .zdgb-meas li + li { margin-top: 0; }
 .zdgb .zdgb-meas .zd-badge { flex: none; min-width: 7.25rem; justify-content: center; }
 .zdgb .zdgb-pre { margin: 0; padding: var(--zd-s-4); max-height: 320px; overflow: auto; white-space: pre-wrap; word-break: break-word; background: var(--zd-grund); border: 1px solid var(--zd-linie); border-radius: var(--zd-radius-s); color: var(--zd-anthrazit); font: var(--zd-fs-xs)/1.6 ui-monospace, Menlo, Consolas, monospace; }
-/* Text erst nach dem Lead-Formular lesbar und kopierbar */
-html:not(.zd-lead-frei) .zdgb .zdgb-pre[data-zdgb-export] { filter: blur(4px); user-select: none; -webkit-user-select: none; pointer-events: none; }
 .zdgb .zdgb-actions { display: flex; flex-wrap: wrap; gap: var(--zd-s-3); }
 @media (max-width: 479px) { .zdgb .zdgb-actions > .zd-btn { width: 100%; } }
 </style>
@@ -295,7 +293,6 @@ html:not(.zd-lead-frei) .zdgb .zdgb-pre[data-zdgb-export] { filter: blur(4px); u
   }
 
   function init(root) {
-    if (window.zdLeadGate && zdLeadGate.frei('gefaehrdungsbeurteilung')) document.documentElement.classList.add('zd-lead-frei');
     var st = { step: 0, name: '', rooms: '', staff: '', sel: {}, ans: {}, meta: {}, filter: 'alle' };
     var stepsEl = root.querySelector('[data-zdgb-steps]');
     var panel = root.querySelector('[data-zdgb-panel]');
@@ -382,7 +379,6 @@ html:not(.zd-lead-frei) .zdgb .zdgb-pre[data-zdgb-export] { filter: blur(4px); u
 
       if (!risks.some(sichtbar)) cards = '<p class="zd-hinweis zd-hinweis--info">Keine Einträge in dieser Ansicht.</p>';
       var text = '<div class="zdgb-panel"><h3>Text zum Übernehmen</h3>' +
-        ((window.zdLeadGate && zdLeadGate.frei('gefaehrdungsbeurteilung')) ? '' : '<p class="zd-klein zd-leise">Der Text wird nach einer kurzen kostenlosen Anmeldung freigeschaltet.</p>') +
         '<pre class="zdgb-pre" data-zdgb-export>' + esc(buildText(st, risks)) + '</pre>' +
         '<div class="zdgb-actions">' +
           '<button class="zd-btn zd-btn--sekundaer zd-btn--klein" type="button" data-act="copy" data-key="copy">Text kopieren</button>' +
@@ -408,7 +404,21 @@ html:not(.zd-lead-frei) .zdgb .zdgb-pre[data-zdgb-export] { filter: blur(4px); u
       }
     }
 
-    function go(step, key) { st.step = step; if (step !== 3) st.filter = 'alle'; focusKey = key || null; render(); }
+    function go(step, key) {
+      // Vor dem Ergebnis: Lead-Formular (einmal pro Browser)
+      if (step === 3 && window.zdLeadGate && !zdLeadGate.frei('gefaehrdungsbeurteilung')) {
+        var nRisiken = Object.keys(st.ans).filter(function (k) { return st.ans[k] === 'ja' || st.ans[k] === 'unklar'; }).length;
+        zdLeadGate({
+          slug: 'gefaehrdungsbeurteilung',
+          aktion: 'ergebnis',
+          titel: 'Ihre Gefährdungsbeurteilung ist fertig',
+          text: 'Tragen Sie kurz Ihre Kontaktdaten ein. Danach sehen Sie sofort Ihren Entwurf mit Gefährdungen, Maßnahmen und Rechtsgrundlagen zum Übernehmen.',
+          button: 'Ergebnis anzeigen',
+          extra: { praxisname: st.name || '', anzahl_hinweise: nRisiken }
+        }).then(function () { go(3, key); });
+        return;
+      }
+      st.step = step; if (step !== 3) st.filter = 'alle'; focusKey = key || null; render(); }
 
     root.addEventListener('click', function (e) {
       var b = e.target.closest('button');
@@ -432,23 +442,6 @@ html:not(.zd-lead-frei) .zdgb .zdgb-pre[data-zdgb-export] { filter: blur(4px); u
       if (act === 'next') go(Math.min(3, st.step + 1), 'step' + Math.min(3, st.step + 1));
       else if (act === 'back') go(Math.max(0, st.step - 1), 'step' + Math.max(0, st.step - 1));
       else if (act === 'copy') {
-        if (!window.zdLeadGate || !zdLeadGate.frei('gefaehrdungsbeurteilung')) {
-          // Vor dem Kopieren: Lead-Formular (einmal pro Browser), danach Text freigeben und kopieren
-          if (!window.zdLeadGate) return;
-          zdLeadGate({
-            slug: 'gefaehrdungsbeurteilung',
-            aktion: 'kopieren',
-            titel: 'Gefährdungsbeurteilung kostenlos übernehmen',
-            text: 'Tragen Sie kurz Ihre Kontaktdaten ein. Danach wird der Text freigeschaltet und Sie können ihn kopieren und in Ihre Unterlagen übernehmen.',
-            button: 'Text freischalten und kopieren',
-            extra: { praxisname: st.name || '' }
-          }).then(function () {
-            focusKey = 'copy'; render();
-            var nb = root.querySelector('[data-key="copy"]');
-            if (nb) nb.click();
-          });
-          return;
-        }
         var pre = root.querySelector('[data-zdgb-export]');
         var txt = pre ? pre.textContent : '';
         var done = function () { b.textContent = 'Kopiert'; };
