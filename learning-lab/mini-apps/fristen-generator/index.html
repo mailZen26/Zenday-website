@@ -79,6 +79,9 @@
       .fg-noprint, .zd-header, .zd-footer, .fg-zenday { display: none !important; }
       .fg-frist { box-shadow: none; break-inside: avoid; }
       .fg-frist__termin .zd-input, .fg-frist__termin .zd-select { border: 0; padding: 0; min-height: 0; }
+      /* Drucken nur nach Freischaltung (Lead-Formular), auch über Strg/Cmd+P */
+      html:not(.zd-lead-frei) #ergebnis { display: none !important; }
+      html:not(.zd-lead-frei) body::before { content: "Ihren Fristenplan können Sie kostenlos auf zen-day.ai über „Drucken oder als PDF speichern“ freischalten."; display: block; padding: 2rem; font-size: 14pt; }
     }
   </style>
 </head>
@@ -327,6 +330,7 @@
   </footer>
 
   <script src="/zenday.js?v=0.3.1" defer></script>
+  <script src="/learning-lab/mini-apps/lead-gate.js?v=1"></script>
   <script>
   (function () {
     'use strict';
@@ -577,10 +581,23 @@
       if (a === 'weiter') { if (!pruefen()) return; if (schritt < SCHRITTE) zeigeSchritt(schritt + 1); else { sammeln(); rendern(); ansicht('ergebnis'); } }
       if (a === 'zurueck' && schritt > 1) zeigeSchritt(schritt - 1);
       if (a === 'bearbeiten') { ansicht('assistent'); zeigeSchritt(1); }
-      if (a === 'drucken') window.print();
-      if (a === 'ics') icsExport();
-      if (a === 'csv') csvExport();
+      if (a === 'drucken' || a === 'ics' || a === 'csv') {
+        // Vor Download, Kalender-Export oder Druck: Lead-Formular (einmal pro Browser)
+        zdLeadGate({
+          slug: 'fristen-generator',
+          aktion: a,
+          titel: 'Fristenplan kostenlos herunterladen',
+          text: 'Tragen Sie kurz Ihre Kontaktdaten ein. Danach können Sie Ihren Fristenplan sofort herunterladen, in Ihren Kalender übernehmen oder drucken.',
+          button: a === 'drucken' ? 'Fristenplan drucken' : a === 'ics' ? 'In den Kalender übernehmen' : 'Fristenplan herunterladen',
+          extra: { praxisname: antworten.praxis || '', team: antworten.team || '' }
+        }).then(function () {
+          if (a === 'drucken') window.print();
+          if (a === 'ics') icsExport();
+          if (a === 'csv') csvExport();
+        });
+      }
     });
+    if (zdLeadGate.frei('fristen-generator')) document.documentElement.classList.add('zd-lead-frei');
 
     /* Ergebnis */
     function aktiveFristen() { return KATALOG.filter(function (f) { return f.wenn(antworten); }); }
