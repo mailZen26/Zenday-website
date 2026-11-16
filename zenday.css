@@ -846,7 +846,8 @@ hr { border: 0; height: 1px; background: var(--zd-linie); margin: var(--zd-s-6) 
   display: flex; align-items: center; justify-content: space-between; gap: var(--zd-s-3);
   padding: var(--zd-s-3) var(--zd-s-5); border-bottom: 1px solid var(--zd-linie); background: var(--zd-grund);
 }
-.zd-app__kopf strong { font-size: var(--zd-fs-s); }
+.zd-app__kopf strong { font-size: var(--zd-fs-s); min-width: 0; }
+.zd-app__kopf .zd-badge { white-space: nowrap; flex: none; }
 .zd-app__punkte { display: inline-flex; gap: 6px; }
 .zd-app__punkte i { width: 9px; height: 9px; border-radius: 50%; background: var(--zd-linie-stark); }
 .zd-app__inhalt { padding: var(--zd-s-4) var(--zd-s-5) var(--zd-s-5); }
