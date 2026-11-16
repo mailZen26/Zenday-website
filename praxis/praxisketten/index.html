@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>zenday für Praxisketten – jeder neue Standort startet nicht bei null</title>
+<meta name="description" content="Jeder Standort schnell startklar mit zenday. Integration neuer Standorte, Gruppenübersicht und vererbte Standards für Ketten sind in Planung.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/zenday.css?v=0.4.0">
+<style>
+  :root { color-scheme: light; }
+  .zd-header { top: env(safe-area-inset-top, 0px); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--zd-grund); }
+
+  .fortschritt__zeile { display: flex; justify-content: space-between; font-size: var(--zd-fs-xs); color: var(--zd-text-leise); font-variant-numeric: tabular-nums; }
+
+  .heatmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--zd-s-2); }
+  .heatmap span { aspect-ratio: 2 / 1; border-radius: var(--zd-radius-s); background: var(--zd-tuerkis-hell); }
+  .heatmap .h2 { background: var(--zd-gelb-hell); }
+  .heatmap .h3 { background: var(--zd-koralle-hell); }
+
+  /* Uhrzeiten und Monate in Mockups */
+  .zd-avatar.zeit { width: auto; min-width: 48px; padding: 0 var(--zd-s-2); border-radius: var(--zd-radius-pill); font-variant-numeric: tabular-nums; }
+
+  /* Funktionsreihen: Text und Mockup im Wechsel */
+  .feature { display: grid; gap: var(--zd-s-5); align-items: center; }
+  .feature + .feature { margin-top: var(--zd-s-8); }
+  @media (min-width: 960px) {
+    .feature { grid-template-columns: 1fr 1.1fr; gap: var(--zd-s-8); }
+    .feature:nth-of-type(even) > :first-child { order: 2; }
+  }
+
+  /* Rechner-Ergebnis */
+  .rechner-ergebnis .zd-kennzahl__wert { font-size: var(--zd-fs-h3); font-variant-numeric: tabular-nums; }
+  .rechner-ergebnis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr)); gap: var(--zd-s-5); padding-top: var(--zd-s-5); border-top: 1px solid var(--zd-linie); }
+
+  /* Garantie-Band (wie Startseite) */
+  .garantie { display: grid; gap: var(--zd-s-5); align-items: center; background: var(--zd-weiss); border-radius: var(--zd-radius-l); padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); box-shadow: var(--zd-schatten); border: 1px solid var(--zd-linie); }
+  @media (min-width: 720px) { .garantie { grid-template-columns: auto 1fr; } }
+  .garantie__siegel { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; background: var(--zd-verlauf-button); color: var(--zd-anthrazit); font-weight: 700; text-align: center; line-height: 1.05; font-size: 1.5rem; }
+  .garantie__siegel small { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<a class="zd-skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="zd-header">
+  <div class="zd-container zd-header__innen">
+    <a class="zd-wortmarke" href="/" aria-label="zenday Startseite"><b>zen</b><span>day</span></a>
+    <nav class="zd-nav" aria-label="Hauptnavigation">
+      <a href="/#funktionen">Funktionen</a>
+      <details class="zd-nav__drop">
+        <summary>Für Ihre Praxis</summary>
+        <div class="zd-nav__panel">
+          <a href="/praxis/einzelpraxis/"><strong>Einzelpraxis</strong><small>Sie halten alles im Kopf zusammen</small></a>
+          <a href="/praxis/mehrbehandlerpraxis/"><strong>Mehrbehandlerpraxis</strong><small>Das Team wächst, die Abläufe nicht mit</small></a>
+          <a href="/praxis/grosspraxis-mvz/"><strong>Großpraxis &amp; MVZ</strong><small>Ab 50 Mitarbeitenden an einem Ort</small></a>
+          <a href="/praxis/mehrere-standorte/"><strong>Mehrere Standorte</strong><small>Gemeinsame Standards, lokal umgesetzt</small></a>
+          <a href="/praxis/praxisketten/"><strong>Praxisketten &amp; Verbünde</strong><small>Neue Standorte starten nicht bei null</small></a>
+        </div>
+      </details>
+      <a href="/#start">So starten Sie</a>
+      <a href="/learning-lab/">Learning Lab</a>
+      <a href="/#faq">FAQ</a>
+    </nav>
+    <div class="zd-header__aktionen">
+      <a class="zd-btn zd-btn--dunkel zd-btn--klein" href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
+      <details class="zd-menue">
+        <summary aria-label="Menü öffnen">
+          <svg class="zd-menue__auf" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="zd-menue__zu" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </summary>
+        <nav class="zd-menue__panel" aria-label="Mobile Navigation">
+          <a href="/#funktionen">Funktionen</a>
+          <span class="zd-menue__titel">Für Ihre Praxis</span>
+          <a class="zd-menue__unter" href="/praxis/einzelpraxis/">Einzelpraxis</a>
+          <a class="zd-menue__unter" href="/praxis/mehrbehandlerpraxis/">Mehrbehandlerpraxis</a>
+          <a class="zd-menue__unter" href="/praxis/grosspraxis-mvz/">Großpraxis &amp; MVZ</a>
+          <a class="zd-menue__unter" href="/praxis/mehrere-standorte/">Mehrere Standorte</a>
+          <a class="zd-menue__unter" href="/praxis/praxisketten/">Praxisketten &amp; Verbünde</a>
+          <a href="/#start">So starten Sie</a>
+          <a href="/learning-lab/">Learning Lab</a>
+          <a href="/#faq">FAQ</a>
+          <a class="zd-btn zd-btn--primaer zd-btn--voll" href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main id="inhalt">
+
+  <!-- HERO -->
+  <section class="zd-hero zd-hero--ellipse" id="top">
+    <div class="zd-container">
+      <div class="zd-split zd-split--text-breit">
+        <div class="zd-stack zd-stack--weit">
+          <div class="zd-stack">
+            <span class="zd-badge zd-badge--koralle zd-badge--punkt">Für Praxisketten und wachsende Verbünde</span>
+            <h1>Jeder neue Standort startet <span class="zd-text-verlauf">nicht bei null</span>.</h1>
+            <p class="zd-lead">Eröffnungen und Übernahmen sollen nach wiederholbaren Abläufen laufen. zenday gibt jedem Standort heute schon ein verlässliches QM. Das Betriebssystem für Ihr Wachstum, mit Vorlagen, Rollen und Rollout, ist in Planung.</p>
+          </div>
+          <div class="zd-reihe zd-reihe--stapeln">
+            <a class="zd-btn zd-btn--primaer zd-btn--gross" href="https://calendly.com/digitalesqm/demo-praesentation">Demo in 15 Minuten</a>
+            <a class="zd-btn zd-btn--sekundaer zd-btn--gross" href="#in-planung">Was in Planung ist</a>
+          </div>
+          <div class="zd-vertrauen">
+            <span>Über 200 Praxisstandorte</span>
+            <span>Mehr als 2.000 Nutzer</span>
+          </div>
+        </div>
+        <div class="zd-app" aria-label="Zielbild: Integration eines neuen Standorts">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Neuer Standort · Köln-Süd</strong><span class="zd-badge zd-badge--violett">In Planung</span></div>
+          <div class="zd-app__inhalt">
+            <div class="fortschritt__zeile"><span>Integration nach Vorlage</span><span>Woche 3 von 6</span></div>
+            <div class="zd-balken"><span style="--wert: 50%"></span></div>
+            <div class="zd-app-zeile zd-app-zeile--fertig"><span class="zd-haken zd-haken--fertig"></span><span>Standards der Gruppe übernommen<small>Dokumente, Abläufe, Aufgabenketten</small></span><span class="zd-badge zd-badge--tuerkis">Erledigt</span></div>
+            <div class="zd-app-zeile"><span class="zd-haken"></span><span>Rollen besetzt und Smart Fields ergänzt<small>Standortleitung, Hygiene, Röntgen</small></span><span class="zd-badge zd-badge--gelb">läuft</span></div>
+            <div class="zd-app-zeile"><span class="zd-haken"></span><span>Team unterwiesen<small>Pflichtunterweisungen der Gruppe</small></span><span class="zd-badge">Woche 4</span></div>
+            <p class="zd-klein zd-leise">Zielbild, Darstellung beispielhaft</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KOMMT IHNEN DAS BEKANNT VOR -->
+  <section class="zd-sektion zd-sektion--weiss">
+    <div class="zd-container">
+      <div class="zd-sektion-kopf">
+        <span class="zd-eyebrow">Kommt Ihnen das bekannt vor?</span>
+        <h2>Wachstum, das jedes Mal neu organisiert werden muss</h2>
+      </div>
+      <div class="zd-grid zd-grid--3">
+        <article class="zd-karte">
+          <span class="zd-icon zd-icon--koralle"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg></span>
+          <h3 class="zd-h4">Jede Übernahme bringt ihr eigenes QM mit</h3>
+          <p>Neue Standorte kommen mit eigenen Ordnern, eigenen Abläufen und eigenen Gewohnheiten. Die Angleichung dauert Monate.</p>
+        </article>
+        <article class="zd-karte">
+          <span class="zd-icon zd-icon--gelb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <h3 class="zd-h4">Integration bindet Ihre besten Leute</h3>
+          <p>Erfahrene Kräfte aus bestehenden Standorten reisen an, um aufzubauen und einzuarbeiten. Dort fehlen sie dann.</p>
+        </article>
+        <article class="zd-karte">
+          <span class="zd-icon zd-icon--violett"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+          <h3 class="zd-h4">Wachstum ohne Übersicht</h3>
+          <p>Mit jedem Standort wird schwerer zu sehen, wo die Gruppe steht und welcher Standort Unterstützung braucht.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFRAME -->
+  <section class="zd-sektion">
+    <div class="zd-container zd-container--schmal zd-mitte zd-stack">
+      <span class="zd-eyebrow">Der eigentliche Engpass</span>
+      <h2>Wachstum braucht ein Betriebssystem, keine Heldentaten.</h2>
+      <p class="zd-lead">Wenn Prozesse, Rollen, Aufgaben, Unterweisungen und Wissen übertragbar sind, wird jede Eröffnung und jede Übernahme wiederholbar. Das ist das Zielbild, auf das wir zenday für Ketten ausrichten. Gemeint ist ein internes Betriebssystem, keine rechtliche Franchise-Struktur.</p>
+    </div>
+  </section>
+
+  <!-- RECHNER -->
+  <section class="zd-sektion zd-sektion--weiss" id="rechner">
+    <div class="zd-container">
+      <div class="zd-split">
+        <div class="zd-stack">
+          <span class="zd-eyebrow">Ihre Rechnung</span>
+          <h2>Was der Aufbau neuer Standorte heute kostet</h2>
+          <p>Schätzen Sie, wie viele Standorte Sie pro Jahr eröffnen oder übernehmen und wie viele Stunden der Aufbau von QM und Abläufen je Standort bindet. Wir rechnen mit Ihren Zahlen, nicht mit Durchschnittswerten.</p>
+          <p class="zd-klein zd-leise">Die Felder sind mit Beispielwerten vorbelegt. Passen Sie sie an Ihre Gruppe an.</p>
+        </div>
+        <div class="zd-formular-box">
+          <form class="zd-formular" id="rechner-form" onsubmit="return false">
+            <div class="zd-feld"><label for="r-std">Neue Standorte pro Jahr</label><input class="zd-input" id="r-std" type="number" inputmode="numeric" min="0" step="1" value="2"></div>
+            <div class="zd-feld"><label for="r-wo">Stunden Aufbau von QM und Abläufen je Standort</label><input class="zd-input" id="r-wo" type="number" inputmode="numeric" min="0" step="5" value="80"></div>
+            <div class="zd-feld"><label for="r-wert">Wert einer Stunde in Euro <span class="zd-leise">(optional)</span></label><input class="zd-input" id="r-wert" type="number" inputmode="numeric" min="0" step="5" placeholder="z. B. Stundensatz QM-Leitung"></div>
+          </form>
+          <div class="rechner-ergebnis zd-mt-6" aria-live="polite">
+            <div class="zd-kennzahl"><span class="zd-kennzahl__wert" id="r-h">160</span><span class="zd-kennzahl__label">Stunden pro Jahr</span></div>
+            <div class="zd-kennzahl"><span class="zd-kennzahl__wert" id="r-t">20</span><span class="zd-kennzahl__label">volle Arbeitstage</span></div>
+            <div class="zd-kennzahl" id="r-euro-box" hidden><span class="zd-kennzahl__wert" id="r-euro">0 €</span><span class="zd-kennzahl__label">Gegenwert pro Jahr</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HEUTE VERFÜGBAR -->
+  <section class="zd-sektion" id="funktionen">
+    <div class="zd-container">
+      <div class="zd-sektion-kopf">
+        <span class="zd-eyebrow">Heute verfügbar</span>
+        <h2>Jeder Standort schnell startklar</h2>
+        <p>Schon heute bekommt jeder neue Standort mit zenday ein verlässliches QM. Seit es die Smart Fields gibt, sind neue Praxen nach rund drei Wochen begehungsbereit.</p>
+      </div>
+      <div class="zd-grid zd-grid--2">
+        <article class="zd-karte"><span class="zd-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l2 2 3-4"/></svg></span><h3 class="zd-h4">Smart Fields und Smart Fill</h3><p>Standortdaten einmal eintragen, die Geräte legen wir für Sie an. Updates durch das zenday-Team erreichen alle Standorte, die lokalen Angaben bleiben erhalten.</p></article>
+        <article class="zd-karte"><span class="zd-icon zd-icon--tuerkis"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></span><h3 class="zd-h4">Aufgabenketten</h3><p>Prüfungen und Fristen laufen an jedem Standort mit Verantwortlichen und Vertretung, sichtbar, erinnert und eskaliert.</p></article>
+        <article class="zd-karte"><span class="zd-icon zd-icon--gelb"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span><h3 class="zd-h4">Digitale Unterweisungen</h3><p>Neue Teams werden digital unterwiesen und unterschreiben am eigenen Gerät, mit Nachweis.</p></article>
+        <article class="zd-karte"><span class="zd-icon zd-icon--violett"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M4 17a2 2 0 0 1 2-2h12M9 7h5"/></svg></span><h3 class="zd-h4">Praxishandbuch und Vorlagen</h3><p>Abläufe und Best-Practice-Vorlagen an einer Stelle, damit neue Teams nicht bei jeder Frage die Zentrale anrufen.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- IN PLANUNG -->
+  <section class="zd-sektion zd-sektion--weiss" id="in-planung">
+    <div class="zd-container">
+      <div class="zd-sektion-kopf">
+        <span class="zd-badge zd-badge--violett zd-badge--punkt">In Planung</span>
+        <h2>Was für Ketten kommt</h2>
+        <p>Diese Funktionen entwickeln wir für Gruppen, die wachsen. Sie sind noch nicht verfügbar. Wer heute startet, kann sie als Pilot mitgestalten.</p>
+      </div>
+
+      <div class="feature">
+        <div class="zd-stack">
+          <span class="zd-badge zd-badge--violett">In Planung</span>
+          <h3>Integration nach Eröffnungen und Übernahmen</h3>
+          <p>Ein neuer Standort übernimmt mit einem Schritt die Standards der Gruppe: Dokumente, Abläufe, Aufgabenketten und Unterweisungen. Ein Integrationsplan zeigt, was bis wann zu tun ist.</p>
+        </div>
+        <div class="zd-app" aria-hidden="true">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Integrationen</strong><span class="zd-badge zd-badge--violett">Zielbild</span></div>
+          <div class="zd-app__inhalt">
+            <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--tuerkis">KS</span><span>Köln-Süd · Eröffnung<small>Woche 3 von 6</small></span><span class="zd-badge zd-badge--tuerkis">im Plan</span></div>
+            <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--gelb">BO</span><span>Bonn · Übernahme<small>Woche 1 von 6 · bestehende Dokumente prüfen</small></span><span class="zd-badge zd-badge--gelb">gestartet</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="zd-stack">
+          <span class="zd-badge zd-badge--violett">In Planung</span>
+          <h3>Gruppenübersicht mit Heatmap</h3>
+          <p>Geschäftsführung und COO sehen den Stand aller Standorte auf einer Seite. Abweichungen fallen auf, bevor sie bei einer Begehung auffallen.</p>
+        </div>
+        <div class="zd-app" aria-hidden="true">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Gruppe · 12 Standorte</strong><span class="zd-badge zd-badge--violett">Zielbild</span></div>
+          <div class="zd-app__inhalt">
+            <div class="heatmap" role="presentation">
+              <span class="h1"></span><span class="h1"></span><span class="h2"></span><span class="h1"></span>
+              <span class="h1"></span><span class="h3"></span><span class="h1"></span><span class="h2"></span>
+              <span class="h1"></span><span class="h1"></span><span class="h1"></span><span class="h2"></span>
+            </div>
+            <p class="zd-klein zd-leise">Ein Feld je Standort: im Plan, offene Punkte, Abweichung</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zd-grid zd-grid--3 zd-mt-8">
+        <article class="zd-karte"><span class="zd-badge zd-badge--violett">In Planung</span><h3 class="zd-h4">Vererbte Standards</h3><p>Zentral festlegen, an alle Standorte weitergeben, lokal ergänzen.</p></article>
+        <article class="zd-karte"><span class="zd-badge zd-badge--violett">In Planung</span><h3 class="zd-h4">Rollen und Rechte</h3><p>Zentrale, QM-Leitung, Expansion, Standortleitungen und Teams mit passenden Rechten.</p></article>
+        <article class="zd-karte"><span class="zd-badge zd-badge--violett">In Planung</span><h3 class="zd-h4">Kontrollierter Rollout</h3><p>Neue Standards erst an Pilotstandorten testen, dann gruppenweit ausrollen.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- START -->
+  <section class="zd-sektion zd-sektion--zart" id="start">
+    <div class="zd-container">
+      <div class="zd-sektion-kopf">
+        <span class="zd-eyebrow">So starten Sie</span>
+        <h2>Pilot an wenigen Standorten, dann Rollout</h2>
+        <p>Wir starten mit einem oder wenigen Standorten, legen gemeinsam fest, woran wir den Erfolg messen, und übertragen das Vorgehen danach auf die Gruppe.</p>
+      </div>
+      <ol class="zd-schritte">
+        <li class="zd-schritt"><h3>Demo buchen</h3><p>In 15 Minuten zeigen wir Ihnen zenday und besprechen Ihre Wachstumspläne.</p></li>
+        <li class="zd-schritt"><h3>Standortpilot</h3><p>An ausgewählten Standorten richten wir zenday ein und schulen Leitungen und Teams online.</p></li>
+        <li class="zd-schritt"><h3>Rollout in der Gruppe</h3><p>Das bewährte Vorgehen übertragen wir auf weitere Standorte. Die Gruppenfunktionen gestalten Sie als Pilot mit.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="zd-sektion zd-sektion--weiss" id="faq">
+    <div class="zd-container zd-container--schmal">
+      <div class="zd-sektion-kopf zd-sektion-kopf--mitte">
+        <span class="zd-eyebrow">FAQ</span>
+        <h2>Fragen von Praxisketten</h2>
+      </div>
+      <div class="zd-faq">
+        <details open><summary>Was kann zenday heute für Ketten?</summary><p>Jeder Standort arbeitet mit dem vollen zenday-Umfang und ist schnell startklar: Smart Fields, Smart Fill für Geräte, Aufgaben, Unterweisungen, Praxishandbuch und aktuelle Dokumente.</p></details>
+        <details><summary>Wann kommen die Gruppenfunktionen?</summary><p>Integration neuer Standorte, Gruppenübersicht, vererbte Standards, Rollen und kontrollierter Rollout sind in Planung. Einen Termin nennen wir erst, wenn er feststeht. In der Demo zeigen wir Ihnen den aktuellen Stand.</p></details>
+        <details><summary>Ist das eine Franchise-Lösung?</summary><p>Nein. Es geht um ein internes Betriebssystem aus Prozessen, Rollen, Aufgaben, Unterweisungen und Wissen, das sich auf neue Standorte übertragen lässt.</p></details>
+        <details><summary>Was kostet zenday?</summary><p>Das hängt von der Zahl der Standorte und Ihrem Bedarf ab. Wir besprechen es in der 15-minütigen Demo, nachdem wir Ihre Ausgangslage kennen.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANDERE PRAXISARTEN -->
+  <section class="zd-sektion">
+    <div class="zd-container zd-stack">
+      <h2 class="zd-h3">Passt eine andere Praxisart besser?</h2>
+      <ul class="zd-pills">
+        <li><a href="/praxis/einzelpraxis/">Einzelpraxis</a></li>
+        <li><a href="/praxis/mehrbehandlerpraxis/">Mehrbehandlerpraxis</a></li>
+        <li><a href="/praxis/grosspraxis-mvz/">Großpraxis &amp; MVZ</a></li>
+        <li><a href="/praxis/mehrere-standorte/">Mehrere Standorte</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ABSCHLUSS -->
+  <section class="zd-sektion zd-sektion--dunkel">
+    <div class="zd-container zd-mitte zd-stack">
+      <h2>Wachsen ohne Kontrollverlust</h2>
+      <p class="zd-lead" style="color:inherit">Sehen Sie in 15 Minuten, wie zenday heute an jedem Standort arbeitet und was für Ketten kommt.</p>
+      <div class="zd-reihe zd-reihe--mitte zd-reihe--stapeln zd-mt-4"><a class="zd-btn zd-btn--primaer zd-btn--gross" href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="zd-footer">
+  <div class="zd-container">
+    <div class="zd-grid zd-grid--3">
+      <div class="zd-stack zd-stack--eng">
+        <a class="zd-wortmarke" href="/"><b>zen</b><span>day</span></a>
+        <p>Digitales Qualitätsmanagement für Zahnarztpraxen.</p>
+      </div>
+      <div class="zd-stack zd-stack--eng">
+        <strong>Kontakt</strong>
+        <span>Ventria GmbH<br>Malkastenstraße 8, 40211 Düsseldorf</span>
+        <span>support@zen-day.de</span>
+      </div>
+      <div class="zd-stack zd-stack--eng">
+        <strong>Entdecken</strong>
+        <a href="https://www.zen-day.ai/learning-lab">Learning Lab</a>
+        <a href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
+      </div>
+    </div>
+    <div class="zd-footer__unten">
+      <span>© 2026 Ventria GmbH</span>
+      <ul class="zd-footer__links">
+        <li><a href="https://www.zen-day.ai/impressum">Impressum</a></li>
+        <li><a href="https://www.zen-day.ai/datenschutz">Datenschutz</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<div class="zd-cta-leiste"><a class="zd-btn zd-btn--primaer" href="https://calendly.com/digitalesqm/demo-praesentation">Demo in 15 Minuten buchen</a></div>
+<script>document.body.classList.add('zd-mit-cta-leiste');</script>
+<script>
+/* Rechner: rechnet nur mit den Angaben der Besucher:innen */
+(function () {
+  var f = function (id) { return document.getElementById(id); };
+  var zahl = function (id) { var v = parseFloat(String(f(id).value).replace(',', '.')); return isFinite(v) && v > 0 ? v : 0; };
+  var fmt = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
+  var rechne = function () {
+    var std = zahl('r-std') * zahl('r-wo');
+    f('r-h').textContent = fmt.format(std);
+    f('r-t').textContent = fmt.format(std / 8);
+    var wert = zahl('r-wert');
+    f('r-euro-box').hidden = !wert;
+    if (wert) f('r-euro').textContent = fmt.format(std * wert) + ' €';
+  };
+  ['r-std', 'r-wo', 'r-wert'].forEach(function (id) { f(id).addEventListener('input', rechne); });
+  rechne();
+})();
+</script>
+<script src="/zenday.js?v=0.4.0" defer></script>
+</body>
+</html>
