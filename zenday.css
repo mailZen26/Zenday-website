@@ -1,6 +1,6 @@
 /* ==========================================================================
    zenday.css — Basis-Stylesheet für zenday-Webseiten und Landingpages
-   Version: 0.3.1 (Prototyp) · Stand: 2026-11-12
+   Version: 0.4.0 (Prototyp) · Stand: 2026-11-16
    Breakpoints (mobile first):
      Handy   < 640 px   eine Spalte, Menü als Klappmenü
      Tablet  ≥ 640 px   zwei Spalten, Menü weiter als Klappmenü
@@ -8,6 +8,10 @@
    Geräte: Die Seite passt sich allein an die Bildschirmgröße an (keine
      Geräteerkennung). Getestet von 320 px (kleinste Handys) bis 2560 px,
      hoch und quer, mit Touch und Maus.
+   Änderungen 0.4.0: Aufklappmenü in der Navigation (zd-nav__drop) und
+     Gruppen im Handy-Menü, Link-Pills (zd-pills), Produkt-Mockups
+     (zd-app, zd-app-zeile, zd-avatar, zd-balken), Feature-Tabs (zd-tabs),
+     markierte Smart Fields in Dokumentvorschauen (zd-feldwert)
    Änderungen 0.3.1: Verlaufs-Buttons mit sauber runden Enden
    Änderungen 0.3: Silbentrennung für lange deutsche Wörter, Rasterspalten
      ohne Überlauf, Handy quer (kompakter Header, keine CTA-Leiste),
@@ -26,6 +30,8 @@
      4. Layout               9. Hero              14. Utilities
      5. Sektionen           10. Formulare         15. Geräte-Anpassungen
                                                   16. Barrierefreiheit
+                                                  17. Navigation erweitert
+                                                  18. Produkt-Mockups & Tabs
    Konvention: Alle Klassen beginnen mit "zd-", alle Variablen mit "--zd-".
    ========================================================================== */
 
@@ -771,3 +777,156 @@ hr { border: 0; height: 1px; background: var(--zd-linie); margin: var(--zd-s-6) 
   body { background: #fff; }
   .zd-karte, .zd-schritt { box-shadow: none; break-inside: avoid; }
 }
+
+
+/* 17. NAVIGATION ERWEITERT ================================================ */
+/* Aufklappmenü in der Desktop-Navigation, funktioniert ohne JavaScript:
+   <details class="zd-nav__drop"><summary>Für Ihre Praxis</summary>
+     <div class="zd-nav__panel"><a href="…"><strong>Titel</strong><small>Zeile</small></a></div>
+   </details>                                                              */
+.zd-nav__drop { position: relative; }
+.zd-nav__drop > summary {
+  list-style: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.35em; min-height: 44px; padding: 0 var(--zd-s-3);
+  border-radius: var(--zd-radius-pill);
+  color: var(--zd-anthrazit); font-size: var(--zd-fs-s); font-weight: 500;
+  transition: background var(--zd-dauer);
+}
+.zd-nav__drop > summary::-webkit-details-marker { display: none; }
+.zd-nav__drop > summary::after {
+  content: ""; width: 14px; height: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232B2F38' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform var(--zd-dauer) var(--zd-kurve);
+}
+.zd-nav__drop[open] > summary::after { transform: rotate(180deg); }
+.zd-nav__drop > summary:hover, .zd-nav__drop[open] > summary { background: rgba(43, 47, 56, 0.05); }
+.zd-nav__panel {
+  position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  width: 340px; padding: var(--zd-s-2);
+  background: var(--zd-weiss); border: 1px solid var(--zd-linie); border-radius: var(--zd-radius);
+  box-shadow: var(--zd-schatten-l);
+  display: grid; gap: 2px;
+  animation: zd-einblenden var(--zd-dauer) var(--zd-kurve);
+}
+.zd-nav .zd-nav__panel a {
+  display: grid; gap: 2px; min-height: 52px; padding: var(--zd-s-2) var(--zd-s-3);
+  border-radius: var(--zd-radius-s); align-content: center;
+}
+.zd-nav__panel a strong { font-size: var(--zd-fs-s); }
+.zd-nav__panel a small { font-size: var(--zd-fs-xs); color: var(--zd-text-leise); font-weight: 400; line-height: 1.35; }
+.zd-nav__panel a:hover { background: var(--zd-grund); }
+
+/* Gruppe im Handy-Menü: <span class="zd-menue__titel">…</span> und Links mit class="zd-menue__unter" */
+.zd-menue__titel {
+  display: block; padding: var(--zd-s-3) var(--zd-s-3) var(--zd-s-1);
+  font-size: var(--zd-fs-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--zd-violett);
+}
+.zd-menue__panel a.zd-menue__unter { min-height: 44px; padding-left: var(--zd-s-5); font-size: var(--zd-fs-s); }
+
+/* Link-Pills, z. B. Auswahl der Praxisart im Hero */
+.zd-pills { display: flex; flex-wrap: wrap; gap: var(--zd-s-2); list-style: none; padding: 0; }
+.zd-pills li + li { margin-top: 0; }
+.zd-pills a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--zd-s-4);
+  border-radius: var(--zd-radius-pill); background: var(--zd-weiss); border: 1px solid var(--zd-linie-stark);
+  color: var(--zd-anthrazit); font-size: var(--zd-fs-s); font-weight: 500; text-decoration: none;
+  transition: border-color var(--zd-dauer), box-shadow var(--zd-dauer);
+}
+.zd-pills a:hover { border-color: var(--zd-violett); box-shadow: var(--zd-schatten-s); text-decoration: none; }
+.zd-pills a[aria-current="page"] { border-color: var(--zd-violett); background: var(--zd-violett-hell); }
+
+
+/* 18. PRODUKT-MOCKUPS & TABS ============================================== */
+/* Stilisierte App-Ansicht: <div class="zd-app"><div class="zd-app__kopf">…</div><div class="zd-app__inhalt">…</div></div> */
+.zd-app {
+  background: var(--zd-weiss); border: 1px solid var(--zd-linie); border-radius: var(--zd-radius-l);
+  box-shadow: var(--zd-schatten-l); overflow: hidden; font-size: var(--zd-fs-s);
+}
+.zd-app__kopf {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--zd-s-3);
+  padding: var(--zd-s-3) var(--zd-s-5); border-bottom: 1px solid var(--zd-linie); background: var(--zd-grund);
+}
+.zd-app__kopf strong { font-size: var(--zd-fs-s); }
+.zd-app__punkte { display: inline-flex; gap: 6px; }
+.zd-app__punkte i { width: 9px; height: 9px; border-radius: 50%; background: var(--zd-linie-stark); }
+.zd-app__inhalt { padding: var(--zd-s-4) var(--zd-s-5) var(--zd-s-5); }
+.zd-app__inhalt > * + * { margin-top: var(--zd-s-3); }
+.zd-app__titel { font-size: var(--zd-fs-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--zd-text-leise); }
+
+/* Zeile in einer App-Liste: Symbol/Haken, Text mit Unterzeile, Badge */
+.zd-app-zeile {
+  display: grid; grid-template-columns: auto 1fr auto; gap: var(--zd-s-3); align-items: center;
+  padding: var(--zd-s-3) 0; border-top: 1px solid var(--zd-linie); line-height: 1.35;
+}
+.zd-app-zeile:first-child { border-top: 0; }
+.zd-app-zeile small { display: block; color: var(--zd-text-leise); font-size: var(--zd-fs-xs); }
+.zd-app-zeile > span:nth-child(2) { min-width: 0; color: var(--zd-anthrazit); }
+.zd-haken { width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid var(--zd-linie-stark); }
+.zd-haken--fertig { background: var(--zd-tuerkis) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 12px no-repeat; border-color: transparent; }
+.zd-app-zeile > :nth-child(3) { justify-self: end; }
+@media (max-width: 479px) {
+  /* Schmale Handys: Badge rutscht unter den Text */
+  .zd-app-zeile { grid-template-columns: auto 1fr; row-gap: var(--zd-s-2); }
+  .zd-app-zeile > :nth-child(3):not(.zd-avatar) { grid-column: 2; justify-self: start; }
+}
+.zd-stack > .zd-btn--link { align-self: flex-start; }
+.zd-app-zeile--fertig > span:nth-child(2) { color: var(--zd-text-leise); text-decoration: line-through; text-decoration-color: var(--zd-linie-stark); }
+
+/* Kürzel-Avatar: <span class="zd-avatar">LW</span> */
+.zd-avatar {
+  display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--zd-blau-hell); color: #1A4FA8; font-size: var(--zd-fs-xs); font-weight: 700;
+}
+.zd-avatar--violett { background: var(--zd-violett-hell); color: #6233B8; }
+.zd-avatar--tuerkis { background: var(--zd-tuerkis-hell); color: #0F6E68; }
+.zd-avatar--gelb { background: var(--zd-gelb-hell); color: #7A5A00; }
+
+/* Fortschrittsbalken: <div class="zd-balken"><span style="--wert: 75%"></span></div> */
+.zd-balken { height: 8px; border-radius: 99px; background: var(--zd-grund); overflow: hidden; }
+.zd-balken span { display: block; height: 100%; width: var(--wert, 50%); border-radius: inherit; background: var(--zd-verlauf); }
+
+/* Sprechblasen für KI-Antworten in Mockups */
+.zd-blase { padding: var(--zd-s-3) var(--zd-s-4); border-radius: var(--zd-radius-s); background: var(--zd-grund); color: var(--zd-anthrazit); line-height: 1.45; max-width: 88%; }
+.zd-blase--frage { margin-left: auto; background: var(--zd-blau-hell); }
+.zd-blase--ki { background: var(--zd-violett-hell); }
+.zd-blase small { display: block; margin-top: var(--zd-s-1); color: var(--zd-text-leise); font-size: var(--zd-fs-xs); }
+
+/* Smart-Field-Wert in einer Dokumentvorschau */
+.zd-feldwert {
+  padding: 0.05em 0.35em; border-radius: 6px; background: var(--zd-gelb-hell);
+  box-shadow: inset 0 -2px 0 var(--zd-gelb); color: var(--zd-anthrazit); font-weight: 600;
+  transition: background var(--zd-dauer);
+}
+.zd-feldwert--neu { animation: zd-aufleuchten 900ms var(--zd-kurve); }
+@keyframes zd-aufleuchten { 0% { background: var(--zd-gelb); } 100% { background: var(--zd-gelb-hell); } }
+
+/* Feature-Tabs: Tab-Leiste plus Inhaltsfläche
+   <div class="zd-tabs"><div class="zd-tabs__leiste" role="tablist"><button role="tab" aria-selected="true" aria-controls="p1">…</button></div>
+   <div class="zd-tabs__panel" role="tabpanel" id="p1">…</div></div>
+   Ohne JavaScript sind alle Panels untereinander sichtbar. */
+.zd-tabs__leiste {
+  display: flex; gap: var(--zd-s-2); overflow-x: auto; scrollbar-width: none;
+  padding: var(--zd-s-1); margin-bottom: var(--zd-s-6);
+  scroll-snap-type: x proximity;
+}
+.zd-tabs__leiste::-webkit-scrollbar { display: none; }
+.zd-tabs__leiste [role="tab"] {
+  flex: none; scroll-snap-align: start;
+  display: inline-flex; align-items: center; gap: var(--zd-s-2); min-height: 44px; padding: 0 var(--zd-s-4);
+  border-radius: var(--zd-radius-pill); border: 1px solid var(--zd-linie-stark); background: var(--zd-weiss);
+  color: var(--zd-anthrazit); font-size: var(--zd-fs-s); font-weight: 500; white-space: nowrap;
+  transition: border-color var(--zd-dauer), background var(--zd-dauer), box-shadow var(--zd-dauer);
+}
+.zd-tabs__leiste [role="tab"] svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.zd-tabs__leiste [role="tab"]:hover { border-color: var(--zd-anthrazit); }
+.zd-tabs__leiste [role="tab"][aria-selected="true"] { background: var(--zd-anthrazit); border-color: var(--zd-anthrazit); color: var(--zd-weiss); font-weight: 600; }
+@media (min-width: 1024px) {
+  .zd-tabs__leiste { flex-wrap: wrap; justify-content: center; overflow: visible; }
+  .zd-tabs__leiste [role="tab"] { padding: 0 var(--zd-s-3); }
+}
+.zd-tabs__panel { display: grid; gap: var(--zd-s-6); align-items: center; }
+.zd-tabs__panel + .zd-tabs__panel { margin-top: var(--zd-s-8); }
+.zd-tabs--aktiv .zd-tabs__panel + .zd-tabs__panel { margin-top: 0; }
+.zd-tabs__panel[hidden] { display: none; }
+.zd-tabs__panel:not([hidden]) { animation: zd-einblenden var(--zd-dauer) var(--zd-kurve); }
+@media (min-width: 960px) { .zd-tabs__panel { grid-template-columns: 1fr 1.15fr; gap: var(--zd-s-8); } }

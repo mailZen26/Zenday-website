@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="facebook-domain-verification" content="4a0wkbj80tu45yy6ojevruioppk9ig" />
-<title>zenday Startseite</title>
+<title>zenday – Digitales QM mit KI für Zahnarztpraxen</title>
+<meta name="description" content="zenday erinnert an Fristen, verteilt Aufgaben im Team und hält Ihre QM-Dokumente aktuell. Für Einzelpraxen, MVZ und Praxisverbünde.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/zenday.css?v=0.3.1">
+<link rel="stylesheet" href="/zenday.css?v=0.4.0">
 <style>
   /* Seitenspezifisch: nur was zenday.css noch nicht abdeckt.
      Bewusst nur heller Modus, so wie es die Marke vorsieht. */
@@ -16,30 +17,34 @@
   .zd-header { top: env(safe-area-inset-top, 0px); }
   body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--zd-grund); }
 
-  /* Produktvorschau im Hero: "Heute fällig" */
+  /* Produktvorschau im Hero */
   .vorschau { position: relative; }
   @media (min-width: 640px) { .vorschau { margin-bottom: 48px; } }
-  .vorschau__karte { background: var(--zd-weiss); border-radius: var(--zd-radius-l); box-shadow: var(--zd-schatten-l); border: 1px solid var(--zd-linie); padding: var(--zd-s-5); }
-  .vorschau__kopf { display: flex; justify-content: space-between; align-items: center; gap: var(--zd-s-3); margin-bottom: var(--zd-s-4); }
-  .vorschau__kopf strong { font-size: var(--zd-fs-m); }
-  .aufgabe { display: grid; grid-template-columns: 24px 1fr auto; gap: var(--zd-s-3); align-items: center; padding: var(--zd-s-3) 0; border-top: 1px solid var(--zd-linie); font-size: var(--zd-fs-s); }
-  .aufgabe__check { width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid var(--zd-linie-stark); }
-  .aufgabe__check--fertig { background: var(--zd-tuerkis) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 12px no-repeat; border-color: transparent; }
-  .aufgabe__text { min-width: 0; color: var(--zd-anthrazit); line-height: 1.35; }
-  .aufgabe__text small { display: block; color: var(--zd-text-leise); font-size: var(--zd-fs-xs); }
-  .aufgabe--fertig .aufgabe__text { color: var(--zd-text-leise); text-decoration: line-through; text-decoration-color: var(--zd-linie-stark); }
-  .fortschritt { margin-top: var(--zd-s-4); }
-  .fortschritt__zeile { display: flex; justify-content: space-between; font-size: var(--zd-fs-xs); color: var(--zd-text-leise); margin-bottom: var(--zd-s-2); font-variant-numeric: tabular-nums; }
-  .fortschritt__balken { height: 8px; border-radius: 99px; background: var(--zd-grund); overflow: hidden; }
-  .fortschritt__balken span { display: block; height: 100%; width: 75%; border-radius: inherit; background: var(--zd-verlauf); }
+  .fortschritt__zeile { display: flex; justify-content: space-between; font-size: var(--zd-fs-xs); color: var(--zd-text-leise); font-variant-numeric: tabular-nums; }
   .vorschau__ki { position: absolute; left: -16px; bottom: -64px; max-width: 260px; display: flex; gap: var(--zd-s-3); align-items: flex-start; background: var(--zd-weiss); border-radius: var(--zd-radius); box-shadow: var(--zd-schatten); border: 1px solid var(--zd-linie); padding: var(--zd-s-3) var(--zd-s-4); font-size: var(--zd-fs-xs); line-height: 1.45; color: var(--zd-anthrazit); }
   .vorschau__ki .zd-icon { width: 32px; height: 32px; border-radius: 10px; flex: none; }
   .vorschau__ki .zd-icon svg { width: 18px; height: 18px; }
   @media (max-width: 639px) { .vorschau__ki { position: static; max-width: none; margin-top: var(--zd-s-3); } }
 
-  /* Zwei Zielgruppen nebeneinander */
+  /* Auswahl der Praxisart unter dem Hero */
+  .segmentwahl { display: grid; gap: var(--zd-s-3); margin-top: var(--zd-s-8); padding-top: var(--zd-s-5); border-top: 1px solid var(--zd-linie); }
+
+  /* Smart-Fields-Demo: Eingabe links, Dokument rechts */
+  .sf-demo { display: grid; gap: var(--zd-s-5); align-items: start; }
+  @media (min-width: 960px) { .sf-demo { grid-template-columns: 0.85fr 1.15fr; gap: var(--zd-s-6); } }
+  .sf-demo .zd-formular { gap: var(--zd-s-3); }
+  @media (min-width: 640px) { .sf-demo .zd-formular { grid-template-columns: 1fr 1fr; } .sf-demo .zd-feld:first-child { grid-column: 1 / -1; } }
+  @media (min-width: 960px) { .sf-demo { grid-template-columns: 1fr 1fr; } }
+  .sf-text p:not(.zd-app__titel) { color: var(--zd-anthrazit); line-height: 1.7; }
+  .sf-text .zd-app__titel { margin-top: var(--zd-s-4); }
+  .sf-text .zd-app__titel:first-child { margin-top: 0; }
+  .sf-weitere { display: flex; flex-wrap: wrap; align-items: center; gap: var(--zd-s-2); margin-top: var(--zd-s-4); }
+  .sf-weitere .zd-badge { transition: background var(--zd-dauer), border-color var(--zd-dauer); }
+  .sf-weitere--aktiv .zd-badge { background: var(--zd-gelb-hell); border-color: var(--zd-gelb); }
+
   .rolle { display: flex; flex-direction: column; gap: var(--zd-s-3); }
-  .rolle .zd-checkliste { margin-top: var(--zd-s-2); }
+  .zd-karte--link { display: flex; flex-direction: column; align-items: flex-start; gap: var(--zd-s-3); }
+  .zd-karte--link > * + * { margin-top: 0; }
 
   /* Garantie-Band */
   .garantie { display: grid; gap: var(--zd-s-5); align-items: center; background: var(--zd-weiss); border-radius: var(--zd-radius-l); padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); box-shadow: var(--zd-schatten); border: 1px solid var(--zd-linie); }
@@ -57,11 +62,21 @@
 
 <header class="zd-header">
   <div class="zd-container zd-header__innen">
-    <a class="zd-wortmarke" href="#top" aria-label="zenday Startseite"><b>zen</b><span>day</span></a>
+    <a class="zd-wortmarke" href="/" aria-label="zenday Startseite"><b>zen</b><span>day</span></a>
     <nav class="zd-nav" aria-label="Hauptnavigation">
       <a href="#funktionen">Funktionen</a>
+      <details class="zd-nav__drop">
+        <summary>Für Ihre Praxis</summary>
+        <div class="zd-nav__panel">
+          <a href="/praxis/einzelpraxis/"><strong>Einzelpraxis</strong><small>Sie halten alles im Kopf zusammen</small></a>
+          <a href="/praxis/mehrbehandlerpraxis/"><strong>Mehrbehandlerpraxis</strong><small>Das Team wächst, die Abläufe nicht mit</small></a>
+          <a href="/praxis/grosspraxis-mvz/"><strong>Großpraxis &amp; MVZ</strong><small>Ab 50 Mitarbeitenden an einem Ort</small></a>
+          <a href="/praxis/mehrere-standorte/"><strong>Mehrere Standorte</strong><small>Gemeinsame Standards, lokal umgesetzt</small></a>
+          <a href="/praxis/praxisketten/"><strong>Praxisketten &amp; Verbünde</strong><small>Neue Standorte starten nicht bei null</small></a>
+        </div>
+      </details>
       <a href="#start">So starten Sie</a>
-      <a href="#learning-lab">Learning Lab</a>
+      <a href="/learning-lab/">Learning Lab</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="zd-header__aktionen">
@@ -73,8 +88,14 @@
         </summary>
         <nav class="zd-menue__panel" aria-label="Mobile Navigation">
           <a href="#funktionen">Funktionen</a>
+          <span class="zd-menue__titel">Für Ihre Praxis</span>
+          <a class="zd-menue__unter" href="/praxis/einzelpraxis/">Einzelpraxis</a>
+          <a class="zd-menue__unter" href="/praxis/mehrbehandlerpraxis/">Mehrbehandlerpraxis</a>
+          <a class="zd-menue__unter" href="/praxis/grosspraxis-mvz/">Großpraxis &amp; MVZ</a>
+          <a class="zd-menue__unter" href="/praxis/mehrere-standorte/">Mehrere Standorte</a>
+          <a class="zd-menue__unter" href="/praxis/praxisketten/">Praxisketten &amp; Verbünde</a>
           <a href="#start">So starten Sie</a>
-          <a href="#learning-lab">Learning Lab</a>
+          <a href="/learning-lab/">Learning Lab</a>
           <a href="#faq">FAQ</a>
           <a class="zd-btn zd-btn--primaer zd-btn--voll" href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
         </nav>
@@ -97,7 +118,7 @@
           </div>
           <div class="zd-reihe zd-reihe--stapeln">
             <a class="zd-btn zd-btn--primaer zd-btn--gross" href="https://calendly.com/digitalesqm/demo-praesentation">Demo in 15 Minuten</a>
-            <a class="zd-btn zd-btn--sekundaer zd-btn--gross" href="#learning-lab">Kostenloses E-Book</a>
+            <a class="zd-btn zd-btn--sekundaer zd-btn--gross" href="#smart-fields">So funktionieren Smart Fields</a>
           </div>
           <div class="zd-vertrauen">
             <span>Über 200 Praxisstandorte</span>
@@ -107,17 +128,14 @@
         </div>
 
         <div class="vorschau" aria-label="Beispielansicht aus zenday">
-          <div class="vorschau__karte">
-            <div class="vorschau__kopf">
-              <strong>Heute fällig</strong>
-              <span class="zd-badge zd-badge--tuerkis">Praxis am Park</span>
-            </div>
-            <div class="aufgabe aufgabe--fertig"><span class="aufgabe__check aufgabe__check--fertig"></span><span class="aufgabe__text">Sterilisator: Chargenfreigabe dokumentieren<small>Aufbereitung · Lea</small></span><span class="zd-badge zd-badge--tuerkis">Erledigt</span></div>
-            <div class="aufgabe"><span class="aufgabe__check"></span><span class="aufgabe__text">Röntgen: Konstanzprüfung OPG<small>Röntgen · Dr. Weber</small></span><span class="zd-badge zd-badge--gelb">Heute</span></div>
-            <div class="aufgabe"><span class="aufgabe__check"></span><span class="aufgabe__text">Unterweisung Hygieneplan unterschreiben<small>Team · 9 von 12 unterschrieben</small></span><span class="zd-badge zd-badge--koralle">3 offen</span></div>
-            <div class="fortschritt">
+          <div class="zd-app">
+            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Heute fällig</strong><span class="zd-badge zd-badge--tuerkis">Praxis am Park</span></div>
+            <div class="zd-app__inhalt">
+              <div class="zd-app-zeile zd-app-zeile--fertig"><span class="zd-haken zd-haken--fertig"></span><span>Sterilisator: Chargenfreigabe dokumentieren<small>Aufbereitung · Lea</small></span><span class="zd-badge zd-badge--tuerkis">Erledigt</span></div>
+              <div class="zd-app-zeile"><span class="zd-haken"></span><span>Röntgen: Konstanzprüfung OPG<small>Röntgen · Dr. Weber</small></span><span class="zd-badge zd-badge--gelb">Heute</span></div>
+              <div class="zd-app-zeile"><span class="zd-haken"></span><span>Unterweisung Hygieneplan unterschreiben<small>Team · 9 von 12 unterschrieben</small></span><span class="zd-badge zd-badge--koralle">3 offen</span></div>
               <div class="fortschritt__zeile"><span>QM-Stand diese Woche</span><span>75 %</span></div>
-              <div class="fortschritt__balken"><span></span></div>
+              <div class="zd-balken"><span style="--wert: 75%"></span></div>
             </div>
           </div>
           <div class="vorschau__ki">
@@ -126,80 +144,242 @@
           </div>
         </div>
       </div>
+
+      <nav class="segmentwahl" aria-label="Praxisart wählen">
+        <span class="zd-klein zd-leise">Was für eine Praxis führen Sie?</span>
+        <ul class="zd-pills">
+          <li><a href="/praxis/einzelpraxis/">Einzelpraxis</a></li>
+          <li><a href="/praxis/mehrbehandlerpraxis/">Mehrbehandlerpraxis</a></li>
+          <li><a href="/praxis/grosspraxis-mvz/">Großpraxis &amp; MVZ</a></li>
+          <li><a href="/praxis/mehrere-standorte/">Mehrere Standorte</a></li>
+          <li><a href="/praxis/praxisketten/">Praxisketten &amp; Verbünde</a></li>
+        </ul>
+      </nav>
     </div>
   </section>
 
-  <!-- FÜR WEN -->
-  <section class="zd-sektion zd-sektion--weiss">
+  <!-- SMART FIELDS: BEDIENUNG UND LIVE-DEMO -->
+  <section class="zd-sektion zd-sektion--weiss" id="smart-fields">
     <div class="zd-container">
       <div class="zd-sektion-kopf">
-        <span class="zd-eyebrow">Für Ihre Praxis</span>
-        <h2>Entlastung für die, die das QM tragen</h2>
-        <p>zenday ersetzt niemanden. Es nimmt Ihrem Team das Erinnern, Nachfassen und Suchen ab.</p>
+        <span class="zd-eyebrow">Smart Fields</span>
+        <h2>Einmal eintragen. In jedem Dokument richtig.</h2>
+        <p>Probieren Sie es aus: Ändern Sie unten eine Angabe und sehen Sie, wie zenday sie in die Hygienedokumente Ihrer Praxis einsetzt.</p>
       </div>
-      <div class="zd-grid zd-grid--2">
-        <article class="zd-karte rolle">
-          <span class="zd-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg></span>
-          <h3>Für Praxisinhaber:innen</h3>
-          <p>Sie wissen jederzeit, wo Ihre Praxis steht, ohne selbst Listen zu prüfen.</p>
-          <ul class="zd-checkliste">
-            <li>Begehungsbereit statt kurz vor der Begehung hektisch</li>
-            <li>Gesetzesänderungen fließen in Ihre Dokumente ein</li>
-            <li>Ein klarer Überblick über offene Aufgaben</li>
-          </ul>
-        </article>
-        <article class="zd-karte rolle">
-          <span class="zd-icon zd-icon--violett"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg></span>
-          <h3>Für Praxismanagerinnen</h3>
-          <p>Ihre rechte Hand, die erinnert, nachfasst und Aufgaben im Team verteilt.</p>
-          <ul class="zd-checkliste">
-            <li>Aufgabenketten einmal anlegen, dann laufen sie</li>
-            <li>Unterweisungen digital unterschreiben lassen</li>
-            <li>Weniger Nachfragen, mehr Zeit für die Praxis</li>
-          </ul>
-        </article>
+
+      <ol class="zd-schritte zd-mb-6">
+        <li class="zd-schritt"><h3>Einmal eintragen</h3><p>Praxisname, Verantwortliche und Geräte erfassen Sie an einer Stelle. Ihre Geräte legen wir mit dem Smart Fill Service für Sie an.</p></li>
+        <li class="zd-schritt"><h3>Automatisch eingesetzt</h3><p>zenday setzt jede Angabe in alle Dokumente ein, in denen sie vorkommt: Hygieneplan, Arbeitsanweisungen, Prüflisten, Unterweisungen.</p></li>
+        <li class="zd-schritt"><h3>An einer Stelle ändern</h3><p>Wechselt die Hygienebeauftragte oder kommt ein neues Gerät dazu, ändern Sie es einmal. Alle Dokumente zeigen den neuen Stand.</p></li>
+      </ol>
+
+      <div class="sf-demo">
+        <div class="zd-app">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Smart Fields · Hygiene</strong><span class="zd-badge zd-badge--violett">Beispiel</span></div>
+          <form class="zd-app__inhalt zd-formular" id="sf-form" onsubmit="return false">
+            <div class="zd-feld"><label for="sf-praxis">Praxisname</label><input class="zd-input" id="sf-praxis" data-feld="praxis" value="Zahnarztpraxis am Park" autocomplete="off"></div>
+            <div class="zd-feld"><label for="sf-hyg">Hygienebeauftragte:r</label><input class="zd-input" id="sf-hyg" data-feld="hyg" value="Lea Wagner" autocomplete="off"></div>
+            <div class="zd-feld"><label for="sf-inhaber">Praxisinhaber:in</label><input class="zd-input" id="sf-inhaber" data-feld="inhaber" value="Dr. Jana Weber" autocomplete="off"></div>
+            <div class="zd-feld"><label for="sf-steri">Dampfsterilisator</label>
+              <select class="zd-select" id="sf-steri" data-feld="steri"><option>MELAG Vacuklav 41 B+</option><option>W&amp;H Lisa</option><option>Euronda E10</option></select></div>
+            <div class="zd-feld"><label for="sf-rdg">Thermodesinfektor</label>
+              <select class="zd-select" id="sf-rdg" data-feld="rdg"><option>MELAG MELAtherm 10</option><option>Miele PG 8581</option></select></div>
+          </form>
+        </div>
+
+        <div class="sf-dokument">
+          <div class="zd-app">
+            <div class="zd-app__kopf"><strong>Arbeitsanweisung · Aufbereitung semikritischer Medizinprodukte</strong><span class="zd-badge">Rev. 02</span></div>
+            <div class="zd-app__inhalt sf-text" aria-live="polite">
+              <p class="zd-app__titel">Geltungsbereich</p>
+              <p>Diese Arbeitsanweisung gilt für die <span class="zd-feldwert" data-wert="praxis">Zahnarztpraxis am Park</span>.</p>
+              <p class="zd-app__titel">Verantwortlich</p>
+              <p><span class="zd-feldwert" data-wert="hyg">Lea Wagner</span> (Hygienebeauftragte:r). Freigabe durch <span class="zd-feldwert" data-wert="inhaber">Dr. Jana Weber</span>.</p>
+              <p class="zd-app__titel">Ablauf</p>
+              <p>Reinigung und Desinfektion maschinell im <span class="zd-feldwert" data-wert="rdg">MELAG MELAtherm 10</span>. Sterilisation im <span class="zd-feldwert" data-wert="steri">MELAG Vacuklav 41 B+</span>. Die Chargenfreigabe dokumentiert <span class="zd-feldwert" data-wert="hyg">Lea Wagner</span>.</p>
+            </div>
+          </div>
+          <div class="sf-weitere">
+            <span class="zd-klein zd-leise">Ebenfalls aktualisiert:</span>
+            <span class="zd-badge">Hygieneplan</span>
+            <span class="zd-badge">AA Sterilisation</span>
+            <span class="zd-badge">Prüfliste Sterilisator</span>
+            <span class="zd-badge">Unterweisung Hygiene</span>
+          </div>
+        </div>
       </div>
+
+      <p class="zd-hinweis zd-hinweis--erfolg zd-mt-6">Seit Einführung der Smart Fields sind neue Praxen nach rund drei Wochen begehungsbereit.</p>
     </div>
   </section>
 
-  <!-- FUNKTIONEN -->
+  <!-- FUNKTIONEN: SHOWCASE MIT TABS -->
   <section class="zd-sektion" id="funktionen">
     <div class="zd-container">
       <div class="zd-sektion-kopf zd-sektion-kopf--mitte">
         <span class="zd-eyebrow">Funktionen</span>
         <h2>Alles, was Ihr QM braucht, an einem Ort</h2>
+        <p>Wählen Sie eine Funktion und sehen Sie, wie sie in zenday aussieht.</p>
+      </div>
+
+      <div class="zd-tabs">
+        <div class="zd-tabs__leiste" role="tablist" aria-label="Funktionen">
+          <button role="tab" id="t-sf" aria-controls="p-sf" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l2 2 3-4"/></svg>Smart Fields</button>
+          <button role="tab" id="t-ak" aria-controls="p-ak" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Aufgabenketten</button>
+          <button role="tab" id="t-ki" aria-controls="p-ki" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/></svg>KI für Ihre Geräte</button>
+          <button role="tab" id="t-uw" aria-controls="p-uw" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>Digitale Unterweisungen</button>
+          <button role="tab" id="t-hb" aria-controls="p-hb" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M4 17a2 2 0 0 1 2-2h12M9 7h5"/></svg>Praxishandbuch</button>
+          <button role="tab" id="t-ad" aria-controls="p-ad" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>Aktuelle Dokumente</button>
+        </div>
+
+        <div class="zd-tabs__panel" role="tabpanel" id="p-sf" aria-labelledby="t-sf">
+          <div class="zd-stack">
+            <h3>Smart Fields</h3>
+            <p>Praxisname, Verantwortliche und Geräte tragen Sie einmal ein. zenday setzt sie in alle QM-Dokumente ein.</p>
+            <ul class="zd-checkliste">
+              <li>Keine Suche nach veralteten Namen in Word-Dateien</li>
+              <li>Neue Verantwortliche an einer Stelle hinterlegen</li>
+              <li>Basis für den schnellen Start in rund drei Wochen</li>
+            </ul>
+            <a class="zd-btn zd-btn--link" href="#smart-fields">Selbst ausprobieren</a>
+          </div>
+          <div class="zd-app" aria-hidden="true">
+            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Stammdaten</strong><span class="zd-badge zd-badge--tuerkis">Vollständig</span></div>
+            <div class="zd-app__inhalt">
+              <div class="zd-app-zeile"><span class="zd-avatar">LW</span><span>Hygienebeauftragte:r<small>Lea Wagner</small></span><span class="zd-badge">in 12 Dokumenten</span></div>
+              <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--violett">JW</span><span>Strahlenschutzverantwortliche:r<small>Dr. Jana Weber</small></span><span class="zd-badge">in 7 Dokumenten</span></div>
+              <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--tuerkis">ST</span><span>Dampfsterilisator<small>MELAG Vacuklav 41 B+</small></span><span class="zd-badge">in 5 Dokumenten</span></div>
+              <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--gelb">EH</span><span>Ersthelfer:in<small>Tim Schulz</small></span><span class="zd-badge">in 4 Dokumenten</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zd-tabs__panel" role="tabpanel" id="p-ak" aria-labelledby="t-ak">
+          <div class="zd-stack">
+            <h3>Aufgabenketten</h3>
+            <p>Prüfungen und Fristen landen automatisch bei der richtigen Person und werden direkt abgehakt.</p>
+            <ul class="zd-checkliste">
+              <li>Wiederkehrende Aufgaben mit Verantwortlichen und Vertretung</li>
+              <li>Erinnerung vor der Frist, Eskalation bei Überfälligkeit</li>
+              <li>Jeder Haken ist zugleich Ihr Nachweis</li>
+            </ul>
+          </div>
+          <div class="zd-app" aria-hidden="true">
+            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Aufgabenkette · Sterilisator</strong><span class="zd-badge zd-badge--blau">läuft</span></div>
+            <div class="zd-app__inhalt">
+              <div class="zd-app-zeile zd-app-zeile--fertig"><span class="zd-haken zd-haken--fertig"></span><span>Vakuumtest durchführen<small>täglich · Lea</small></span><span class="zd-avatar">LW</span></div>
+              <div class="zd-app-zeile zd-app-zeile--fertig"><span class="zd-haken zd-haken--fertig"></span><span>Bowie-Dick-Test dokumentieren<small>täglich · Lea</small></span><span class="zd-avatar">LW</span></div>
+              <div class="zd-app-zeile"><span class="zd-haken"></span><span>Chargenfreigabe<small>nach jeder Charge · Vertretung: Tim</small></span><span class="zd-badge zd-badge--gelb">Heute</span></div>
+              <div class="zd-app-zeile"><span class="zd-haken"></span><span>Validierung beauftragen<small>jährlich · Praxismanagement</small></span><span class="zd-badge">in 6 Wochen</span></div>
+              <div class="zd-blase zd-blase--ki">Erinnerung an Tim gesendet: Lea ist heute nicht im Dienst.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zd-tabs__panel" role="tabpanel" id="p-ki" aria-labelledby="t-ki">
+          <div class="zd-stack">
+            <h3>KI für Ihre Geräte</h3>
+            <p>Unser Smart Fill Service legt Ihre Geräte mit passenden Prüfaufgaben an und schaltet die KI-Funktion frei.</p>
+            <ul class="zd-checkliste">
+              <li>Geräte mit Bedienungsanleitung und Prüfintervallen</li>
+              <li>Ihr Team fragt die KI, statt die Anleitung zu suchen</li>
+              <li>Antworten aus den Unterlagen, die Ihre Praxis freigegeben hat</li>
+            </ul>
+          </div>
+          <div class="zd-app" aria-hidden="true">
+            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>MELAG Vacuklav 41 B+</strong><span class="zd-badge zd-badge--violett">KI aktiv</span></div>
+            <div class="zd-app__inhalt">
+              <div class="zd-blase zd-blase--frage">Der Sterilisator zeigt eine Fehlermeldung beim Vakuumtest. Was tun?</div>
+              <div class="zd-blase zd-blase--ki">Prüfen Sie zuerst, ob die Türdichtung sauber und unbeschädigt ist. Starten Sie den Test danach erneut. Bleibt der Fehler, informieren Sie Lea Wagner.<small>Quelle: Bedienungsanleitung, Kapitel Wartung</small></div>
+              <div class="zd-app-zeile"><span class="zd-haken"></span><span>Prüfaufgaben aus der Anleitung<small>4 Aufgaben angelegt</small></span><span class="zd-badge zd-badge--tuerkis">Smart Fill</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zd-tabs__panel" role="tabpanel" id="p-uw" aria-labelledby="t-uw">
+          <div class="zd-stack">
+            <h3>Digitale Unterweisungen</h3>
+            <p>Unterweisungen verteilen, digital unterschreiben lassen und den Stand jederzeit sehen.</p>
+            <ul class="zd-checkliste">
+              <li>Jede Person unterschreibt am eigenen Gerät</li>
+              <li>Offene Unterschriften werden automatisch erinnert</li>
+              <li>Der Nachweis für die Begehung liegt sofort bereit</li>
+            </ul>
+          </div>
+          <div class="zd-app" aria-hidden="true">
+            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Unterweisung Hygieneplan 2026</strong><span class="zd-badge zd-badge--koralle">3 offen</span></div>
+            <div class="zd-app__inhalt">
+              <div class="fortschritt__zeile"><span>Unterschrieben</span><span>9 von 12</span></div>
+              <div class="zd-balken"><span style="--wert: 75%"></span></div>
+              <div class="zd-app-zeile"><span class="zd-avatar">LW</span><span>Lea Wagner<small>unterschrieben am 03.11.</small></span><span class="zd-badge zd-badge--tuerkis">Erledigt</span></div>
+              <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--violett">MK</span><span>Mara Klein<small>unterschrieben am 04.11.</small></span><span class="zd-badge zd-badge--tuerkis">Erledigt</span></div>
+              <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--gelb">TS</span><span>Tim Schulz<small>erinnert heute 7:30</small></span><span class="zd-badge zd-badge--koralle">Offen</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zd-tabs__panel" role="tabpanel" id="p-hb" aria-labelledby="t-hb">
+          <div class="zd-stack">
+            <h3>Praxishandbuch</h3>
+            <p>Ihre eigenen Abläufe an einer Stelle. Das Team findet Antworten, ohne zu fragen.</p>
+            <ul class="zd-checkliste">
+              <li>Abläufe, Checklisten und Anleitungen durchsuchbar</li>
+              <li>Fragen in eigenen Worten stellen, die KI antwortet</li>
+              <li>Neue Mitarbeitende finden sich schneller zurecht</li>
+            </ul>
+          </div>
+          <div class="zd-app" aria-hidden="true">
+            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Fragen Sie zenday</strong><span class="zd-badge zd-badge--violett">Praxishandbuch</span></div>
+            <div class="zd-app__inhalt">
+              <div class="zd-blase zd-blase--frage">Wo steht der Notfallkoffer und wer prüft ihn?</div>
+              <div class="zd-blase zd-blase--ki">Der Notfallkoffer steht im Flur neben Behandlungsraum 2. Tim Schulz prüft ihn monatlich auf Vollständigkeit und Ablaufdaten.<small>Quelle: Notfallplan, freigegeben von Dr. Jana Weber</small></div>
+              <div class="zd-app-zeile"><span class="zd-haken"></span><span>Notfallplan öffnen<small>Praxishandbuch · Notfallmanagement</small></span><span class="zd-badge">Dokument</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zd-tabs__panel" role="tabpanel" id="p-ad" aria-labelledby="t-ad">
+          <div class="zd-stack">
+            <h3>Aktuelle Dokumente</h3>
+            <p>Bei Gesetzesänderungen werden Ihre QM-Dokumente angepasst. Sie bleiben auf dem aktuellen Stand.</p>
+            <ul class="zd-checkliste">
+              <li>Sie sehen, welches Dokument sich geändert hat und warum</li>
+              <li>Sie prüfen und geben frei, bevor es gilt</li>
+              <li>Das Team wird zur neuen Version unterwiesen</li>
+            </ul>
+          </div>
+          <div class="zd-app" aria-hidden="true">
+            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Dokumente</strong><span class="zd-badge zd-badge--gelb">2 zur Freigabe</span></div>
+            <div class="zd-app__inhalt">
+              <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--gelb">!</span><span>Hygieneplan<small>Rev. 03 · neue Rechtslage eingearbeitet</small></span><span class="zd-badge zd-badge--gelb">Freigeben</span></div>
+              <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--gelb">!</span><span>Gefährdungsbeurteilung Aufbereitung<small>Rev. 02 · Anpassung Arbeitsschutz</small></span><span class="zd-badge zd-badge--gelb">Freigeben</span></div>
+              <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--tuerkis">✓</span><span>Notfallplan<small>Rev. 04 · aktuell</small></span><span class="zd-badge zd-badge--tuerkis">Gültig</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FÜR IHRE PRAXIS: SEGMENTE -->
+  <section class="zd-sektion zd-sektion--weiss" id="praxis">
+    <div class="zd-container">
+      <div class="zd-sektion-kopf">
+        <span class="zd-eyebrow">Für Ihre Praxis</span>
+        <h2>Jede Praxis tickt anders</h2>
+        <p>Eine Einzelpraxis braucht andere Funktionen als ein Verbund mit zehn Standorten. Wählen Sie, was zu Ihnen passt.</p>
       </div>
       <div class="zd-grid zd-grid--3">
-        <article class="zd-karte">
-          <span class="zd-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l2 2 3-4"/></svg></span>
-          <h3 class="zd-h4">Smart Fields</h3>
-          <p>Praxisname, Verantwortliche und Geräte tragen Sie einmal ein. zenday setzt sie in alle QM-Dokumente ein.</p>
-        </article>
-        <article class="zd-karte">
-          <span class="zd-icon zd-icon--tuerkis"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></span>
-          <h3 class="zd-h4">Aufgabenketten</h3>
-          <p>Prüfungen und Fristen landen automatisch bei der richtigen Person und werden direkt abgehakt.</p>
-        </article>
-        <article class="zd-karte">
-          <span class="zd-icon zd-icon--violett"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span>
-          <h3 class="zd-h4">KI für Ihre Geräte</h3>
-          <p>Unser Smart Fill Service legt Ihre Geräte mit passenden Prüfaufgaben an und schaltet die KI-Funktion frei.</p>
-        </article>
-        <article class="zd-karte">
-          <span class="zd-icon zd-icon--gelb"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span>
-          <h3 class="zd-h4">Digitale Unterweisungen</h3>
-          <p>Unterweisungen verteilen, digital unterschreiben lassen und den Stand jederzeit sehen.</p>
-        </article>
-        <article class="zd-karte">
-          <span class="zd-icon"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M4 17a2 2 0 0 1 2-2h12M9 7h5"/></svg></span>
-          <h3 class="zd-h4">Praxishandbuch</h3>
-          <p>Ihre eigenen Abläufe an einer Stelle. Das Team findet Antworten, ohne zu fragen.</p>
-        </article>
-        <article class="zd-karte">
-          <span class="zd-icon zd-icon--koralle"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
-          <h3 class="zd-h4">Aktuelle Dokumente</h3>
-          <p>Bei Gesetzesänderungen werden Ihre QM-Dokumente angepasst. Sie bleiben auf dem aktuellen Stand.</p>
-        </article>
+        <a class="zd-karte zd-karte--link" href="/praxis/einzelpraxis/"><span class="zd-badge zd-badge--blau">Einzelpraxis</span><strong class="zd-h4">„Ich muss alles selbst im Kopf haben.“</strong><span class="zd-klein zd-leise">Erinnerungen, Jahresvorschau und ein schneller Start.</span></a>
+        <a class="zd-karte zd-karte--link" href="/praxis/mehrbehandlerpraxis/"><span class="zd-badge zd-badge--violett">Mehrbehandlerpraxis</span><strong class="zd-h4">„Was mit vier Leuten lief, trägt mit zwölf nicht mehr.“</strong><span class="zd-klein zd-leise">Einarbeitung, Wissen im Team und klare Zuständigkeiten.</span></a>
+        <a class="zd-karte zd-karte--link" href="/praxis/grosspraxis-mvz/"><span class="zd-badge zd-badge--tuerkis">Großpraxis &amp; MVZ</span><strong class="zd-h4">„Zwischen den Schichten geht etwas verloren.“</strong><span class="zd-klein zd-leise">Schichtübergabe, Bereiche und Gesamtübersicht.</span></a>
+        <a class="zd-karte zd-karte--link" href="/praxis/mehrere-standorte/"><span class="zd-badge zd-badge--gelb">Mehrere Standorte</span><strong class="zd-h4">„Jeder Standort macht es anders.“</strong><span class="zd-klein zd-leise">Gemeinsame Standards und Status je Standort.</span></a>
+        <a class="zd-karte zd-karte--link" href="/praxis/praxisketten/"><span class="zd-badge zd-badge--koralle">Praxisketten &amp; Verbünde</span><strong class="zd-h4">„Jeder neue Standort fängt bei null an.“</strong><span class="zd-klein zd-leise">Wiederholbare Abläufe für Eröffnungen und Übernahmen.</span></a>
+        <div class="zd-karte rolle">
+          <span class="zd-icon zd-icon--violett"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg></span>
+          <strong class="zd-h4">Für Praxismanagerinnen</strong>
+          <span class="zd-klein">zenday ersetzt niemanden. Es ist Ihre rechte Hand, die erinnert, nachfasst und Aufgaben im Team verteilt.</span>
+        </div>
       </div>
     </div>
   </section>
@@ -248,7 +428,7 @@
           <span class="zd-eyebrow">zenday Learning Lab</span>
           <h2>Wissen für Ihr Praxis-QM, kostenlos</h2>
           <p class="zd-lead">E-Books, Leitfäden und Mini-Apps für Praxisinhaber:innen und Praxismanagerinnen. Regelmäßig kommen neue Themen dazu.</p>
-          <div class="zd-reihe zd-mt-4"><a class="zd-btn zd-btn--sekundaer" href="https://www.zen-day.ai/learning-lab">Zum Learning Lab</a></div>
+          <div class="zd-reihe zd-mt-4"><a class="zd-btn zd-btn--sekundaer" href="/learning-lab/">Zum Learning Lab</a></div>
         </div>
         <div class="zd-stack">
           <a class="zd-karte zd-karte--link zd-karte--gross" href="/learning-lab/mini-apps/begehungs-check/">
@@ -282,6 +462,8 @@
         <details open><summary>Ersetzt zenday unsere Praxismanagerin?</summary><p>Nein. zenday entlastet sie. Das System erinnert, fasst nach und behält den Überblick. Die Entscheidungen trifft Ihr Team.</p></details>
         <details><summary>Wie lange dauert die Einrichtung?</summary><p>Der QM-Aufbau dauert vier bis sechs Wochen. Mit den Smart Fields sind neue Praxen nach rund drei Wochen begehungsbereit.</p></details>
         <details><summary>Was übernimmt zenday beim Start?</summary><p>Wir legen Ihre Geräte mit Prüfaufgaben an, schulen die Verantwortlichen und das Team und begleiten Sie mit regelmäßigen Check-in-Calls.</p></details>
+        <details><summary>Passt zenday zu unserer Praxisgröße?</summary><p>zenday wird von Einzelpraxen genauso genutzt wie von Großpraxen und Praxisverbünden. Was für Sie im Vordergrund steht, sehen Sie unter <a href="#praxis">Für Ihre Praxis</a>. In der Demo zeigen wir die Funktionen, die zu Ihrer Praxis passen.</p></details>
+        <details><summary>Was kostet zenday?</summary><p>Das hängt von Größe und Bedarf Ihrer Praxis ab. Wir besprechen es in der 15-minütigen Demo, nachdem wir Ihre Ausgangslage kennen.</p></details>
         <details><summary>Brauchen wir technisches Vorwissen?</summary><p>Nein. zenday läuft im Browser und auf dem Tablet. Ihr Team lernt in einer kurzen Online-Schulung, Aufgaben abzuhaken und Unterweisungen zu unterschreiben.</p></details>
       </div>
     </div>
@@ -301,7 +483,7 @@
   <div class="zd-container">
     <div class="zd-grid zd-grid--3">
       <div class="zd-stack zd-stack--eng">
-        <a class="zd-wortmarke" href="#top"><b>zen</b><span>day</span></a>
+        <a class="zd-wortmarke" href="/"><b>zen</b><span>day</span></a>
         <p>Digitales Qualitätsmanagement für Zahnarztpraxen.</p>
       </div>
       <div class="zd-stack zd-stack--eng">
@@ -327,6 +509,27 @@
 
 <div class="zd-cta-leiste"><a class="zd-btn zd-btn--primaer" href="https://calendly.com/digitalesqm/demo-praesentation">Demo in 15 Minuten buchen</a></div>
 <script>document.body.classList.add('zd-mit-cta-leiste');</script>
-<script src="/zenday.js?v=0.3.1" defer></script>
+<script>
+/* Smart-Fields-Demo: Eingaben live in die Dokumentvorschau übernehmen */
+(function () {
+  var form = document.getElementById('sf-form');
+  if (!form) return;
+  var weitere = document.querySelector('.sf-weitere'), timer;
+  var setze = function (feld) {
+    var wert = feld.value.trim() || '…';
+    document.querySelectorAll('[data-wert="' + feld.dataset.feld + '"]').forEach(function (el) {
+      el.textContent = wert;
+      el.classList.remove('zd-feldwert--neu'); void el.offsetWidth; el.classList.add('zd-feldwert--neu');
+    });
+    weitere.classList.add('sf-weitere--aktiv');
+    clearTimeout(timer); timer = setTimeout(function () { weitere.classList.remove('sf-weitere--aktiv'); }, 900);
+  };
+  form.querySelectorAll('[data-feld]').forEach(function (f) {
+    f.addEventListener('input', function () { setze(f); });
+    f.addEventListener('change', function () { setze(f); });
+  });
+})();
+</script>
+<script src="/zenday.js?v=0.4.0" defer></script>
 </body>
 </html>

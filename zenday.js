@@ -1,4 +1,4 @@
-/* zenday.js — optionale Komfortfunktionen zu zenday.css (Version 0.2)
+/* zenday.js — optionale Komfortfunktionen zu zenday.css (Version 0.3)
    Einbinden am Ende des <body>: <script src="/zenday.js" defer></script>
    Ohne dieses Skript funktioniert alles weiterhin, nur das Menü schließt sich nicht von selbst. */
 (function () {
@@ -16,23 +16,61 @@
     });
   });
 
+  // Aufklappmenüs in der Desktop-Navigation (zd-nav__drop) gemeinsam behandeln
+  var drops = document.querySelectorAll('.zd-nav__drop');
+  drops.forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (d.open) drops.forEach(function (o) { if (o !== d) o.open = false; });
+    });
+    d.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { d.open = false; }); });
+  });
+  var alleKlapp = Array.prototype.slice.call(menues).concat(Array.prototype.slice.call(drops));
+
+  // Feature-Tabs (zd-tabs): ohne JavaScript bleiben alle Inhalte sichtbar
+  document.querySelectorAll('.zd-tabs').forEach(function (box) {
+    var tabs = Array.prototype.slice.call(box.querySelectorAll('[role="tab"]'));
+    var zeige = function (tab, fokus) {
+      tabs.forEach(function (t) {
+        var an = t === tab;
+        t.setAttribute('aria-selected', an ? 'true' : 'false');
+        t.tabIndex = an ? 0 : -1;
+        var p = document.getElementById(t.getAttribute('aria-controls'));
+        if (p) p.hidden = !an;
+      });
+      if (fokus) tab.focus();
+      tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    };
+    box.classList.add('zd-tabs--aktiv');
+    var start = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
+    if (start) zeige(start, false);
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { zeige(t, false); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
+        if (n === null) return;
+        e.preventDefault();
+        zeige(tabs[(n + tabs.length) % tabs.length], true);
+      });
+    });
+  });
+
   // Schließen mit Escape oder Klick außerhalb
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    menues.forEach(function (m) { if (m.open) { m.open = false; var s = m.querySelector('summary'); if (s) s.focus(); } });
+    alleKlapp.forEach(function (m) { if (m.open) { m.open = false; var s = m.querySelector('summary'); if (s) s.focus(); } });
   });
   document.addEventListener('click', function (e) {
-    menues.forEach(function (m) { if (m.open && !m.contains(e.target)) m.open = false; });
+    alleKlapp.forEach(function (m) { if (m.open && !m.contains(e.target)) m.open = false; });
   });
 
   // Beim Wechsel auf Desktop-Breite offenes Menü schließen
   var desktop = window.matchMedia('(min-width: 1024px)');
-  var zu = function () { if (desktop.matches) menues.forEach(function (m) { m.open = false; }); };
+  var zu = function () { menues.forEach(function (m) { if (desktop.matches) m.open = false; }); drops.forEach(function (d) { if (!desktop.matches) d.open = false; }); };
   desktop.addEventListener ? desktop.addEventListener('change', zu) : desktop.addListener(zu);
 
   // Aktuellen Menüpunkt markieren (gleicher Pfad)
   var pfad = location.pathname.replace(/\/index\.html$/, '/');
-  document.querySelectorAll('.zd-nav a, .zd-menue__panel a:not(.zd-btn)').forEach(function (a) {
+  document.querySelectorAll('.zd-nav a, .zd-menue__panel a:not(.zd-btn), .zd-pills a').forEach(function (a) {
     var ziel = a.getAttribute('href') || '';
     if (ziel && ziel.charAt(0) === '/' && ziel.replace(/\/index\.html$/, '/') === pfad) a.setAttribute('aria-current', 'page');
   });

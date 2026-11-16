@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>zenday für Einzelpraxen – Sie behandeln, zenday hält nach</title>
+<meta name="description" content="zenday verteilt Fristen, Prüfungen und Unterweisungen ans Team und erinnert rechtzeitig. Für Einzelpraxen, in denen bisher alles über die Inhaberin läuft.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/zenday.css?v=0.4.0">
+<style>
+  :root { color-scheme: light; }
+  .zd-header { top: env(safe-area-inset-top, 0px); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--zd-grund); }
+
+  /* Uhrzeiten und Monate in Mockups */
+  .zd-avatar.zeit { width: auto; min-width: 48px; padding: 0 var(--zd-s-2); border-radius: var(--zd-radius-pill); font-variant-numeric: tabular-nums; }
+
+  /* Funktionsreihen: Text und Mockup im Wechsel */
+  .feature { display: grid; gap: var(--zd-s-5); align-items: center; }
+  .feature + .feature { margin-top: var(--zd-s-8); }
+  @media (min-width: 960px) {
+    .feature { grid-template-columns: 1fr 1.1fr; gap: var(--zd-s-8); }
+    .feature:nth-of-type(even) > :first-child { order: 2; }
+  }
+
+  /* Rechner-Ergebnis */
+  .rechner-ergebnis .zd-kennzahl__wert { font-size: var(--zd-fs-h3); font-variant-numeric: tabular-nums; }
+  .rechner-ergebnis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr)); gap: var(--zd-s-5); padding-top: var(--zd-s-5); border-top: 1px solid var(--zd-linie); }
+
+  /* Garantie-Band (wie Startseite) */
+  .garantie { display: grid; gap: var(--zd-s-5); align-items: center; background: var(--zd-weiss); border-radius: var(--zd-radius-l); padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); box-shadow: var(--zd-schatten); border: 1px solid var(--zd-linie); }
+  @media (min-width: 720px) { .garantie { grid-template-columns: auto 1fr; } }
+  .garantie__siegel { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; background: var(--zd-verlauf-button); color: var(--zd-anthrazit); font-weight: 700; text-align: center; line-height: 1.05; font-size: 1.5rem; }
+  .garantie__siegel small { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<a class="zd-skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="zd-header">
+  <div class="zd-container zd-header__innen">
+    <a class="zd-wortmarke" href="/" aria-label="zenday Startseite"><b>zen</b><span>day</span></a>
+    <nav class="zd-nav" aria-label="Hauptnavigation">
+      <a href="/#funktionen">Funktionen</a>
+      <details class="zd-nav__drop">
+        <summary>Für Ihre Praxis</summary>
+        <div class="zd-nav__panel">
+          <a href="/praxis/einzelpraxis/"><strong>Einzelpraxis</strong><small>Sie halten alles im Kopf zusammen</small></a>
+          <a href="/praxis/mehrbehandlerpraxis/"><strong>Mehrbehandlerpraxis</strong><small>Das Team wächst, die Abläufe nicht mit</small></a>
+          <a href="/praxis/grosspraxis-mvz/"><strong>Großpraxis &amp; MVZ</strong><small>Ab 50 Mitarbeitenden an einem Ort</small></a>
+          <a href="/praxis/mehrere-standorte/"><strong>Mehrere Standorte</strong><small>Gemeinsame Standards, lokal umgesetzt</small></a>
+          <a href="/praxis/praxisketten/"><strong>Praxisketten &amp; Verbünde</strong><small>Neue Standorte starten nicht bei null</small></a>
+        </div>
+      </details>
+      <a href="/#start">So starten Sie</a>
+      <a href="/learning-lab/">Learning Lab</a>
+      <a href="/#faq">FAQ</a>
+    </nav>
+    <div class="zd-header__aktionen">
+      <a class="zd-btn zd-btn--dunkel zd-btn--klein" href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
+      <details class="zd-menue">
+        <summary aria-label="Menü öffnen">
+          <svg class="zd-menue__auf" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="zd-menue__zu" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </summary>
+        <nav class="zd-menue__panel" aria-label="Mobile Navigation">
+          <a href="/#funktionen">Funktionen</a>
+          <span class="zd-menue__titel">Für Ihre Praxis</span>
+          <a class="zd-menue__unter" href="/praxis/einzelpraxis/">Einzelpraxis</a>
+          <a class="zd-menue__unter" href="/praxis/mehrbehandlerpraxis/">Mehrbehandlerpraxis</a>
+          <a class="zd-menue__unter" href="/praxis/grosspraxis-mvz/">Großpraxis &amp; MVZ</a>
+          <a class="zd-menue__unter" href="/praxis/mehrere-standorte/">Mehrere Standorte</a>
+          <a class="zd-menue__unter" href="/praxis/praxisketten/">Praxisketten &amp; Verbünde</a>
+          <a href="/#start">So starten Sie</a>
+          <a href="/learning-lab/">Learning Lab</a>
+          <a href="/#faq">FAQ</a>
+          <a class="zd-btn zd-btn--primaer zd-btn--voll" href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main id="inhalt">
+
+  <!-- HERO (Warmer) -->
+  <section class="zd-hero zd-hero--ellipse" id="top">
+    <div class="zd-container">
+      <div class="zd-split zd-split--text-breit">
+        <div class="zd-stack zd-stack--weit">
+          <div class="zd-stack">
+            <span class="zd-badge zd-badge--blau zd-badge--punkt">Für Einzelpraxen</span>
+            <h1>Sie behandeln. zenday <span class="zd-text-verlauf">hält nach</span>.</h1>
+            <p class="zd-lead">In vielen Einzelpraxen laufen alle Fristen, Prüfungen und Unterweisungen über die Inhaberin. zenday verteilt sie ans Team, erinnert rechtzeitig und zeigt Ihnen nur, was noch offen ist.</p>
+          </div>
+          <div class="zd-reihe zd-reihe--stapeln">
+            <a class="zd-btn zd-btn--primaer zd-btn--gross" href="https://calendly.com/digitalesqm/demo-praesentation">Demo in 15 Minuten</a>
+            <a class="zd-btn zd-btn--sekundaer zd-btn--gross" href="#rechner">Ihren Aufwand berechnen</a>
+          </div>
+          <div class="zd-vertrauen">
+            <span>Über 200 Praxisstandorte</span>
+            <span>Rund drei Wochen bis begehungsbereit</span>
+          </div>
+        </div>
+        <div class="zd-app" aria-label="Beispielansicht: Heute in zenday">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Guten Morgen, Dr. Weber</strong><span class="zd-badge zd-badge--tuerkis">Heute</span></div>
+          <div class="zd-app__inhalt">
+            <p class="zd-app__titel">Ihr Team hat heute</p>
+            <div class="zd-app-zeile zd-app-zeile--fertig"><span class="zd-haken zd-haken--fertig"></span><span>Bowie-Dick-Test<small>Lea · 7:52 erledigt</small></span><span class="zd-avatar">LW</span></div>
+            <div class="zd-app-zeile"><span class="zd-haken"></span><span>Kühlschrank-Temperatur dokumentieren<small>Mara · fällig 12:00</small></span><span class="zd-avatar zd-avatar--violett">MK</span></div>
+            <div class="zd-app-zeile"><span class="zd-haken"></span><span>Unterweisung Hygieneplan<small>2 Unterschriften offen · erinnert</small></span><span class="zd-badge zd-badge--koralle">2 offen</span></div>
+            <p class="zd-app__titel">Für Sie</p>
+            <div class="zd-app-zeile"><span class="zd-haken"></span><span>Hygieneplan Rev. 03 freigeben<small>Anpassung an neue Rechtslage</small></span><span class="zd-badge zd-badge--gelb">1 Klick</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KOMMT IHNEN DAS BEKANNT VOR -->
+  <section class="zd-sektion zd-sektion--weiss">
+    <div class="zd-container">
+      <div class="zd-sektion-kopf">
+        <span class="zd-eyebrow">Kommt Ihnen das bekannt vor?</span>
+        <h2>Wenn alles über Ihren Tisch läuft</h2>
+      </div>
+      <div class="zd-grid zd-grid--3">
+        <article class="zd-karte">
+          <span class="zd-icon zd-icon--koralle"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
+          <h3 class="zd-h4">Sie erinnern zum dritten Mal</h3>
+          <p>An dieselbe Prüfung, dieselbe Unterschrift, denselben Termin. Zwischen zwei Patient:innen.</p>
+        </article>
+        <article class="zd-karte">
+          <span class="zd-icon zd-icon--gelb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <h3 class="zd-h4">Teilzeit, Urlaub, Krankheit</h3>
+          <p>Wer heute nicht da ist, nimmt sein Wissen mit. Übergaben laufen über Zettel und WhatsApp.</p>
+        </article>
+        <article class="zd-karte">
+          <span class="zd-icon zd-icon--violett"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></span>
+          <h3 class="zd-h4">Die Begehung ist angekündigt</h3>
+          <p>Und plötzlich müssen Sie selbst prüfen, welche Nachweise fehlen und wer was nachholen muss.</p>
+        </article>
+      </div>
+      <figure class="zd-zitat zd-mt-6">
+        <blockquote>„Unser Team muss immer erinnert werden, an Aufgaben, Schulungen, Termine. Sonst vergessen die das.“</blockquote>
+        <figcaption><strong>Das hören wir von Praxisinhaber:innen immer wieder</strong>Aus unseren Demo-Gesprächen</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- REFRAME -->
+  <section class="zd-sektion">
+    <div class="zd-container zd-container--schmal zd-mitte zd-stack">
+      <span class="zd-eyebrow">Der eigentliche Engpass</span>
+      <h2>Ihr QM ist nicht das Problem. Es fehlt jemand, der nachhält.</h2>
+      <p class="zd-lead">Vorlagen und Ordner haben die meisten Praxen. Was fehlt, ist jemand, der erinnert, nachfasst und den Überblick behält. In einer Einzelpraxis sind das meistens Sie selbst.</p>
+    </div>
+  </section>
+
+  <!-- RECHNER (Rational) -->
+  <section class="zd-sektion zd-sektion--weiss" id="rechner">
+    <div class="zd-container">
+      <div class="zd-split">
+        <div class="zd-stack">
+          <span class="zd-eyebrow">Ihre Rechnung</span>
+          <h2>Was Sie das Nachhalten heute kostet</h2>
+          <p>Schätzen Sie, wie viel Zeit Sie oder Ihre Praxismanagerin pro Woche mit Erinnern, Nachfassen und Suchen verbringen. Wir rechnen mit Ihren Zahlen, nicht mit Durchschnittswerten.</p>
+          <p class="zd-klein zd-leise">Die Felder sind mit Beispielwerten vorbelegt. Passen Sie sie an Ihre Praxis an.</p>
+        </div>
+        <div class="zd-formular-box">
+          <form class="zd-formular" id="rechner-form" onsubmit="return false">
+            <div class="zd-feld"><label for="r-std">Stunden pro Woche für Erinnern und Nachfassen</label><input class="zd-input" id="r-std" type="number" inputmode="decimal" min="0" step="0.5" value="3"></div>
+            <div class="zd-feld"><label for="r-wo">Arbeitswochen pro Jahr</label><input class="zd-input" id="r-wo" type="number" inputmode="numeric" min="1" max="52" value="46"></div>
+            <div class="zd-feld"><label for="r-wert">Wert einer Stunde in Euro <span class="zd-leise">(optional)</span></label><input class="zd-input" id="r-wert" type="number" inputmode="numeric" min="0" step="10" placeholder="z. B. Ihr Stundensatz in der Behandlung"></div>
+          </form>
+          <div class="rechner-ergebnis zd-mt-6" aria-live="polite">
+            <div class="zd-kennzahl"><span class="zd-kennzahl__wert" id="r-h">138</span><span class="zd-kennzahl__label">Stunden pro Jahr</span></div>
+            <div class="zd-kennzahl"><span class="zd-kennzahl__wert" id="r-t">17</span><span class="zd-kennzahl__label">volle Arbeitstage</span></div>
+            <div class="zd-kennzahl" id="r-euro-box" hidden><span class="zd-kennzahl__wert" id="r-euro">0 €</span><span class="zd-kennzahl__label">Gegenwert pro Jahr</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMOTIONAL -->
+  <section class="zd-sektion">
+    <div class="zd-container zd-container--schmal">
+      <div class="zd-karte zd-karte--gross zd-karte--akzent zd-stack">
+        <h2 class="zd-h3">Wenn Sie zwei Wochen nicht erreichbar wären …</h2>
+        <p>… wüsste Ihr Team, welche Prüfungen fällig sind, wer die Chargen freigibt und welche Unterweisung noch offen ist? Viele Inhaber:innen antworten ehrlich: „Wenn ich es nicht mache, macht es niemand.“</p>
+        <p><strong>zenday sorgt dafür, dass Ihre Praxis auch dann weiterläuft, wenn Sie nicht hinterherlaufen.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW WAY: FUNKTIONEN FÜR EINZELPRAXEN -->
+  <section class="zd-sektion zd-sektion--weiss" id="funktionen">
+    <div class="zd-container">
+      <div class="zd-sektion-kopf">
+        <span class="zd-eyebrow">So entlastet zenday Sie</span>
+        <h2>Die vier Funktionen, die Einzelpraxen am meisten bringen</h2>
+      </div>
+
+      <div class="feature">
+        <div class="zd-stack">
+          <span class="zd-badge zd-badge--tuerkis">Heute-Ansicht</span>
+          <h3>Jede Person sieht morgens, was heute dran ist</h3>
+          <p>Ihr Team öffnet zenday und sieht die eigenen Aufgaben des Tages. Sie sehen nur, was offen bleibt.</p>
+        </div>
+        <div class="zd-app" aria-hidden="true">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Heute · Mara Klein</strong><span class="zd-badge">3 Aufgaben</span></div>
+          <div class="zd-app__inhalt">
+            <div class="zd-app-zeile zd-app-zeile--fertig"><span class="zd-haken zd-haken--fertig"></span><span>Wasserhähne Behandlungseinheit spülen<small>morgens</small></span><span class="zd-badge zd-badge--tuerkis">Erledigt</span></div>
+            <div class="zd-app-zeile"><span class="zd-haken"></span><span>Kühlschrank-Temperatur dokumentieren<small>bis 12:00</small></span><span class="zd-badge zd-badge--gelb">Heute</span></div>
+            <div class="zd-app-zeile"><span class="zd-haken"></span><span>Unterweisung Hygieneplan unterschreiben<small>dauert 4 Minuten</small></span><span class="zd-badge zd-badge--koralle">Offen</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="zd-stack">
+          <span class="zd-badge zd-badge--violett">Erinnern und Eskalieren</span>
+          <h3>zenday erinnert, damit Sie es nicht müssen</h3>
+          <p>Vor der Frist bekommt die zuständige Person eine Erinnerung. Bleibt etwas liegen, geht es an die Vertretung. Sie bekommen abends einen kurzen Bericht.</p>
+        </div>
+        <div class="zd-app" aria-hidden="true">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Benachrichtigungen</strong><span class="zd-badge zd-badge--violett">automatisch</span></div>
+          <div class="zd-app__inhalt">
+            <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--violett zeit">7:30</span><span>Morgen-Erinnerung an das Team<small>3 Aufgaben heute fällig</small></span><span class="zd-badge">gesendet</span></div>
+            <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--gelb zeit">13:00</span><span>Kühlschrank-Temperatur noch offen<small>Erinnerung an Mara Klein</small></span><span class="zd-badge zd-badge--gelb">erinnert</span></div>
+            <div class="zd-app-zeile"><span class="zd-avatar zd-avatar--tuerkis zeit">18:00</span><span>Tagesbericht an Dr. Weber<small>11 von 12 Aufgaben erledigt</small></span><span class="zd-badge zd-badge--tuerkis">Bericht</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="zd-stack">
+          <span class="zd-badge zd-badge--gelb">Jahresvorschau</span>
+          <h3>Alles, was dieses Jahr ansteht, mit Vorlauf</h3>
+          <p>Prüfungen, Wartungen und Unterweisungen stehen im Kalender, bevor sie dringend werden. So verteilen Sie früh, statt kurz vorher zu suchen.</p>
+        </div>
+        <div class="zd-app" aria-hidden="true">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Jahresvorschau 2027</strong><span class="zd-badge">Beispiel</span></div>
+          <div class="zd-app__inhalt">
+            <div class="zd-app-zeile"><span class="zd-avatar zeit">JAN</span><span>Jährliche Unterweisungen Team<small>Hygiene, Arbeitsschutz, Datenschutz</small></span><span class="zd-avatar zd-avatar--violett">MK</span></div>
+            <div class="zd-app-zeile"><span class="zd-avatar zeit">MÄR</span><span>Konstanzprüfung Röntgen<small>Vorlauf 4 Wochen</small></span><span class="zd-avatar zd-avatar--violett">JW</span></div>
+            <div class="zd-app-zeile"><span class="zd-avatar zeit">MAI</span><span>Validierung Sterilisator<small>Termin mit Techniker:in vereinbaren</small></span><span class="zd-avatar">LW</span></div>
+            <div class="zd-app-zeile"><span class="zd-avatar zeit">SEP</span><span>Prüfung elektrischer Geräte<small>DGUV Vorschrift 3</small></span><span class="zd-avatar zd-avatar--gelb">TS</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="zd-stack">
+          <span class="zd-badge zd-badge--blau">Smart Fields</span>
+          <h3>Schnell startklar, ohne Dokumente umzuschreiben</h3>
+          <p>Praxisname, Verantwortliche und Geräte tragen Sie einmal ein. zenday setzt sie in alle QM-Dokumente ein. Seit es die Smart Fields gibt, sind neue Praxen nach rund drei Wochen begehungsbereit.</p>
+          <a class="zd-btn zd-btn--link" href="/#smart-fields">Smart Fields ausprobieren</a>
+        </div>
+        <div class="zd-app" aria-hidden="true">
+          <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Arbeitsanweisung Sterilisation</strong><span class="zd-badge">Rev. 02</span></div>
+          <div class="zd-app__inhalt">
+            <p>Diese Arbeitsanweisung gilt für die <span class="zd-feldwert">Zahnarztpraxis am Park</span>. Verantwortlich ist <span class="zd-feldwert">Lea Wagner</span>. Sterilisiert wird im <span class="zd-feldwert">MELAG Vacuklav 41 B+</span>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SO STARTEN SIE + GARANTIE -->
+  <section class="zd-sektion zd-sektion--zart" id="start">
+    <div class="zd-container">
+      <div class="zd-sektion-kopf">
+        <span class="zd-eyebrow">So starten Sie</span>
+        <h2>In rund drei Wochen begehungsbereit</h2>
+        <p>Wir richten zenday mit Ihnen ein und begleiten Sie bei jedem Schritt.</p>
+      </div>
+      <ol class="zd-schritte">
+        <li class="zd-schritt"><h3>Demo buchen</h3><p>In 15 Minuten zeigen wir Ihnen, wie zenday in Ihrer Praxis arbeitet.</p></li>
+        <li class="zd-schritt"><h3>Gemeinsam einrichten</h3><p>Sie tragen die Smart Fields ein. Wir legen Ihre Geräte an und schulen die Verantwortlichen und Ihr Team online.</p></li>
+        <li class="zd-schritt"><h3>Ruhig weiterarbeiten</h3><p>Fristen und Aufgaben laufen im Hintergrund. In Check-in-Calls planen wir die nächsten Schritte.</p></li>
+      </ol>
+      <div class="garantie zd-mt-8">
+        <div class="garantie__siegel"><span>6<small>Wochen</small></span></div>
+        <div class="zd-stack zd-stack--eng">
+          <h3>Unser Versprechen: Ihr QM ist in 6 Wochen aufgesetzt</h3>
+          <p>Sie erledigen Ihre Onboarding-Schritte, wir sorgen dafür, dass Ihr QM steht. Klappt es nicht, begleiten wir Sie kostenlos weiter und schenken Ihnen die Chat-Funktion für ein Jahr.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="zd-sektion zd-sektion--weiss" id="faq">
+    <div class="zd-container zd-container--schmal">
+      <div class="zd-sektion-kopf zd-sektion-kopf--mitte">
+        <span class="zd-eyebrow">FAQ</span>
+        <h2>Fragen aus Einzelpraxen</h2>
+      </div>
+      <div class="zd-faq">
+        <details open><summary>Lohnt sich zenday für eine kleine Praxis?</summary><p>Gerade in kleinen Praxen hängt viel an wenigen Personen. zenday übernimmt das Erinnern und Nachfassen, damit es nicht an Ihnen hängen bleibt. Was zenday für Ihre Praxis kostet, besprechen wir in der Demo.</p></details>
+        <details><summary>Wie viel Zeit kostet mich die Einrichtung?</summary><p>Sie tragen die Smart Fields einmal ein. Ihre Geräte legen wir mit dem Smart Fill Service an, Verantwortliche und Team schulen wir online. Der QM-Aufbau dauert vier bis sechs Wochen.</p></details>
+        <details><summary>Wir haben schon ein QM-Handbuch. Fangen wir von vorn an?</summary><p>Nein. In der Demo schauen wir gemeinsam, was Sie schon haben, und zeigen, wie zenday darauf aufbaut.</p></details>
+        <details><summary>Muss mein ganzes Team mitmachen?</summary><p>Jede Person sieht nur ihre eigenen Aufgaben und hakt sie ab. Eine kurze Online-Schulung reicht dafür.</p></details>
+        <details><summary>Ersetzt zenday unsere Praxismanagerin?</summary><p>Nein. zenday entlastet sie. Das System erinnert, fasst nach und behält den Überblick. Die Entscheidungen trifft Ihr Team.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANDERE PRAXISARTEN -->
+  <section class="zd-sektion">
+    <div class="zd-container zd-stack">
+      <h2 class="zd-h3">Ihre Praxis ist größer?</h2>
+      <ul class="zd-pills">
+        <li><a href="/praxis/mehrbehandlerpraxis/">Mehrbehandlerpraxis</a></li>
+        <li><a href="/praxis/grosspraxis-mvz/">Großpraxis &amp; MVZ</a></li>
+        <li><a href="/praxis/mehrere-standorte/">Mehrere Standorte</a></li>
+        <li><a href="/praxis/praxisketten/">Praxisketten &amp; Verbünde</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ABSCHLUSS -->
+  <section class="zd-sektion zd-sektion--dunkel">
+    <div class="zd-container zd-mitte zd-stack">
+      <h2>Behandeln statt hinterherlaufen</h2>
+      <p class="zd-lead" style="color:inherit">Sehen Sie in 15 Minuten, wie zenday das Nachhalten in Ihrer Praxis übernimmt.</p>
+      <div class="zd-reihe zd-reihe--mitte zd-reihe--stapeln zd-mt-4"><a class="zd-btn zd-btn--primaer zd-btn--gross" href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="zd-footer">
+  <div class="zd-container">
+    <div class="zd-grid zd-grid--3">
+      <div class="zd-stack zd-stack--eng">
+        <a class="zd-wortmarke" href="/"><b>zen</b><span>day</span></a>
+        <p>Digitales Qualitätsmanagement für Zahnarztpraxen.</p>
+      </div>
+      <div class="zd-stack zd-stack--eng">
+        <strong>Kontakt</strong>
+        <span>Ventria GmbH<br>Malkastenstraße 8, 40211 Düsseldorf</span>
+        <span>support@zen-day.de</span>
+      </div>
+      <div class="zd-stack zd-stack--eng">
+        <strong>Entdecken</strong>
+        <a href="https://www.zen-day.ai/learning-lab">Learning Lab</a>
+        <a href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
+      </div>
+    </div>
+    <div class="zd-footer__unten">
+      <span>© 2026 Ventria GmbH</span>
+      <ul class="zd-footer__links">
+        <li><a href="https://www.zen-day.ai/impressum">Impressum</a></li>
+        <li><a href="https://www.zen-day.ai/datenschutz">Datenschutz</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<div class="zd-cta-leiste"><a class="zd-btn zd-btn--primaer" href="https://calendly.com/digitalesqm/demo-praesentation">Demo in 15 Minuten buchen</a></div>
+<script>document.body.classList.add('zd-mit-cta-leiste');</script>
+<script>
+/* Rechner: rechnet nur mit den Angaben der Besucher:innen */
+(function () {
+  var f = function (id) { return document.getElementById(id); };
+  var zahl = function (id) { var v = parseFloat(String(f(id).value).replace(',', '.')); return isFinite(v) && v > 0 ? v : 0; };
+  var fmt = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
+  var rechne = function () {
+    var std = zahl('r-std') * zahl('r-wo');
+    f('r-h').textContent = fmt.format(std);
+    f('r-t').textContent = fmt.format(std / 8);
+    var wert = zahl('r-wert');
+    f('r-euro-box').hidden = !wert;
+    if (wert) f('r-euro').textContent = fmt.format(std * wert) + ' €';
+  };
+  ['r-std', 'r-wo', 'r-wert'].forEach(function (id) { f(id).addEventListener('input', rechne); });
+  rechne();
+})();
+</script>
+<script src="/zenday.js?v=0.4.0" defer></script>
+</body>
+</html>
