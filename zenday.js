@@ -38,7 +38,12 @@
         if (p) p.hidden = !an;
       });
       if (fokus) tab.focus();
-      tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      // Nur die Tab-Leiste seitlich verschieben, nie die ganze Seite
+      // (scrollIntoView hat beim Laden die Startseite nach unten gescrollt)
+      var leiste = tab.parentNode;
+      var lr = leiste.getBoundingClientRect(), tr = tab.getBoundingClientRect();
+      if (tr.left < lr.left) leiste.scrollLeft -= lr.left - tr.left;
+      else if (tr.right > lr.right) leiste.scrollLeft += tr.right - lr.right;
     };
     box.classList.add('zd-tabs--aktiv');
     var start = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
