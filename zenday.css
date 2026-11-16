@@ -1,6 +1,6 @@
 /* ==========================================================================
    zenday.css — Basis-Stylesheet für zenday-Webseiten und Landingpages
-   Version: 0.4.0 (Prototyp) · Stand: 2026-11-16
+   Version: 0.5.0 (Prototyp) · Stand: 2026-11-16
    Breakpoints (mobile first):
      Handy   < 640 px   eine Spalte, Menü als Klappmenü
      Tablet  ≥ 640 px   zwei Spalten, Menü weiter als Klappmenü
@@ -8,6 +8,7 @@
    Geräte: Die Seite passt sich allein an die Bildschirmgröße an (keine
      Geräteerkennung). Getestet von 320 px (kleinste Handys) bis 2560 px,
      hoch und quer, mit Touch und Maus.
+   Änderungen 0.5.0: Ankündigungsleiste (zd-ankuendigung)
    Änderungen 0.4.0: Aufklappmenü in der Navigation (zd-nav__drop) und
      Gruppen im Handy-Menü, Link-Pills (zd-pills), Produkt-Mockups
      (zd-app, zd-app-zeile, zd-avatar, zd-balken), Feature-Tabs (zd-tabs),
@@ -32,6 +33,7 @@
                                                   16. Barrierefreiheit
                                                   17. Navigation erweitert
                                                   18. Produkt-Mockups & Tabs
+                                                  19. Ankündigungsleiste
    Konvention: Alle Klassen beginnen mit "zd-", alle Variablen mit "--zd-".
    ========================================================================== */
 
@@ -931,3 +933,20 @@ hr { border: 0; height: 1px; background: var(--zd-linie); margin: var(--zd-s-6) 
 .zd-tabs__panel[hidden] { display: none; }
 .zd-tabs__panel:not([hidden]) { animation: zd-einblenden var(--zd-dauer) var(--zd-kurve); }
 @media (min-width: 960px) { .zd-tabs__panel { grid-template-columns: 1fr 1.15fr; gap: var(--zd-s-8); } }
+
+
+/* 19. ANKÜNDIGUNGSLEISTE ================================================== */
+/* Schmale Leiste über dem Header, z. B. für Produkt-News oder eine Warteliste:
+   <div class="zd-ankuendigung"><div class="zd-container zd-ankuendigung__innen">
+     <p>…<a href="#warteliste">Zur Warteliste</a></p>
+     <button type="button" data-schliessen aria-label="Hinweis schließen">×</button>
+   </div></div>                                                            */
+.zd-ankuendigung { background: var(--zd-anthrazit); color: rgba(255, 255, 255, 0.88); font-size: var(--zd-fs-s); }
+.zd-ankuendigung[hidden] { display: none; }
+.zd-ankuendigung__innen { display: flex; align-items: center; justify-content: center; gap: var(--zd-s-3); min-height: 44px; padding-block: var(--zd-s-2); }
+.zd-ankuendigung p { max-width: none; text-align: center; line-height: 1.4; }
+.zd-ankuendigung strong { color: var(--zd-weiss); }
+.zd-ankuendigung a { color: var(--zd-weiss); font-weight: 600; text-decoration: underline; text-underline-offset: 0.2em; white-space: nowrap; }
+.zd-ankuendigung__neu { display: inline-block; margin-right: var(--zd-s-2); padding: 0.1em 0.55em; border-radius: var(--zd-radius-pill); background: var(--zd-verlauf-button); color: var(--zd-anthrazit); font-size: var(--zd-fs-xs); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.zd-ankuendigung button { flex: none; width: 44px; height: 44px; margin-right: calc(-1 * var(--zd-s-3)); border: 0; background: none; color: inherit; font-size: 1.4rem; line-height: 1; }
+@media (max-width: 639px) { .zd-ankuendigung__lang { display: none; } }
