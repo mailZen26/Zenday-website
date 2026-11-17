@@ -354,7 +354,7 @@
     <a class="zd-btn zd-btn--primaer" href="#formular">Einarbeitungsplan kostenlos erhalten</a>
   </div>
 
-  <script src="/zenday.js?v=0.5.0" defer></script>
+  <script src="/zenday.js?v=0.5.1" defer></script>
   <script>
   (function () {
     // Zapier-Workflow „zenday-landingpage-leads“ (Catch Hook → Sheet „FB Leads“ → Slack #leads)
@@ -399,7 +399,7 @@
       fetch(FORM_ENDPOINT, { method: 'POST', body: data })
         .then(function (r) {
           if (!r.ok) throw new Error('Status ' + r.status);
-          if (typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: 'einarbeitung-empfang' });
+          if (window.zdLeadMerken) window.zdLeadMerken('einarbeitung-empfang');
           location.href = DANKE;
         })
         .catch(function () {

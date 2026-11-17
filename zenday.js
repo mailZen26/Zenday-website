@@ -107,8 +107,27 @@
     try { localStorage.setItem(SCHLUESSEL, JSON.stringify({ marketing: ja, zeit: Date.now() })); } catch (e) {}
   };
 
+  /* Lead-Event über den Seitenwechsel retten:
+     Formulare rufen window.zdLeadMerken('slug') auf und leiten dann auf die Danke-Seite weiter.
+     Ein direkt vor dem Redirect gefeuertes fbq('track','Lead') wird vom Seitenwechsel abgebrochen.
+     Deshalb wird der Lead hier gemerkt und auf der nächsten Seite gesendet, sobald der Pixel geladen ist
+     (genau einmal; verfällt nach 30 Minuten). */
+  var LEAD_SCHLUESSEL = 'zd-lead-offen';
+  window.zdLeadMerken = function (name) {
+    try { sessionStorage.setItem(LEAD_SCHLUESSEL, JSON.stringify({ name: name || '', zeit: Date.now() })); } catch (e) {}
+  };
+  var offenenLeadSenden = function () {
+    try {
+      var l = JSON.parse(sessionStorage.getItem(LEAD_SCHLUESSEL) || 'null');
+      if (!l) return;
+      sessionStorage.removeItem(LEAD_SCHLUESSEL);
+      if (Date.now() - l.zeit > 30 * 60e3) return;
+      window.fbq('track', 'Lead', l.name ? { content_name: l.name } : {});
+    } catch (e) {}
+  };
+
   var pixelLaden = function () {
-    if (window.fbq) return;
+    if (window.fbq) { offenenLeadSenden(); return; }
     /* Offizielles Meta-Pixel-Basisskript */
     !function (f, b, e, v, n, t, s) {
       if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
@@ -117,6 +136,7 @@
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
     window.fbq('init', META_PIXEL_ID);
     window.fbq('track', 'PageView');
+    offenenLeadSenden();
   };
 
   /* Banner */

@@ -284,7 +284,7 @@
     <a class="zd-btn zd-btn--primaer" href="#formular">Checklisten kostenlos erhalten</a>
   </div>
 
-  <script src="/zenday.js?v=0.5.0" defer></script>
+  <script src="/zenday.js?v=0.5.1" defer></script>
   <script>
   // Zapier-Workflow „zenday-landingpage-leads“ → Google Sheet „FB Leads“
   const FORM_ENDPOINT = 'https://hooks.zapier.com/hooks/catch/5504389/C5lwaBt49fBLCqbw/';
@@ -314,7 +314,7 @@
       // no-cors: Zapier erhält die Daten, der Browser blockiert keine Antwort.
       // Ein Fehler wird nur bei echtem Netzwerkproblem (offline) ausgelöst.
       await fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', keepalive: true, body: new URLSearchParams(data) });
-      try { if (window.fbq) fbq('track', 'Lead'); } catch (e) {}
+      if (window.zdLeadMerken) window.zdLeadMerken('empfang');
       location.href = DANKE_URL;
     } catch (e) {
       err.hidden = false;
