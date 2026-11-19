@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Terminmanagement am Empfang – kostenloser QM-Leitfaden | zenday</title>
+  <meta name="description" content="Zeitrichtwerte für 16 Terminarten, Akut-Abfrage mit roten Flaggen und 2 Checklisten: der kostenlose Leitfaden für einen einheitlichen Standard am Empfang Ihrer Zahnarztpraxis.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Jede plant Termine anders? Ein Standard für Ihren Empfang">
+  <meta property="og:description" content="Kostenloser QM-Leitfaden für Zahnarztpraxen: Zeitrichtwerte, Akut-Abfrage, Behandlerbindung, Recall und 2 Checklisten.">
+  <meta property="og:image" content="https://www.zen-day.ai/ebooks/terminmanagement/assets/og.jpg">
+  <meta property="og:url" content="https://www.zen-day.ai/ebooks/terminmanagement/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/zenday.css?v=0.5.0">
+  <style>
+    .lp-cover { border-radius: var(--zd-radius-s); box-shadow: var(--zd-schatten); border: 1px solid var(--zd-linie); margin-bottom: var(--zd-s-5); }
+    .lp-weg { display: grid; gap: var(--zd-s-2); }
+    .lp-weg__alt { font-size: var(--zd-fs-s); color: var(--zd-text-leise); text-decoration: line-through; text-decoration-color: var(--zd-linie-stark); }
+    .lp-weg__neu { color: var(--zd-anthrazit); font-weight: 600; }
+    .lp-weg__neu::before { content: "→ "; color: var(--zd-violett); }
+    .lp-vorschau figcaption { margin-top: var(--zd-s-3); font-size: var(--zd-fs-s); color: var(--zd-text-leise); }
+    .lp-avatar { width: 72px; height: 72px; flex: none; border-radius: 50%; object-fit: cover; box-shadow: var(--zd-schatten-s); }
+    .lp-absender { display: flex; gap: var(--zd-s-5); align-items: flex-start; }
+    .lp-rechnung { font-size: var(--zd-fs-l); color: var(--zd-anthrazit); font-weight: 600; }
+    @media (max-width: 639px) { .lp-absender { flex-direction: column; } }
+  </style>
+</head>
+<body class="zd-mit-cta-leiste">
+  <a class="zd-skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="zd-header">
+    <div class="zd-container zd-header__innen">
+      <a class="zd-wortmarke" href="https://www.zen-day.ai/" aria-label="zenday Startseite"><b>zen</b><span>day</span></a>
+    </div>
+  </header>
+
+  <main id="inhalt">
+
+    <!-- 1 Hero mit Formular -->
+    <section class="zd-hero zd-hero--ellipse">
+      <div class="zd-container">
+        <div class="zd-split zd-split--text-breit">
+          <div class="zd-stack">
+            <span class="zd-eyebrow">Für Praxismanager:innen und Praxisinhaber:innen</span>
+            <h1>Jede plant Termine anders? Ein Standard für Ihren Empfang</h1>
+            <p class="zd-lead">Zeitrichtwerte für <strong>16 Terminarten</strong>, Akut-Abfrage mit roten Flaggen und <strong>2 Checklisten</strong>. Kostenlos und sofort einsetzbar, auch für neue Kolleg:innen.</p>
+            <div class="zd-vertrauen">
+              <span>über 200 Praxisstandorte</span>
+              <span>mehr als 2.000 User</span>
+              <span>kostenlos · 16 Seiten</span>
+            </div>
+          </div>
+
+          <div class="zd-formular-box" id="formular">
+            <img class="lp-cover" src="assets/cover.jpg" width="1280" height="720" alt="Cover des Leitfadens „Terminmanagement am Empfang“ mit Tagesplan-Ansicht">
+            <h2>Leitfaden kostenlos erhalten</h2>
+            <p class="zd-klein zd-leise">Sie erhalten den Download direkt auf der nächsten Seite.</p>
+            <form class="zd-formular" id="lead-form" novalidate>
+              <div class="zd-feld">
+                <label for="vorname">Vorname<span class="zd-pflicht" aria-hidden="true">*</span></label>
+                <input class="zd-input" id="vorname" name="vorname" type="text" required autocomplete="given-name">
+              </div>
+              <div class="zd-feld">
+                <label for="email">E-Mail<span class="zd-pflicht" aria-hidden="true">*</span></label>
+                <input class="zd-input" id="email" name="email" type="email" required autocomplete="email" inputmode="email">
+              </div>
+              <div class="zd-feld">
+                <label for="telefon">Telefon<span class="zd-pflicht" aria-hidden="true">*</span></label>
+                <input class="zd-input" id="telefon" name="telefon" type="tel" required autocomplete="tel" inputmode="tel" pattern="[0-9+()\/ -]{6,}">
+              </div>
+              <div class="zd-feld">
+                <label for="rolle">Ihre Rolle<span class="zd-pflicht" aria-hidden="true">*</span></label>
+                <select class="zd-select" id="rolle" name="rolle" required>
+                  <option value="">Bitte wählen</option>
+                  <option>Praxisinhaber/in</option>
+                  <option>Praxismanager/in</option>
+                  <option>QM-Beauftragte/r</option>
+                  <option>Empfang/Assistenz</option>
+                  <option>Andere</option>
+                </select>
+              </div>
+              <label class="zd-check">
+                <input type="checkbox" name="consent" value="ja">
+                <span>Ja, ich möchte weitere Praxis-Tipps von zenday per E-Mail erhalten. Abmeldung jederzeit möglich.</span>
+              </label>
+
+              <div class="zd-sr-only" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <input type="hidden" name="ebook" value="terminmanagement-empfang">
+              <input type="hidden" name="persona" value="praxismanagement">
+              <input type="hidden" name="quelle" value="organisch">
+              <input type="hidden" name="utm_source">
+              <input type="hidden" name="utm_medium">
+              <input type="hidden" name="utm_campaign">
+              <input type="hidden" name="utm_content">
+
+              <button class="zd-btn zd-btn--primaer zd-btn--voll" type="submit">Leitfaden kostenlos erhalten</button>
+              <p class="zd-feld__fehler" id="form-error" role="alert" hidden>Das hat leider nicht geklappt. Bitte versuchen Sie es erneut oder schreiben Sie an support@zen-day.de.</p>
+              <p class="zd-feld__hilfe">Das zenday-Team meldet sich kurz telefonisch bei Ihnen. Mehr zum Umgang mit Ihren Daten in der <a href="https://www.zen-day.ai/datenschutz">Datenschutzerklärung</a>.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 Ist das für Sie? -->
+    <section class="zd-sektion zd-sektion--weiss">
+      <div class="zd-container">
+        <div class="zd-sektion-kopf">
+          <span class="zd-eyebrow">Ist das für Sie?</span>
+          <h2>Kommt Ihnen das bekannt vor?</h2>
+        </div>
+        <div class="zd-grid zd-grid--3">
+          <div class="zd-karte">
+            <span class="zd-icon zd-icon--gelb"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span>
+            <p>Eine Füllung ist mit <strong>20 Minuten</strong> geplant – und der ganze Nachmittag verschiebt sich.</p>
+          </div>
+          <div class="zd-karte">
+            <span class="zd-icon zd-icon--koralle"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
+            <p>Eine Schmerzpatientin ruft an – und <strong>jede Kollegin fragt etwas anderes ab</strong>.</p>
+          </div>
+          <div class="zd-karte">
+            <span class="zd-icon zd-icon--violett"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+            <p>Eine neue Kraft am Empfang <strong>muss bei jedem Termin nachfragen</strong>.</p>
+          </div>
+        </div>
+        <p class="zd-lead zd-mt-8">Das liegt selten am Team. Es fehlt ein <strong>gemeinsamer Standard</strong> – und jemand, der ihn nachhält.</p>
+      </div>
+    </section>
+
+    <!-- 3 Was Sie erhalten -->
+    <section class="zd-sektion">
+      <div class="zd-container">
+        <div class="zd-sektion-kopf">
+          <span class="zd-eyebrow">Was im Leitfaden steht</span>
+          <h2>Vom Bauchgefühl zum Standard am Empfang</h2>
+          <p class="zd-lead">Was sich mit dem Leitfaden am Empfang ändert:</p>
+        </div>
+        <div class="zd-grid zd-grid--3">
+          <div class="zd-karte lp-weg"><span class="lp-weg__alt">Planen nach Wunsch</span><span class="lp-weg__neu">Richtwerte für 16 Terminarten</span><p class="zd-klein">Plus Zuschläge für Angstpatienten, Kinder, ältere Patienten und Sprachbarrieren.</p></div>
+          <div class="zd-karte lp-weg"><span class="lp-weg__alt">Jede fragt anders ab</span><span class="lp-weg__neu">6 Fragen &amp; 5 rote Flaggen</span><p class="zd-klein">Der Empfang erkennt Warnzeichen und leitet sofort weiter – ohne Diagnose.</p></div>
+          <div class="zd-karte lp-weg"><span class="lp-weg__alt">Unklar, wer was behandelt</span><span class="lp-weg__neu">Behandlerbindung in 4 Stufen</span><p class="zd-klein">Fest, bevorzugt, frei oder erst nach Rücksprache – für jede Leistung klar.</p></div>
+          <div class="zd-karte lp-weg"><span class="lp-weg__alt">Lücken bleiben leer</span><span class="lp-weg__neu">Warteliste in 4 Schritten</span><p class="zd-klein">Freie Termine fair nachbesetzen, mit Hinweis zum Datenschutz auf Mailbox und SMS.</p></div>
+          <div class="zd-karte lp-weg"><span class="lp-weg__alt">Recall nach Gefühl</span><span class="lp-weg__neu">Intervalle &amp; 5-Minuten-Briefing</span><p class="zd-klein">Recall-Tabelle, tägliches Briefing und monatliche Kurzanalyse.</p></div>
+          <div class="zd-karte lp-weg"><span class="lp-weg__alt">Regeln nur im Kopf</span><span class="lp-weg__neu">2 Checklisten zum Ausdrucken</span><p class="zd-klein">Plus eine Seite „Praxis-Festlegungen“, die Sie einmal im Team ausfüllen.</p></div>
+        </div>
+
+        <div class="zd-grid zd-grid--2 zd-mt-8">
+          <figure class="lp-vorschau">
+            <div class="zd-bild"><img src="assets/vorschau-zeitrichtwerte.jpg" width="1280" height="720" loading="lazy" alt="Seitenvorschau: Tabelle mit Zeitrichtwerten für Terminarten"></div>
+            <figcaption>Seite 4: Zeitrichtwerte – Übersicht</figcaption>
+          </figure>
+          <figure class="lp-vorschau">
+            <div class="zd-bild"><img src="assets/vorschau-checkliste.jpg" width="1280" height="720" loading="lazy" alt="Seitenvorschau: Checkliste für Schmerzpatienten am Telefon"></div>
+            <figcaption>Seite 14: Checkliste Schmerzpatient am Telefon</figcaption>
+          </figure>
+        </div>
+
+        <div class="zd-reihe zd-reihe--stapeln zd-mt-8">
+          <a class="zd-btn zd-btn--primaer zd-btn--gross" href="#formular">Leitfaden kostenlos erhalten</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 Rechnung / Warum jetzt -->
+    <section class="zd-sektion zd-sektion--zart">
+      <div class="zd-container zd-container--schmal zd-stack">
+        <span class="zd-eyebrow">Rechnen Sie selbst</span>
+        <h2>Was kostet Sie ein Kalender, der jeden Tag kippt?</h2>
+        <p class="lp-rechnung">[Minuten Verzug pro Tag] × [Behandlungstage im Jahr] = Stunden, in denen Ihr Team gegen den Kalender arbeitet.</p>
+        <p>Dazu kommen Rückfragen am Empfang, Wartezeiten im Wartezimmer und freie Termine, die niemand nachbesetzt. Besonders spürbar wird das, wenn sich <strong>Teilzeitkräfte abwechseln</strong> oder <strong>neue Kolleg:innen</strong> am Empfang starten.</p>
+      </div>
+    </section>
+
+    <!-- 5 Brücke + Beweis -->
+    <section class="zd-sektion zd-sektion--weiss">
+      <div class="zd-container">
+        <div class="zd-split">
+          <div class="zd-stack">
+            <span class="zd-eyebrow">Vom Papier in den Alltag</span>
+            <h2>Ein Leitfaden hilft nur, wenn er gelebt wird</h2>
+            <p>In zenday wird der Leitfaden Teil Ihres QM. Das tägliche Briefing, die monatliche Kurzanalyse und die jährliche Prüfung werden zu <strong>Aufgaben mit Verantwortlichen</strong>. Offene und überfällige Aufgaben werden sichtbar, erinnert und eskaliert.</p>
+            <p>So weiß auch eine neue Kollegin am Empfang, was wann zu tun ist – ohne dass Sie hinterherlaufen.</p>
+          </div>
+          <div class="zd-grid zd-grid--2">
+            <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">200+</span><span class="zd-kennzahl__label">Praxisstandorte arbeiten mit zenday</span></div>
+            <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">2.000+</span><span class="zd-kennzahl__label">User in Zahnarztpraxen</span></div>
+            <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">25+</span><span class="zd-kennzahl__label">Begehungen mit Praxen begleitet</span></div>
+            <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">3 Wo.</span><span class="zd-kennzahl__label">bis begehungsbereit – seit den Smart Fields</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 Absender -->
+    <section class="zd-sektion">
+      <div class="zd-container zd-container--schmal">
+        <div class="zd-karte zd-karte--gross lp-absender">
+          <img class="lp-avatar" src="assets/tilmann-foerster.jpg" width="72" height="72" alt="Tilmann Förster, Gründer von zenday">
+          <div class="zd-stack zd-stack--eng">
+            <span class="zd-eyebrow">Von wem der Leitfaden kommt</span>
+            <h3>Tilmann Förster, Gründer von zenday</h3>
+            <p>zenday ist speziell für Zahnarztpraxen entwickelt. Wir sehen in Praxen immer wieder dasselbe: Gute Regeln gibt es – aber jede kennt eine andere Version. Dieser Leitfaden bringt die Terminplanung am Empfang auf einen gemeinsamen Stand.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 FAQ -->
+    <section class="zd-sektion zd-sektion--weiss">
+      <div class="zd-container zd-container--schmal">
+        <div class="zd-sektion-kopf">
+          <span class="zd-eyebrow">Fragen &amp; Antworten</span>
+          <h2>Kurz beantwortet</h2>
+        </div>
+        <div class="zd-faq">
+          <details><summary>Was kostet der Leitfaden?</summary><p>Nichts. Sie erhalten das PDF direkt nach dem Absenden des Formulars zum Download.</p></details>
+          <details><summary>Passt das zu unserer Praxis?</summary><p>Die Zeitrichtwerte sind Startwerte. Mit der Seite „Praxis-Festlegungen“ passen Sie Akutfenster, Pufferregel und Freigaben an Ihre Praxis an – und geben sie im Team frei.</p></details>
+          <details><summary>Ersetzt das die Rücksprache mit dem Behandler?</summary><p>Nein. Der Empfang stellt keine Diagnose. Der Leitfaden zeigt, welche Informationen aufzunehmen sind und wann sofort weitergeleitet wird.</p></details>
+          <details><summary>Was passiert mit meinen Daten?</summary><p>Wir nutzen Ihre Angaben, um Ihnen den Leitfaden bereitzustellen und uns telefonisch bei Ihnen zu melden. Praxis-Tipps per E-Mail erhalten Sie nur mit Ihrer Einwilligung. Details in der <a href="https://www.zen-day.ai/datenschutz">Datenschutzerklärung</a>.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 Abschluss-CTA -->
+    <section class="zd-sektion zd-sektion--dunkel">
+      <div class="zd-container zd-container--schmal zd-mitte zd-stack">
+        <h2>Ein Standard für Ihren Empfang – heute noch im Team besprechen</h2>
+        <p>16 Seiten, 2 Checklisten, sofort einsetzbar.</p>
+        <div class="zd-reihe zd-reihe--mitte zd-reihe--stapeln">
+          <a class="zd-btn zd-btn--primaer zd-btn--gross" href="#formular">Leitfaden kostenlos erhalten</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="zd-footer">
+    <div class="zd-container">
+      <div class="zd-grid zd-grid--3">
+        <div class="zd-stack zd-stack--eng">
+          <a class="zd-wortmarke" href="https://www.zen-day.ai/"><b>zen</b><span>day</span></a>
+          <p>Digitales QM für Zahnarztpraxen.</p>
+        </div>
+        <div class="zd-stack zd-stack--eng">
+          <strong>Kontakt</strong>
+          <span>Ventria GmbH · Malkastenstraße 8, 40211 Düsseldorf</span>
+          <a href="mailto:support@zen-day.de">support@zen-day.de</a>
+        </div>
+        <div class="zd-stack zd-stack--eng">
+          <strong>Demo</strong>
+          <a href="https://calendly.com/digitalesqm/demo-praesentation">15-Minuten-Demo buchen</a>
+        </div>
+      </div>
+      <div class="zd-footer__unten">
+        <span>© 2026 Ventria GmbH</span>
+        <ul class="zd-footer__links">
+          <li><a href="https://www.zen-day.ai/impressum">Impressum</a></li>
+          <li><a href="https://www.zen-day.ai/datenschutz">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div class="zd-cta-leiste"><a class="zd-btn zd-btn--primaer" href="#formular">Leitfaden kostenlos erhalten</a></div>
+
+  <script src="/zenday.js?v=0.5.1" defer></script>
+  <script>
+  // Zapier-Workflow „zenday-landingpage-leads“ → Google Sheet „FB Leads“
+  const FORM_ENDPOINT = 'https://hooks.zapier.com/hooks/catch/5504389/C5lwaBt49fBLCqbw/';
+  const DANKE_URL = '/ebooks/terminmanagement/danke/';
+  const form = document.getElementById('lead-form');
+  const params = new URLSearchParams(location.search);
+  ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(k => {
+    const el = form.querySelector(`[name="${k}"]`);
+    if (el) el.value = params.get(k) || '';
+  });
+  if (params.get('utm_source')) form.quelle.value = params.get('utm_source') + '-' + (params.get('utm_medium') || 'organisch');
+  form.addEventListener('input', (e) => {
+    if (e.target.getAttribute('aria-invalid') === 'true' && e.target.checkValidity()) e.target.setAttribute('aria-invalid', 'false');
+  });
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const btn = form.querySelector('button[type=submit]');
+    const err = document.getElementById('form-error');
+    err.hidden = true;
+    form.querySelectorAll('[required]').forEach(f => f.setAttribute('aria-invalid', f.checkValidity() ? 'false' : 'true'));
+    if (!form.reportValidity()) return;
+    btn.disabled = true;
+    const data = Object.fromEntries(new FormData(form));
+    if (data.website) { location.href = DANKE_URL; return; } // Honeypot
+    data.consent = form.querySelector('[name=consent]').checked ? 'ja' : 'nein';
+    data.zeitstempel = new Date().toISOString();
+    data.seite = location.href.split('?')[0];
+    try {
+      // no-cors: Zapier erhält die Daten, der Browser blockiert keine Antwort.
+      await fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', keepalive: true, body: new URLSearchParams(data) });
+      if (window.zdLeadMerken) window.zdLeadMerken('terminmanagement-empfang');
+      location.href = DANKE_URL;
+    } catch (e) {
+      err.hidden = false;
+      btn.disabled = false;
+    }
+  });
+  </script>
+</body>
+</html>
