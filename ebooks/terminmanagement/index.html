@@ -26,6 +26,17 @@
     .lp-absender { display: flex; gap: var(--zd-s-5); align-items: flex-start; }
     .lp-rechnung { font-size: var(--zd-fs-l); color: var(--zd-anthrazit); font-weight: 600; }
     @media (max-width: 639px) { .lp-absender { flex-direction: column; } }
+    /* Hero-Erklärvideo (1:1) */
+    .lp-hero-video { max-width: 520px; width: 100%; border-radius: var(--zd-radius); overflow: hidden; border: 1px solid var(--zd-linie); box-shadow: var(--zd-schatten-l); background: var(--zd-linie); aspect-ratio: 1 / 1; }
+    .lp-hero-video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    /* Handy und Tablet: Formular direkt nach Headline und Einleitung, Video danach */
+    @media (max-width: 959px) {
+      .zd-hero .zd-split { gap: var(--zd-s-5); }
+      .lp-hero-text { display: contents; }
+      .lp-hero-text > * { order: 1; }
+      #formular { order: 2; }
+      .lp-hero-video { order: 3; margin-inline: auto; }
+    }
   </style>
 </head>
 <body class="zd-mit-cta-leiste">
@@ -43,7 +54,7 @@
     <section class="zd-hero zd-hero--ellipse">
       <div class="zd-container">
         <div class="zd-split zd-split--text-breit">
-          <div class="zd-stack">
+          <div class="zd-stack lp-hero-text">
             <span class="zd-eyebrow">Für Praxismanager:innen und Praxisinhaber:innen</span>
             <h1>Jede plant Termine anders? Ein Standard für Ihren Empfang</h1>
             <p class="zd-lead">Zeitrichtwerte für <strong>16 Terminarten</strong>, Akut-Abfrage mit roten Flaggen und <strong>2 Checklisten</strong>. Kostenlos und sofort einsetzbar, auch für neue Kolleg:innen.</p>
@@ -51,6 +62,13 @@
               <span>über 200 Praxisstandorte</span>
               <span>mehr als 2.000 User</span>
               <span>kostenlos · 16 Seiten</span>
+            </div>
+            <div class="lp-hero-video">
+              <video id="lp-erklaervideo" muted playsinline loop controls preload="metadata"
+                     poster="/ebooks/terminmanagement/assets/video-poster.jpg" width="1080" height="1080"
+                     aria-label="Erklärvideo zum Leitfaden „Terminmanagement am Empfang“ (55 Sekunden)">
+                <source src="/ebooks/terminmanagement/assets/erklaervideo.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
 
@@ -306,6 +324,35 @@
       btn.disabled = false;
     }
   });
+  </script>
+  <script>
+  // Erklärvideo: startet stumm, sobald es sichtbar ist; meldet Start, 50 % und 100 % an den Meta Pixel (falls geladen)
+  (function () {
+    var v = document.getElementById('lp-erklaervideo');
+    if (!v) return;
+    var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var gemeldet = {};
+    var melden = function (schritt) {
+      if (gemeldet[schritt]) return;
+      gemeldet[schritt] = true;
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'Video' + schritt, { content_name: 'terminmanagement-empfang' });
+    };
+    if ('IntersectionObserver' in window && !ruhig) {
+      new IntersectionObserver(function (eintraege) {
+        eintraege.forEach(function (e) {
+          if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          else v.pause();
+        });
+      }, { threshold: 0.5 }).observe(v);
+    }
+    v.addEventListener('play', function () { melden('Start'); });
+    v.addEventListener('timeupdate', function () {
+      if (!v.duration) return;
+      var anteil = v.currentTime / v.duration;
+      if (anteil >= 0.5) melden('50');
+      if (anteil >= 0.97) melden('100');
+    });
+  })();
   </script>
 </body>
 </html>
