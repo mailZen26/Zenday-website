@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>zenday Learning Lab · Kostenlose Leitfäden für Zahnarztpraxen</title>
-  <meta name="description" content="Kostenlose Leitfäden und Checklisten für Zahnarztpraxen: Begehung, Praxiswäsche, Pflichtunterweisungen, Empfang, Einarbeitung, Assistenz und Compliance. Bald auch Kurse und Mini-Apps.">
+  <title>zenday Learning Lab · Kostenlose Leitfäden &amp; Mini-Apps für Zahnarztpraxen</title>
+  <meta name="description" content="Kostenlose Leitfäden und Checklisten für Zahnarztpraxen: Begehung, Praxiswäsche, Pflichtunterweisungen, Empfang, Einarbeitung, Assistenz und Compliance. Dazu Mini-Apps wie Begehungs-Check und Fristen-Generator.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="de_DE">
-  <meta property="og:title" content="zenday Learning Lab · Leitfäden für Zahnarztpraxen">
-  <meta property="og:description" content="Kostenlose Leitfäden und Checklisten für Praxisinhaber:innen, Praxismanager:innen und das ganze Praxisteam.">
+  <meta property="og:title" content="zenday Learning Lab · Leitfäden &amp; Mini-Apps für Zahnarztpraxen">
+  <meta property="og:description" content="Kostenlose Leitfäden, Checklisten und Mini-Apps für Praxisinhaber:innen, Praxismanager:innen und das ganze Praxisteam.">
   <meta property="og:image" content="https://www.zen-day.ai/ebooks/pflichtunterweisungen/assets/og.jpg">
   <meta property="og:url" content="https://www.zen-day.ai/learning-lab/">
   <meta name="twitter:card" content="summary_large_image">
@@ -20,22 +20,51 @@
   <style>
     /* Seitenspezifisch: nur var(--zd-…) */
 
-    /* Format-Filter: neue Formate (Kurse, Mini-Apps, Artikel) bekommen hier nur einen weiteren Button */
-    .ll-filter { display: flex; flex-wrap: wrap; gap: var(--zd-s-2); margin-bottom: var(--zd-s-6); }
-    .ll-filter button {
+    /* Sprungleiste unter dem Header: zeigt, welche Formate es gibt, und bleibt beim Scrollen stehen */
+    html { scroll-padding-top: calc(var(--zd-header-hoehe) + 76px); }
+    .ll-sprung {
+      position: sticky; top: var(--zd-header-hoehe); z-index: 40;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: saturate(160%) blur(12px);
+      -webkit-backdrop-filter: saturate(160%) blur(12px);
+      border-block: 1px solid var(--zd-linie);
+    }
+    .ll-sprung__innen {
+      display: flex; align-items: center; gap: var(--zd-s-2);
+      padding-block: var(--zd-s-3);
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .ll-sprung__innen::-webkit-scrollbar { display: none; }
+    .ll-sprung__titel { font-size: var(--zd-fs-xs); font-weight: 600; color: var(--zd-text-leise); white-space: nowrap; margin-right: var(--zd-s-1); }
+    .ll-sprung__link {
       display: inline-flex; align-items: center; gap: var(--zd-s-2);
       min-height: 44px; padding: 0 var(--zd-s-4);
       border-radius: var(--zd-radius-pill);
       border: 1.5px solid var(--zd-linie-stark);
       background: var(--zd-weiss); color: var(--zd-anthrazit);
-      font-size: var(--zd-fs-s); font-weight: 600;
+      font-size: var(--zd-fs-s); font-weight: 600; white-space: nowrap; text-decoration: none;
       transition: border-color var(--zd-dauer), background var(--zd-dauer);
     }
-    .ll-filter button:hover { border-color: var(--zd-anthrazit); }
-    .ll-filter button[aria-pressed="true"] { background: var(--zd-anthrazit); border-color: var(--zd-anthrazit); color: var(--zd-weiss); }
-    .ll-filter__zahl { font-size: var(--zd-fs-xs); font-weight: 500; opacity: 0.7; }
+    .ll-sprung__link:hover { text-decoration: none; }
+    .ll-sprung__zahl { font-size: var(--zd-fs-xs); font-weight: 500; opacity: 0.7; }
+    .ll-punkt { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+    .ll-sprung__link--mini-app .ll-punkt { background: var(--zd-tuerkis); }
+    .ll-sprung__link--leitfaden .ll-punkt { background: var(--zd-violett); }
+    .ll-sprung__link--mini-app:hover, .ll-sprung__link--mini-app[aria-current="true"] { border-color: var(--zd-tuerkis); background: var(--zd-tuerkis-hell); }
+    .ll-sprung__link--leitfaden:hover, .ll-sprung__link--leitfaden[aria-current="true"] { border-color: var(--zd-violett); background: var(--zd-violett-hell); }
+    @media (max-width: 479px) { .ll-sprung__titel { display: none; } }
 
-    /* Kachel: gleicher Aufbau für E-Book, Kurs, Mini-App */
+    /* Bereiche: jedes Format hat eigene Sektion, eigene Farbe und eine Trennlinie in Formatfarbe oben */
+    .ll-bereich { border-top: 4px solid var(--ll-farbe); }
+    .ll-bereich--mini-app { --ll-farbe: var(--zd-tuerkis); --ll-farbe-hell: var(--zd-tuerkis-hell); }
+    .ll-bereich--leitfaden { --ll-farbe: var(--zd-violett); --ll-farbe-hell: var(--zd-violett-hell); }
+    .ll-bereich__kopf .zd-icon { margin-bottom: var(--zd-s-2); }
+    .ll-bereich__kopf .zd-eyebrow { color: var(--zd-anthrazit); }
+    .ll-bereich .ll-kachel { border-top: 4px solid var(--ll-farbe); }
+    .ll-bereich--leitfaden .ll-kachel__bild { background: var(--zd-verlauf-zart); }
+    .ll-bereich--mini-app .ll-kachel__bild { background: var(--ll-farbe-hell); }
+
+    /* Kachel: gleicher Aufbau für Leitfaden, Mini-App (und später Kurs) */
     .ll-kachel { display: flex; flex-direction: column; height: 100%; padding: 0; overflow: hidden; }
     .ll-kachel > * + * { margin-top: 0; }
     /* Bildfeld 4:3. Das Cover ist absolut positioniert und bekommt eine feste Höhe,
@@ -76,17 +105,10 @@
     .ll-kachel:hover .ll-kachel__mehr { text-decoration: underline; }
     .ll-kachel:target { outline: 3px solid var(--zd-violett); outline-offset: 3px; }
 
-    /* Kachel für Formate in Vorbereitung */
-    .ll-kachel--bald { background: transparent; border: 1.5px dashed var(--zd-linie-stark); box-shadow: none; }
-    .ll-kachel--bald .ll-kachel__bild { background: transparent; border-bottom: 1.5px dashed var(--zd-linie-stark); }
-    @media (max-width: 719px) { .ll-kachel--bald .ll-kachel__bild { aspect-ratio: 3 / 1; } }
     .ll-zahlen { grid-template-columns: repeat(2, 1fr); gap: var(--zd-s-3); }
     @media (max-width: 359px) { .ll-zahlen { grid-template-columns: 1fr; } }
 
     .ll-hinweis { max-width: var(--zd-breite-schmal); }
-    .ll-leer { display: none; }
-    .ll-raster[data-leer="true"] + .ll-leer { display: flex; }
-    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
@@ -97,7 +119,8 @@
       <a class="zd-wortmarke" href="/" aria-label="zenday Startseite"><b>zen</b><span>day</span></a>
       <nav class="zd-nav" aria-label="Hauptnavigation">
         <a href="/">Startseite</a>
-        <a href="#inhalte">Inhalte</a>
+        <a href="#mini-apps">Mini-Apps</a>
+        <a href="#leitfaeden">Leitfäden</a>
         <a href="#so-gehts">So funktioniert's</a>
         <a href="#ueber">Über zenday</a>
       </nav>
@@ -110,7 +133,8 @@
           </summary>
           <nav class="zd-menue__panel" aria-label="Mobile Navigation">
             <a href="/">Startseite</a>
-            <a href="#inhalte">Inhalte</a>
+            <a href="#mini-apps">Mini-Apps</a>
+        <a href="#leitfaeden">Leitfäden</a>
             <a href="#so-gehts">So funktioniert's</a>
             <a href="#ueber">Über zenday</a>
             <a class="zd-btn zd-btn--primaer zd-btn--voll" href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
@@ -127,9 +151,9 @@
       <div class="zd-container">
         <span class="zd-eyebrow">zenday Learning Lab</span>
         <h1>Praxiswissen, das Ihr Team <span class="zd-text-verlauf">morgen umsetzt</span></h1>
-        <p class="zd-lead">Kostenlose Leitfäden und Checklisten für Zahnarztpraxen: <strong>Begehung, Praxiswäsche, Pflichtunterweisungen, Empfang, Einarbeitung, Assistenz und Compliance</strong>. Kurz, konkret und zum Ausdrucken.</p>
+        <p class="zd-lead">Kostenlose <strong>Mini-Apps</strong> für den schnellen Check und <strong>Leitfäden</strong> zum Ausdrucken: Begehung, Prüffristen, Gefährdungsbeurteilung, Pflichtunterweisungen, Empfang, Einarbeitung, Assistenz und Compliance.</p>
         <div class="zd-reihe zd-reihe--stapeln">
-          <a class="zd-btn zd-btn--primaer zd-btn--gross" href="#inhalte">Leitfäden ansehen</a>
+          <a class="zd-btn zd-btn--primaer zd-btn--gross" href="#mini-apps">Inhalte ansehen</a>
           <a class="zd-btn zd-btn--link" href="#so-gehts">So funktioniert das Learning Lab</a>
         </div>
         <div class="zd-vertrauen">
@@ -139,7 +163,7 @@
         </div>
         <div class="zd-hinweis zd-hinweis--info ll-hinweis">
           <span aria-hidden="true">👋</span>
-          <span><strong>Sie kommen von Instagram?</strong> Den Leitfaden aus dem Beitrag finden Sie unten unter <a href="#inhalte">Inhalte</a>, sortiert nach Thema.</span>
+          <span><strong>Sie kommen von Instagram?</strong> Den Inhalt aus dem Beitrag finden Sie unten unter <a href="#mini-apps">Mini-Apps</a> oder <a href="#leitfaeden">Leitfäden</a>.</span>
         </div>
       </div>
     </section>
@@ -149,152 +173,46 @@
       <div class="zd-container">
         <div class="zd-sektion-kopf">
           <span class="zd-eyebrow">So funktioniert's</span>
-          <h2>In 3 Schritten zum passenden Leitfaden</h2>
+          <h2>In 3 Schritten zum passenden Inhalt</h2>
           <p>Das Learning Lab sammelt alles, was wir für Zahnarztpraxen aufbereiten, an einem Ort. Ohne Abo, ohne Verpflichtung.</p>
         </div>
         <ol class="zd-schritte">
           <li class="zd-schritt">
             <h3>Thema wählen</h3>
-            <p>Unten finden Sie alle Inhalte als Kacheln. Mit dem Filter sehen Sie nur das Format, das Sie suchen.</p>
+            <p>Unten finden Sie zwei Bereiche: <strong>Mini-Apps</strong> zum direkten Ausprobieren und <strong>Leitfäden</strong> zum Nachlesen. Die Leiste oben bringt Sie direkt hin.</p>
           </li>
           <li class="zd-schritt">
-            <h3>Kostenlos anfordern</h3>
-            <p>Jede Kachel führt zur Seite des Leitfadens. Dort sehen Sie, was drinsteht, und erhalten das <strong>PDF direkt danach</strong>.</p>
+            <h3>Kostenlos nutzen</h3>
+            <p>Mini-Apps starten direkt im Browser. Jede Leitfaden-Kachel führt zur Seite des Leitfadens, dort erhalten Sie das <strong>PDF direkt danach</strong>.</p>
           </li>
           <li class="zd-schritt">
             <h3>Im Team umsetzen</h3>
-            <p>Checklisten, Vorlagen und Pläne sind zum Ausdrucken gemacht. So arbeitet das ganze Team mit demselben Stand.</p>
+            <p>Ergebnisse, Checklisten, Vorlagen und Pläne sind zum Ausdrucken gemacht. So arbeitet das ganze Team mit demselben Stand.</p>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- INHALTE -->
-    <section class="zd-sektion" id="inhalte">
+    <!-- SPRUNGLEISTE: bleibt beim Scrollen unter dem Header stehen. Neues Format = ein weiterer Link + eine weitere Bereichs-Sektion -->
+    <nav class="ll-sprung" id="inhalte" aria-label="Formate im Learning Lab">
+      <div class="zd-container ll-sprung__innen">
+        <span class="ll-sprung__titel">Springen zu:</span>
+        <a class="ll-sprung__link ll-sprung__link--mini-app" href="#mini-apps"><span class="ll-punkt" aria-hidden="true"></span>Mini-Apps <span class="ll-sprung__zahl">4</span></a>
+        <a class="ll-sprung__link ll-sprung__link--leitfaden" href="#leitfaeden"><span class="ll-punkt" aria-hidden="true"></span>Leitfäden &amp; E-Books <span class="ll-sprung__zahl">8</span></a>
+      </div>
+    </nav>
+
+    <!-- BEREICH 1: MINI-APPS -->
+    <section class="zd-sektion zd-sektion--zart ll-bereich ll-bereich--mini-app" id="mini-apps">
       <div class="zd-container">
-        <div class="zd-sektion-kopf">
-          <span class="zd-eyebrow">Inhalte</span>
-          <h2>Alle Leitfäden im Überblick</h2>
-          <p>Für Praxisinhaber:innen, Praxismanager:innen, QM-Beauftragte und das ganze Praxisteam. Regelmäßig kommen neue Themen dazu.</p>
+        <div class="zd-sektion-kopf ll-bereich__kopf">
+          <span class="zd-icon zd-icon--tuerkis" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M9 7h6M9 11h6M9 15h3"/></svg></span>
+          <span class="zd-eyebrow">Mini-Apps · 4 Werkzeuge</span>
+          <h2>In wenigen Minuten wissen, wo Ihre Praxis steht</h2>
+          <p>Kleine Werkzeuge direkt im Browser, ohne Installation. Sie beantworten ein paar Fragen und erhalten sofort ein Ergebnis: Ampel, Fristenplan oder Entwurf zum Übernehmen.</p>
         </div>
 
-        <!-- Filter: Formate. Ein neues Format = ein Button + Kacheln mit passendem data-format -->
-        <div class="ll-filter" role="group" aria-label="Nach Format filtern" hidden>
-          <button type="button" data-filter="alle" aria-pressed="true">Alle</button>
-          <button type="button" data-filter="ebook" aria-pressed="false">E-Books &amp; Leitfäden <span class="ll-filter__zahl" data-zahl="ebook"></span></button>
-          <button type="button" data-filter="kurs" aria-pressed="false">Kurse <span class="ll-filter__zahl" data-zahl="kurs"></span></button>
-          <button type="button" data-filter="mini-app" aria-pressed="false">Mini-Apps <span class="ll-filter__zahl" data-zahl="mini-app"></span></button>
-        </div>
-
-        <div class="zd-grid zd-grid--3 ll-raster" aria-live="polite">
-
-          <!-- E-BOOK: Einarbeitung Empfang -->
-          <a class="zd-karte zd-karte--link ll-kachel" id="einarbeitung-empfang" data-format="ebook" href="/ebooks/einarbeitung-empfang/">
-            <div class="ll-kachel__bild"><img src="/ebooks/einarbeitung-empfang/assets/cover.jpg" alt="" width="760" height="1074" loading="lazy"></div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Plan · 6 Wochen</span><span class="zd-badge">Einarbeitung</span></div>
-              <h3>6-Wochen-Einarbeitungsplan Empfang</h3>
-              <p>Neue Kraft am Empfang in 6 Wochen sicher allein am Tresen. Mit <strong>Telefonleitfäden</strong>, Kompetenzmatrix und Abschlussprüfung.</p>
-              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen und Praxismanager:innen</p>
-              <span class="ll-kachel__mehr">Plan ansehen →</span>
-            </div>
-          </a>
-
-          <!-- E-BOOK: Begehung -->
-          <a class="zd-karte zd-karte--link ll-kachel" id="begehung" data-format="ebook" href="/ebooks/begehung/">
-            <div class="ll-kachel__bild"><img src="/ebooks/begehung/assets/cover.jpg" alt="" width="760" height="1075" loading="lazy"></div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--koralle">Leitfaden · 30 Seiten</span><span class="zd-badge">Hygiene &amp; Begehung</span></div>
-              <h3>Begehung der Zahnarztpraxis: optimal vorbereitet</h3>
-              <p>Alle Prüfpunkte von Gesundheitsamt und Aufsichtsbehörde in 12 Checklisten. Mit <strong>Routineprotokollen</strong> und Rechtsstand November 2026.</p>
-              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen und Praxismanager:innen</p>
-              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
-            </div>
-          </a>
-
-          <!-- E-BOOK: Praxiswäsche -->
-          <a class="zd-karte zd-karte--link ll-kachel" id="praxiswaesche" data-format="ebook" href="/ebooks/praxiswaesche/">
-            <div class="ll-kachel__bild"><img src="/ebooks/praxiswaesche/assets/cover.jpg" alt="" width="760" height="1076" loading="lazy"></div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--koralle">Leitfaden · 16 Seiten</span><span class="zd-badge">Hygiene</span></div>
-              <h3>Umgang mit Praxiswäsche</h3>
-              <p>Wechselrhythmus, Waschverfahren, Heimwäsche und Nachweise für 7 Textilarten. Mit <strong>Musterformulierung für Ihren Hygieneplan</strong> und 18 Prüfpunkten für die Begehung.</p>
-              <p class="ll-kachel__fuer zd-klein">Für Hygiene- und QM-Beauftragte</p>
-              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
-            </div>
-          </a>
-
-          <!-- E-BOOK: Pflichtunterweisungen -->
-          <a class="zd-karte zd-karte--link ll-kachel" id="pflichtunterweisungen" data-format="ebook" href="/ebooks/pflichtunterweisungen/">
-            <div class="ll-kachel__bild"><img src="/ebooks/pflichtunterweisungen/assets/cover.jpg" alt="" width="1520" height="2152" loading="lazy"></div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Leitfaden · 23 Seiten</span><span class="zd-badge">Arbeitsschutz</span></div>
-              <h3>Die 6 Pflichtunterweisungen in der Zahnarztpraxis</h3>
-              <p>Alle sechs Unterweisungen <strong>fertig zum Vortragen</strong>, mit Nachweisbögen zum Unterschreiben. Rechtsstand November 2026.</p>
-              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen, Praxismanager:innen, QM-Beauftragte</p>
-              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
-            </div>
-          </a>
-
-          <!-- E-BOOK: Empfang -->
-          <a class="zd-karte zd-karte--link ll-kachel" id="empfang" data-format="ebook" href="/ebooks/empfang/">
-            <div class="ll-kachel__bild"><img src="/ebooks/empfang/assets/cover.jpg" alt="" width="1520" height="2152" loading="lazy"></div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--blau">Checklisten · 24 Stück</span><span class="zd-badge">Empfang</span></div>
-              <h3>Empfang in der Zahnarztpraxis: 24 Checklisten</h3>
-              <p>Praxisstart, Termine, Telefon, ePA und EBZ zum Abhaken. Plus <strong>4-Wochen-Einarbeitungsplan</strong> für neue Kolleginnen.</p>
-              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen und das Empfangsteam</p>
-              <span class="ll-kachel__mehr">Checklisten ansehen →</span>
-            </div>
-          </a>
-
-          <!-- E-BOOK: Terminmanagement -->
-          <a class="zd-karte zd-karte--link ll-kachel" id="terminmanagement" data-format="ebook" href="/ebooks/terminmanagement/">
-            <div class="ll-kachel__bild"><img src="/ebooks/terminmanagement/assets/kachel.jpg" alt="" width="760" height="1074" loading="lazy"></div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--blau">Leitfaden · 16 Seiten</span><span class="zd-badge">Empfang</span></div>
-              <h3>Terminmanagement am Empfang</h3>
-              <p>Zeitrichtwerte für 16 Terminarten, Akut-Abfrage mit roten Flaggen und <strong>2 Checklisten</strong> für einen Standard im ganzen Team.</p>
-              <p class="ll-kachel__fuer zd-klein">Für Praxismanager:innen und Praxisinhaber:innen</p>
-              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
-            </div>
-          </a>
-
-          <!-- E-BOOK: Assistenz -->
-          <a class="zd-karte zd-karte--link ll-kachel" id="assistenz" data-format="ebook" href="/ebooks/assistenz/">
-            <div class="ll-kachel__bild"><img src="/ebooks/assistenz/assets/cover.jpg" alt="" width="1520" height="2152" loading="lazy"></div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--tuerkis">Leitfaden · 4 Kapitel</span><span class="zd-badge">Team &amp; Abläufe</span></div>
-              <h3>Assistenz in der Zahnarztpraxis</h3>
-              <p>Klare Abläufe vom Tagesbeginn bis zur Verabschiedung. Mit <strong>Tagesablauf mit Uhrzeiten</strong>, Teamcheck und Vertretungsplan.</p>
-              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen, ZFA und das ganze Praxisteam</p>
-              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
-            </div>
-          </a>
-
-          <!-- E-BOOK: Compliance -->
-          <a class="zd-karte zd-karte--link ll-kachel" id="compliance" data-format="ebook" href="/ebooks/compliance/">
-            <div class="ll-kachel__bild"><img src="/ebooks/compliance/assets/cover.jpg" alt="" width="760" height="1074" loading="lazy"></div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--gelb">E-Book · 8 Seiten</span><span class="zd-badge">Compliance</span></div>
-              <h3>Compliance Update 2024–2026</h3>
-              <p>Gesetzesänderungen für Zahnarztpraxen aus 6 QM-Bereichen. Mit Checklisten, Fristen und <strong>priorisiertem Aktionsplan</strong>.</p>
-              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen und QM-Beauftragte</p>
-              <span class="ll-kachel__mehr">E-Book ansehen →</span>
-            </div>
-          </a>
-
-          <!-- BALD: Kurse. Sobald der erste Kurs live ist: Kachel wie oben mit data-format="kurs" anlegen und diese entfernen -->
-          <div class="zd-karte ll-kachel ll-kachel--bald" data-format="kurs" data-bald="true">
-            <div class="ll-kachel__bild">
-              <span class="zd-icon zd-icon--violett"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M10 9l4 2-4 2z"/><path d="M8 21h8"/></svg></span>
-            </div>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--punkt">In Vorbereitung</span></div>
-              <h3>Kurse</h3>
-              <p>Praxisthemen Schritt für Schritt im Video. Für Ihr Team, in kurzen Lektionen.</p>
-            </div>
-          </div>
+        <div class="zd-grid zd-grid--4 ll-raster">
 
           <!-- MINI-APP: Begehungs-Check -->
           <a class="zd-karte zd-karte--link ll-kachel" id="begehungs-check" data-format="mini-app" href="/learning-lab/mini-apps/begehungs-check/">
@@ -343,17 +261,123 @@
               <span class="ll-kachel__mehr">Mini-App öffnen →</span>
             </div>
           </a>
-            <div class="ll-kachel__text">
-              <div class="zd-reihe"><span class="zd-badge zd-badge--punkt">In Vorbereitung</span></div>
-              <h3>Mini-Apps</h3>
-              <p>Kleine Werkzeuge für Ihren Praxisalltag, direkt im Browser. Ohne Installation.</p>
-            </div>
-          </div>
 
         </div>
-        <div class="zd-hinweis ll-leer zd-mt-6">Für dieses Format gibt es noch keine Inhalte. Schauen Sie bald wieder vorbei.</div>
       </div>
     </section>
+
+    <!-- BEREICH 2: LEITFÄDEN & E-BOOKS -->
+    <section class="zd-sektion zd-sektion--weiss ll-bereich ll-bereich--leitfaden" id="leitfaeden">
+      <div class="zd-container">
+        <div class="zd-sektion-kopf ll-bereich__kopf">
+          <span class="zd-icon zd-icon--violett" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/></svg></span>
+          <span class="zd-eyebrow">Leitfäden &amp; E-Books · 8 Themen</span>
+          <h2>Zum Nachlesen, Ausdrucken und Umsetzen</h2>
+          <p>Checklisten, Pläne und Leitfäden als PDF. Für Praxisinhaber:innen, Praxismanager:innen, QM-Beauftragte und das ganze Praxisteam. Regelmäßig kommen neue Themen dazu.</p>
+        </div>
+
+        <div class="zd-grid zd-grid--3 ll-raster">
+
+          <!-- LEITFADEN: Einarbeitung Empfang -->
+          <a class="zd-karte zd-karte--link ll-kachel" id="einarbeitung-empfang" data-format="ebook" href="/ebooks/einarbeitung-empfang/">
+            <div class="ll-kachel__bild"><img src="/ebooks/einarbeitung-empfang/assets/cover.jpg" alt="" width="760" height="1074" loading="lazy"></div>
+            <div class="ll-kachel__text">
+              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Plan · 6 Wochen</span><span class="zd-badge">Einarbeitung</span></div>
+              <h3>6-Wochen-Einarbeitungsplan Empfang</h3>
+              <p>Neue Kraft am Empfang in 6 Wochen sicher allein am Tresen. Mit <strong>Telefonleitfäden</strong>, Kompetenzmatrix und Abschlussprüfung.</p>
+              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen und Praxismanager:innen</p>
+              <span class="ll-kachel__mehr">Plan ansehen →</span>
+            </div>
+          </a>
+
+          <!-- LEITFADEN: Begehung -->
+          <a class="zd-karte zd-karte--link ll-kachel" id="begehung" data-format="ebook" href="/ebooks/begehung/">
+            <div class="ll-kachel__bild"><img src="/ebooks/begehung/assets/cover.jpg" alt="" width="760" height="1075" loading="lazy"></div>
+            <div class="ll-kachel__text">
+              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Leitfaden · 30 Seiten</span><span class="zd-badge">Hygiene &amp; Begehung</span></div>
+              <h3>Begehung der Zahnarztpraxis: optimal vorbereitet</h3>
+              <p>Alle Prüfpunkte von Gesundheitsamt und Aufsichtsbehörde in 12 Checklisten. Mit <strong>Routineprotokollen</strong> und Rechtsstand November 2026.</p>
+              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen und Praxismanager:innen</p>
+              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
+            </div>
+          </a>
+
+          <!-- LEITFADEN: Praxiswäsche -->
+          <a class="zd-karte zd-karte--link ll-kachel" id="praxiswaesche" data-format="ebook" href="/ebooks/praxiswaesche/">
+            <div class="ll-kachel__bild"><img src="/ebooks/praxiswaesche/assets/cover.jpg" alt="" width="760" height="1076" loading="lazy"></div>
+            <div class="ll-kachel__text">
+              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Leitfaden · 16 Seiten</span><span class="zd-badge">Hygiene</span></div>
+              <h3>Umgang mit Praxiswäsche</h3>
+              <p>Wechselrhythmus, Waschverfahren, Heimwäsche und Nachweise für 7 Textilarten. Mit <strong>Musterformulierung für Ihren Hygieneplan</strong> und 18 Prüfpunkten für die Begehung.</p>
+              <p class="ll-kachel__fuer zd-klein">Für Hygiene- und QM-Beauftragte</p>
+              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
+            </div>
+          </a>
+
+          <!-- LEITFADEN: Pflichtunterweisungen -->
+          <a class="zd-karte zd-karte--link ll-kachel" id="pflichtunterweisungen" data-format="ebook" href="/ebooks/pflichtunterweisungen/">
+            <div class="ll-kachel__bild"><img src="/ebooks/pflichtunterweisungen/assets/cover.jpg" alt="" width="1520" height="2152" loading="lazy"></div>
+            <div class="ll-kachel__text">
+              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Leitfaden · 23 Seiten</span><span class="zd-badge">Arbeitsschutz</span></div>
+              <h3>Die 6 Pflichtunterweisungen in der Zahnarztpraxis</h3>
+              <p>Alle sechs Unterweisungen <strong>fertig zum Vortragen</strong>, mit Nachweisbögen zum Unterschreiben. Rechtsstand November 2026.</p>
+              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen, Praxismanager:innen, QM-Beauftragte</p>
+              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
+            </div>
+          </a>
+
+          <!-- LEITFADEN: Empfang -->
+          <a class="zd-karte zd-karte--link ll-kachel" id="empfang" data-format="ebook" href="/ebooks/empfang/">
+            <div class="ll-kachel__bild"><img src="/ebooks/empfang/assets/cover.jpg" alt="" width="1520" height="2152" loading="lazy"></div>
+            <div class="ll-kachel__text">
+              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Checklisten · 24 Stück</span><span class="zd-badge">Empfang</span></div>
+              <h3>Empfang in der Zahnarztpraxis: 24 Checklisten</h3>
+              <p>Praxisstart, Termine, Telefon, ePA und EBZ zum Abhaken. Plus <strong>4-Wochen-Einarbeitungsplan</strong> für neue Kolleginnen.</p>
+              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen und das Empfangsteam</p>
+              <span class="ll-kachel__mehr">Checklisten ansehen →</span>
+            </div>
+          </a>
+
+          <!-- LEITFADEN: Terminmanagement -->
+          <a class="zd-karte zd-karte--link ll-kachel" id="terminmanagement" data-format="ebook" href="/ebooks/terminmanagement/">
+            <div class="ll-kachel__bild"><img src="/ebooks/terminmanagement/assets/kachel.jpg" alt="" width="760" height="1074" loading="lazy"></div>
+            <div class="ll-kachel__text">
+              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Leitfaden · 16 Seiten</span><span class="zd-badge">Empfang</span></div>
+              <h3>Terminmanagement am Empfang</h3>
+              <p>Zeitrichtwerte für 16 Terminarten, Akut-Abfrage mit roten Flaggen und <strong>2 Checklisten</strong> für einen Standard im ganzen Team.</p>
+              <p class="ll-kachel__fuer zd-klein">Für Praxismanager:innen und Praxisinhaber:innen</p>
+              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
+            </div>
+          </a>
+
+          <!-- LEITFADEN: Assistenz -->
+          <a class="zd-karte zd-karte--link ll-kachel" id="assistenz" data-format="ebook" href="/ebooks/assistenz/">
+            <div class="ll-kachel__bild"><img src="/ebooks/assistenz/assets/cover.jpg" alt="" width="1520" height="2152" loading="lazy"></div>
+            <div class="ll-kachel__text">
+              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">Leitfaden · 4 Kapitel</span><span class="zd-badge">Team &amp; Abläufe</span></div>
+              <h3>Assistenz in der Zahnarztpraxis</h3>
+              <p>Klare Abläufe vom Tagesbeginn bis zur Verabschiedung. Mit <strong>Tagesablauf mit Uhrzeiten</strong>, Teamcheck und Vertretungsplan.</p>
+              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen, ZFA und das ganze Praxisteam</p>
+              <span class="ll-kachel__mehr">Leitfaden ansehen →</span>
+            </div>
+          </a>
+
+          <!-- LEITFADEN: Compliance -->
+          <a class="zd-karte zd-karte--link ll-kachel" id="compliance" data-format="ebook" href="/ebooks/compliance/">
+            <div class="ll-kachel__bild"><img src="/ebooks/compliance/assets/cover.jpg" alt="" width="760" height="1074" loading="lazy"></div>
+            <div class="ll-kachel__text">
+              <div class="zd-reihe"><span class="zd-badge zd-badge--violett">E-Book · 8 Seiten</span><span class="zd-badge">Compliance</span></div>
+              <h3>Compliance Update 2024–2026</h3>
+              <p>Gesetzesänderungen für Zahnarztpraxen aus 6 QM-Bereichen. Mit Checklisten, Fristen und <strong>priorisiertem Aktionsplan</strong>.</p>
+              <p class="ll-kachel__fuer zd-klein">Für Praxisinhaber:innen und QM-Beauftragte</p>
+              <span class="ll-kachel__mehr">E-Book ansehen →</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
 
     <!-- ÜBER ZENDAY -->
     <section class="zd-sektion zd-sektion--weiss" id="ueber">
@@ -362,14 +386,14 @@
           <div class="zd-stack">
             <span class="zd-eyebrow">Wer dahinter steht</span>
             <h2>Aus über 25 begleiteten Begehungen</h2>
-            <p>Die Leitfäden entstehen bei zenday, dem digitalen Qualitätsmanagement <strong>speziell für Zahnarztpraxen</strong>. Wir schreiben auf, was wir in Praxen und bei Begehungen immer wieder sehen, und machen daraus Checklisten, die Ihr Team direkt nutzen kann.</p>
-            <p>Die Leitfäden funktionieren eigenständig. Sie müssen zenday dafür nicht nutzen.</p>
+            <p>Leitfäden und Mini-Apps entstehen bei zenday, dem digitalen Qualitätsmanagement <strong>speziell für Zahnarztpraxen</strong>. Wir schreiben auf, was wir in Praxen und bei Begehungen immer wieder sehen, und machen daraus Checklisten, die Ihr Team direkt nutzen kann.</p>
+            <p>Alles funktioniert eigenständig. Sie müssen zenday dafür nicht nutzen.</p>
           </div>
           <div class="zd-grid zd-grid--2 ll-zahlen">
             <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">200+</span><span class="zd-kennzahl__label">Praxisstandorte arbeiten mit zenday</span></div>
             <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">2.000+</span><span class="zd-kennzahl__label">Nutzer in Praxisteams</span></div>
             <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">25+</span><span class="zd-kennzahl__label">Begehungen mit Praxen begleitet</span></div>
-            <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">6</span><span class="zd-kennzahl__label">Leitfäden im Learning Lab</span></div>
+            <div class="zd-karte zd-kennzahl"><span class="zd-kennzahl__wert">8 + 4</span><span class="zd-kennzahl__label">Leitfäden und Mini-Apps im Learning Lab</span></div>
           </div>
         </div>
       </div>
@@ -382,10 +406,10 @@
           <h2>Häufige Fragen</h2>
         </div>
         <div class="zd-faq">
-          <details><summary>Kosten die Leitfäden etwas?</summary><p>Nein. Alle E-Books und Leitfäden im Learning Lab sind kostenlos.</p></details>
+          <details><summary>Kosten die Inhalte etwas?</summary><p>Nein. Alle Leitfäden, E-Books und Mini-Apps im Learning Lab sind kostenlos.</p></details>
           <details><summary>Muss ich zenday nutzen?</summary><p>Nein. Die Checklisten und Vorlagen funktionieren eigenständig, auf Papier oder in Ihrem bestehenden System.</p></details>
-          <details><summary>Was passiert mit meinen Daten?</summary><p>Wir nutzen Ihre Angaben, um Ihnen den Leitfaden bereitzustellen und uns bei Bedarf bei Ihnen zu melden. Praxis-Tipps per E-Mail gibt es nur, wenn Sie zustimmen. Mehr in der <a href="https://www.zen-day.ai/datenschutz">Datenschutzerklärung</a>.</p></details>
-          <details><summary>Kommen weitere Themen dazu?</summary><p>Ja. Weitere Leitfäden sind in Arbeit, dazu Kurse und Mini-Apps. Alles Neue erscheint zuerst hier im Learning Lab.</p></details>
+          <details><summary>Was passiert mit meinen Daten?</summary><p>Wir nutzen Ihre Angaben, um Ihnen den Leitfaden oder das Ergebnis der Mini-App bereitzustellen und uns bei Bedarf bei Ihnen zu melden. Praxis-Tipps per E-Mail gibt es nur, wenn Sie zustimmen. Mehr in der <a href="https://www.zen-day.ai/datenschutz">Datenschutzerklärung</a>.</p></details>
+          <details><summary>Kommen weitere Themen dazu?</summary><p>Ja. Weitere Leitfäden und Mini-Apps sind in Arbeit, Videokurse folgen. Alles Neue erscheint zuerst hier im Learning Lab.</p></details>
         </div>
       </div>
     </section>
@@ -421,7 +445,8 @@
         <div class="zd-stack zd-stack--eng">
           <strong>Entdecken</strong>
           <a href="/">Startseite</a>
-          <a href="#inhalte">Alle Leitfäden</a>
+          <a href="#mini-apps">Mini-Apps</a>
+          <a href="#leitfaeden">Leitfäden</a>
           <a href="https://calendly.com/digitalesqm/demo-praesentation">Demo buchen</a>
         </div>
       </div>
@@ -438,37 +463,23 @@
   <script src="/zenday.js?v=0.5.1" defer></script>
   <script>
     (function () {
-      // 1. Format-Filter (ohne JavaScript bleiben alle Kacheln sichtbar)
-      var filter = document.querySelector('.ll-filter');
-      var raster = document.querySelector('.ll-raster');
-      var kacheln = Array.prototype.slice.call(raster.querySelectorAll('[data-format]'));
-      var knoepfe = Array.prototype.slice.call(filter.querySelectorAll('button'));
-      filter.hidden = false;
-
-      // Anzahl live verfügbarer Inhalte je Format, sonst "bald"
-      filter.querySelectorAll('[data-zahl]').forEach(function (el) {
-        var f = el.getAttribute('data-zahl');
-        var n = kacheln.filter(function (k) { return k.dataset.format === f && !k.dataset.bald; }).length;
-        el.textContent = n ? '(' + n + ')' : '· bald';
-      });
-
-      function setze(f) {
-        knoepfe.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.filter === f ? 'true' : 'false'); });
-        var sichtbar = 0;
-        kacheln.forEach(function (k) {
-          var an = f === 'alle' || k.dataset.format === f;
-          k.hidden = !an;
-          if (an) sichtbar++;
-        });
-        raster.setAttribute('data-leer', sichtbar ? 'false' : 'true');
+      // 1. Sprungleiste: aktiven Bereich beim Scrollen markieren
+      var links = Array.prototype.slice.call(document.querySelectorAll('.ll-sprung__link'));
+      if ('IntersectionObserver' in window) {
+        var beob = new IntersectionObserver(function (eintraege) {
+          eintraege.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            links.forEach(function (l) { l.setAttribute('aria-current', l.getAttribute('href') === '#' + e.target.id ? 'true' : 'false'); });
+          });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        document.querySelectorAll('.ll-bereich').forEach(function (b) { beob.observe(b); });
       }
-      knoepfe.forEach(function (b) { b.addEventListener('click', function () { setze(b.dataset.filter); }); });
 
-      // 2. UTM-Parameter (z. B. aus dem Instagram-Link) an die E-Book-Seiten weitergeben
+      // 2. UTM-Parameter (z. B. aus dem Instagram-Link) an Leitfaden-Seiten und Mini-Apps weitergeben
       var q = new URLSearchParams(location.search), weiter = new URLSearchParams();
       q.forEach(function (v, k) { if (/^utm_|^fbclid$/.test(k)) weiter.set(k, v); });
       if (weiter.toString()) {
-        document.querySelectorAll('a[href^="/ebooks/"]').forEach(function (a) {
+        document.querySelectorAll('a[href^="/ebooks/"], a[href^="/learning-lab/mini-apps/"]').forEach(function (a) {
           var u = new URL(a.getAttribute('href'), location.origin);
           weiter.forEach(function (v, k) { u.searchParams.set(k, v); });
           a.setAttribute('href', u.pathname + u.search + u.hash);
