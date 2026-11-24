@@ -11,6 +11,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/zenday.css?v=0.5.0">
+  <style>
+    .lp-hero h1 { max-width: 15ch; hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; }
+    .lp-erklaer { width: 100%; max-width: 520px; margin-inline: auto; border-radius: var(--zd-radius); overflow: hidden; border: 1px solid var(--zd-linie); box-shadow: var(--zd-schatten-l); background: var(--zd-linie); aspect-ratio: 1 / 1; }
+    .lp-erklaer video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  </style>
 </head>
 <body>
   <a class="zd-skip-link" href="#inhalt">Zum Inhalt springen</a>
@@ -23,6 +28,34 @@
     </div>
   </header>
   <main id="inhalt">
+  <!-- Hero mit Erklärvideo (gehört zur Seite, nicht zum Einbettungs-Fragment darunter) -->
+  <section class="zd-hero zd-hero--ellipse lp-hero">
+    <div class="zd-container">
+      <div class="zd-split zd-split--text-breit">
+        <div class="zd-stack">
+          <span class="zd-badge zd-badge--violett zd-badge--punkt">Kostenlose Mini-App für Zahnarztpraxen</span>
+          <h1>Ihre Gefährdungs&shy;beurteilung. <span class="zd-text-verlauf">In wenigen Minuten als Entwurf.</span></h1>
+          <p class="zd-lead">Pflicht nach <b>§ 5 Arbeitsschutzgesetz</b>, aber oft eine leere Vorlage. Die Mini-App fragt Ihre Praxis kurz ab und erstellt einen Entwurf mit <b>Gefährdungen, Maßnahmen und Rechtsgrundlagen</b>, den Sie übernehmen und ergänzen.</p>
+          <div class="zd-reihe zd-reihe--stapeln">
+            <a class="zd-btn zd-btn--primaer zd-btn--gross" href="#zdgb-titel">Jetzt kostenlos GBUs erstellen</a>
+          </div>
+          <div class="zd-vertrauen">
+            <span>Kostenlos</span>
+            <span>Im Browser</span>
+            <span>Auch ohne zenday</span>
+          </div>
+        </div>
+
+        <div class="lp-erklaer">
+          <video id="lp-erklaervideo" muted playsinline loop controls preload="none"
+                 poster="/learning-lab/mini-apps/gefaehrdungsbeurteilung/assets/video-poster.jpg" width="1080" height="1080"
+                 aria-label="Erklärvideo zur Mini-App Gefährdungsbeurteilung (50 Sekunden, ohne Sprache)">
+            <source src="/learning-lab/mini-apps/gefaehrdungsbeurteilung/assets/erklaervideo.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
 <!-- zenday Mini-App: Gefährdungsbeurteilung (Einbettungs-Fragment)
      Einbinden auf der Startseite (zen-day.ai) am Ende des <main>:
        <link rel="stylesheet" href="/zenday.css?v=0.5.0">   (im <head>, falls nicht schon vorhanden)
@@ -504,5 +537,34 @@
     </div>
   </footer>
   <script src="/zenday.js?v=0.5.1" defer></script>
+  <script>
+  // Erklärvideo im Hero: startet stumm, sobald es sichtbar ist; meldet Start, 50 % und 100 % an den Meta Pixel (falls geladen)
+  (function () {
+    var v = document.getElementById('lp-erklaervideo');
+    if (!v) return;
+    var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var gemeldet = {};
+    var melden = function (schritt) {
+      if (gemeldet[schritt]) return;
+      gemeldet[schritt] = true;
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'Video' + schritt, { content_name: 'gefaehrdungsbeurteilung' });
+    };
+    if ('IntersectionObserver' in window && !ruhig) {
+      new IntersectionObserver(function (eintraege) {
+        eintraege.forEach(function (e) {
+          if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          else v.pause();
+        });
+      }, { threshold: 0.5 }).observe(v);
+    }
+    v.addEventListener('play', function () { melden('Start'); });
+    v.addEventListener('timeupdate', function () {
+      if (!v.duration) return;
+      var anteil = v.currentTime / v.duration;
+      if (anteil >= 0.5) melden('50');
+      if (anteil >= 0.97) melden('100');
+    });
+  })();
+  </script>
 </body>
 </html>
