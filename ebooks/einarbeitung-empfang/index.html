@@ -43,6 +43,8 @@
     }
     /* Lange Wörter in Spans/Bildunterschriften (in zenday.css 0.3 nicht abgedeckt) */
     .zd-kennzahl__label, figcaption { hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere; }
+    .lp-erklaer { border-radius: var(--zd-radius); overflow: hidden; border: 1px solid var(--zd-linie); box-shadow: var(--zd-schatten-l); background: var(--zd-linie); aspect-ratio: 16 / 9; }
+    .lp-erklaer video { display: block; width: 100%; height: 100%; object-fit: cover; }
   </style>
 </head>
 <body class="zd-mit-cta-leiste">
@@ -64,6 +66,13 @@
             <span class="zd-eyebrow">Für Praxisinhaber:innen und Praxismanagerinnen</span>
             <h1>Neue Kraft am Empfang? <span class="zd-text-verlauf">In 6 Wochen sicher allein am Tresen.</span></h1>
             <p class="zd-lead">Der <strong>6-Wochen-Einarbeitungsplan</strong> für ZFA, MFA und Quereinsteiger:innen: Wochenplan, Telefonleitfäden, Kompetenzmatrix und Abschlussprüfung. <strong>Rechtsstand geprüft (November 2026)</strong>, sofort einsetzbar.</p>
+            <div class="lp-erklaer">
+              <video id="lp-erklaervideo" muted playsinline loop controls preload="none"
+                     poster="/ebooks/einarbeitung-empfang/assets/video-poster.jpg" width="1920" height="1080"
+                     aria-label="Erklärvideo zum E-Book „6-Wochen-Einarbeitungsplan Empfang“ (40 Sekunden)">
+                <source src="/ebooks/einarbeitung-empfang/assets/erklaervideo.mp4" type="video/mp4">
+              </video>
+            </div>
             <ul class="zd-checkliste">
               <li>Wochenplan mit Tagesvorschlägen bis zum Sign-off</li>
               <li>9 Gesprächsleitfäden für Telefon und Tresen</li>
@@ -407,6 +416,33 @@
           btn.disabled = false;
           btn.textContent = 'Einarbeitungsplan kostenlos erhalten';
         });
+    });
+  })();
+  // Erklärvideo im Hero: startet stumm, sobald es sichtbar ist; meldet Start, 50 % und 100 % an den Meta Pixel (falls geladen)
+  (function () {
+    var v = document.getElementById('lp-erklaervideo');
+    if (!v) return;
+    var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var gemeldet = {};
+    var melden = function (schritt) {
+      if (gemeldet[schritt]) return;
+      gemeldet[schritt] = true;
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'Video' + schritt, { content_name: 'einarbeitung-empfang' });
+    };
+    if ('IntersectionObserver' in window && !ruhig) {
+      new IntersectionObserver(function (eintraege) {
+        eintraege.forEach(function (e) {
+          if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          else v.pause();
+        });
+      }, { threshold: 0.5 }).observe(v);
+    }
+    v.addEventListener('play', function () { melden('Start'); });
+    v.addEventListener('timeupdate', function () {
+      if (!v.duration) return;
+      var anteil = v.currentTime / v.duration;
+      if (anteil >= 0.5) melden('50');
+      if (anteil >= 0.97) melden('100');
     });
   })();
   </script>
