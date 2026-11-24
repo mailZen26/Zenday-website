@@ -83,6 +83,10 @@
       html:not(.zd-lead-frei) #ergebnis { display: none !important; }
       html:not(.zd-lead-frei) body::before { content: "Ihren Fristenplan können Sie kostenlos auf zen-day.ai über „Drucken oder als PDF speichern“ freischalten."; display: block; padding: 2rem; font-size: 14pt; }
     }
+    /* Hero-Erklärvideo (1:1) */
+    .fg-hero-video { max-width: 520px; width: 100%; margin-inline: auto; border-radius: var(--zd-radius); overflow: hidden; border: 1px solid var(--zd-linie); box-shadow: var(--zd-schatten-l); background: var(--zd-linie); aspect-ratio: 1 / 1; }
+    .fg-hero-video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 959px) { .zd-hero .zd-split { gap: var(--zd-s-6); } }
   </style>
 </head>
 <body>
@@ -100,16 +104,27 @@
     <!-- START -->
     <section class="zd-hero zd-hero--ellipse" id="start">
       <div class="zd-container">
-        <span class="zd-eyebrow">Kostenloses Werkzeug für Zahnarztpraxen</span>
-        <h1>Alle Prüf- und Schulungsfristen Ihrer Praxis. <span class="zd-text-verlauf">Auf einen Blick.</span></h1>
-        <p class="zd-lead">Beantworten Sie ein paar Fragen zu Ihrer Praxis. Sie erhalten einen persönlichen Fristenplan mit der Rechtsgrundlage zu jeder Frist und dem nächsten Fälligkeitsdatum.</p>
-        <div class="zd-reihe zd-reihe--stapeln">
-          <button class="zd-btn zd-btn--primaer zd-btn--gross" type="button" data-aktion="starten">Fristenplan erstellen</button>
-        </div>
-        <div class="zd-vertrauen">
-          <span>5 kurze Schritte, ca. 3 Minuten</span>
-          <span>Rechtsgrundlage zu jeder Frist</span>
-          <span>Export als Kalender oder PDF</span>
+        <div class="zd-split zd-split--text-breit">
+          <div class="zd-stack fg-hero-text">
+            <span class="zd-eyebrow">Kostenloses Werkzeug für Zahnarztpraxen</span>
+            <h1>Alle Prüf- und Schulungsfristen Ihrer Praxis. <span class="zd-text-verlauf">Auf einen Blick.</span></h1>
+            <p class="zd-lead">Beantworten Sie ein paar Fragen zu Ihrer Praxis. Sie erhalten einen persönlichen Fristenplan mit der Rechtsgrundlage zu jeder Frist und dem nächsten Fälligkeitsdatum.</p>
+            <div class="zd-reihe zd-reihe--stapeln">
+              <button class="zd-btn zd-btn--primaer zd-btn--gross" type="button" data-aktion="starten">Fristenplan erstellen</button>
+            </div>
+            <div class="zd-vertrauen">
+              <span>5 kurze Schritte, ca. 3 Minuten</span>
+              <span>Rechtsgrundlage zu jeder Frist</span>
+              <span>Export als Kalender oder PDF</span>
+            </div>
+          </div>
+          <div class="fg-hero-video">
+            <video id="lp-erklaervideo" muted playsinline loop controls preload="metadata"
+                   poster="/learning-lab/mini-apps/fristen-generator/assets/video-poster.jpg" width="1080" height="1080"
+                   aria-label="Erklärvideo zum Fristen-Generator (40 Sekunden)">
+              <source src="/learning-lab/mini-apps/fristen-generator/assets/erklaervideo.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
       </div>
     </section>
@@ -753,5 +768,35 @@
     }
 
     laden();
+  })();
+  </script>
+
+  <script>
+  // Erklärvideo: startet stumm, sobald es sichtbar ist; pausiert, sobald der Assistent startet; meldet Start, 50 % und 100 % an den Meta Pixel (falls geladen)
+  (function () {
+    var v = document.getElementById('lp-erklaervideo');
+    if (!v) return;
+    var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var gemeldet = {};
+    var melden = function (schritt) {
+      if (gemeldet[schritt]) return;
+      gemeldet[schritt] = true;
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'Video' + schritt, { content_name: 'fristen-generator' });
+    };
+    if ('IntersectionObserver' in window && !ruhig) {
+      new IntersectionObserver(function (eintraege) {
+        eintraege.forEach(function (e) {
+          if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          else v.pause();
+        });
+      }, { threshold: 0.5 }).observe(v);
+    }
+    v.addEventListener('play', function () { melden('Start'); });
+    v.addEventListener('timeupdate', function () {
+      if (!v.duration) return;
+      var anteil = v.currentTime / v.duration;
+      if (anteil >= 0.5) melden('50');
+      if (anteil >= 0.97) melden('100');
+    });
   })();
   </script>
