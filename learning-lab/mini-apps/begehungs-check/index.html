@@ -17,6 +17,10 @@
 
   /* ---------- Landing ---------- */
   .lp-hero h1 { max-width: 15ch; }
+  /* Hero-Erklärvideo (1:1) */
+  .lp-hero-video { max-width: 520px; width: 100%; justify-self: end; border-radius: var(--zd-radius); overflow: hidden; border: 1px solid var(--zd-linie); box-shadow: var(--zd-schatten-l); background: var(--zd-linie); aspect-ratio: 1 / 1; }
+  .lp-hero-video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 959px) { .lp-hero-video { justify-self: center; margin-inline: auto; } }
   .lp-beispiel { position: relative; }
   .lp-beispiel__kopf { display: flex; justify-content: space-between; align-items: center; gap: var(--zd-s-3); flex-wrap: wrap; }
   .lp-beispiel__kopf strong { font-size: var(--zd-fs-m); }
@@ -155,19 +159,12 @@
           </div>
         </div>
 
-        <div class="zd-karte zd-karte--gross lp-beispiel zd-stack" aria-label="Beispielergebnis">
-          <div class="lp-beispiel__kopf">
-            <strong>So sieht Ihr Ergebnis aus</strong>
-            <span class="zd-badge">Beispiel</span>
-          </div>
-          <ul class="lp-zeilen">
-            <li><span class="lp-punkt" data-status="gelb"></span><b>Hygiene</b><span class="zd-leise">Nachbessern</span></li>
-            <li><span class="lp-punkt" data-status="gruen"></span><b>Medizinprodukte</b><span class="zd-leise">Begehungsbereit</span></li>
-            <li><span class="lp-punkt" data-status="rot"></span><b>Röntgen</b><span class="zd-leise">Handlungsbedarf</span></li>
-            <li><span class="lp-punkt" data-status="gelb"></span><b>Arbeitsschutz</b><span class="zd-leise">Nachbessern</span></li>
-            <li><span class="lp-punkt" data-status="rot"></span><b>Datenschutz</b><span class="zd-leise">Handlungsbedarf</span></li>
-          </ul>
-          <p class="zd-klein zd-leise">Im Lückenreport: jede offene Stelle mit Rechtsgrundlage, Priorität und nächstem Schritt.</p>
+        <div class="lp-hero-video">
+          <video id="lp-erklaervideo" muted playsinline loop controls preload="metadata"
+                 poster="/learning-lab/mini-apps/begehungs-check/assets/video-poster.jpg" width="1080" height="1080"
+                 aria-label="Erklärvideo zum Begehungs-Check (55 Sekunden): 19 Fragen, Ampel pro Bereich und Lückenreport">
+            <source src="/learning-lab/mini-apps/begehungs-check/assets/erklaervideo.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
@@ -436,6 +433,37 @@
 <div class="zd-cta-leiste" id="cta-leiste"><button type="button" class="zd-btn zd-btn--primaer js-start">Check jetzt starten</button></div>
 
 <script src="/zenday.js?v=0.5.1" defer></script>
+<script>
+// Erklärvideo: startet stumm, sobald es sichtbar ist; meldet Start, 50 % und 100 % an den Meta Pixel (falls geladen)
+(function () {
+  var v = document.getElementById('lp-erklaervideo');
+  if (!v) return;
+  var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var gemeldet = {};
+  var melden = function (schritt) {
+    if (gemeldet[schritt]) return;
+    gemeldet[schritt] = true;
+    if (typeof window.fbq === 'function') window.fbq('trackCustom', 'Video' + schritt, { content_name: 'begehungs-check' });
+  };
+  if ('IntersectionObserver' in window && !ruhig) {
+    new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        else v.pause();
+      });
+    }, { threshold: 0.5 }).observe(v);
+  }
+  // Beim Start des Checks (Landing wird ausgeblendet) Video anhalten
+  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.js-start, #btn-fortsetzen')) v.pause(); });
+  v.addEventListener('play', function () { melden('Start'); });
+  v.addEventListener('timeupdate', function () {
+    if (!v.duration) return;
+    var anteil = v.currentTime / v.duration;
+    if (anteil >= 0.5) melden('50');
+    if (anteil >= 0.97) melden('100');
+  });
+})();
+</script>
 <script>
 (function () {
   /* ===================== KONFIGURATION ===================== */
