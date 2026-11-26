@@ -1,6 +1,6 @@
 /* ==========================================================================
    zenday.css — Basis-Stylesheet für zenday-Webseiten und Landingpages
-   Version: 0.5.0 (Prototyp) · Stand: 2026-11-16
+   Version: 0.5.1 (Prototyp) · Stand: 2026-11-26
    Breakpoints (mobile first):
      Handy   < 640 px   eine Spalte, Menü als Klappmenü
      Tablet  ≥ 640 px   zwei Spalten, Menü weiter als Klappmenü
@@ -8,6 +8,7 @@
    Geräte: Die Seite passt sich allein an die Bildschirmgröße an (keine
      Geräteerkennung). Getestet von 320 px (kleinste Handys) bis 2560 px,
      hoch und quer, mit Touch und Maus.
+   Änderungen 0.5.1: hidden-Attribut gilt immer (auch bei zd-stack, zd-grid usw.)
    Änderungen 0.5.0: Ankündigungsleiste (zd-ankuendigung)
    Änderungen 0.4.0: Aufklappmenü in der Navigation (zd-nav__drop) und
      Gruppen im Handy-Menü, Link-Pills (zd-pills), Produkt-Mockups
@@ -758,6 +759,9 @@ hr { border: 0; height: 1px; background: var(--zd-linie); margin: var(--zd-s-6) 
 
 
 /* 16. BARRIEREFREIHEIT ==================================================== */
+/* hidden-Attribut hat Vorrang vor display-Regeln der Bausteine (z. B. .zd-stack { display: flex }) */
+[hidden] { display: none !important; }
+
 :focus-visible { outline: 3px solid rgba(59, 130, 246, 0.55); outline-offset: 3px; border-radius: 4px; }
 .zd-btn:focus-visible { outline-offset: 3px; border-radius: var(--zd-radius-pill); }
 
