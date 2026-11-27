@@ -96,7 +96,7 @@
 
               <input type="hidden" name="ebook" value="erste-100-tage">
               <input type="hidden" name="persona" value="praxisinhaber-gruendung">
-              <input type="hidden" name="quelle" value="landingpage">
+              <input type="hidden" name="quelle" value="instagram-organisch">
               <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium"><input type="hidden" name="utm_campaign"><input type="hidden" name="utm_content">
               <div class="zd-sr-only" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
 
@@ -252,6 +252,18 @@
     var box = document.querySelector('.zd-hero-video'); if (!box) return;
     var v = box.querySelector('video'), b = box.querySelector('.zd-hero-video__sound');
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); }
+    var gemeldet = {};
+    var melden = function (schritt) {
+      if (gemeldet[schritt]) return; gemeldet[schritt] = true;
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'Video' + schritt, { content_name: 'erste-100-tage' });
+    };
+    v.addEventListener('play', function () { melden('Start'); });
+    v.addEventListener('timeupdate', function () {
+      if (!v.duration) return;
+      var anteil = v.currentTime / v.duration;
+      if (anteil >= 0.5) melden('50');
+      if (anteil >= 0.97) melden('100');
+    });
     b.addEventListener('click', function () {
       v.muted = !v.muted; if (!v.muted) v.play();
       b.textContent = v.muted ? '🔇' : '🔊'; b.setAttribute('aria-label', v.muted ? 'Ton einschalten' : 'Ton ausschalten');
@@ -266,7 +278,7 @@
     const el = form.querySelector(`[name="${k}"]`);
     if (el) el.value = params.get(k) || '';
   });
-  if (params.get('utm_source')) form.querySelector('[name="quelle"]').value = params.get('utm_source') + (params.get('utm_medium') ? '-' + params.get('utm_medium') : '');
+  if (params.get('utm_medium') === 'paid') form.querySelector('[name="quelle"]').value = 'meta-paid';
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
     const btn = form.querySelector('button[type=submit]');
@@ -277,6 +289,7 @@
     if (form.website.value) { location.href = 'danke/'; return; } // Honeypot: still verwerfen
     btn.disabled = true;
     const data = new URLSearchParams(new FormData(form));
+    data.delete('website');
     data.set('consent', form.consent.checked ? 'ja' : 'nein');
     data.set('zeitstempel', new Date().toISOString());
     data.set('seite', location.href.split('?')[0]);
@@ -284,7 +297,8 @@
       // form-urlencoded: kein CORS-Preflight, Zapier liest die Felder einzeln aus
       const r = await fetch(ZAPIER_WEBHOOK_URL, { method: 'POST', body: data });
       if (!r.ok) throw new Error('Fehler');
-      if (window.fbq) fbq('track', 'Lead');
+      // Lead-Event über den Seitenwechsel retten: zenday.js sendet es auf der Danke-Seite, sobald der Pixel (mit Einwilligung) geladen ist
+      if (window.zdLeadMerken) window.zdLeadMerken('erste-100-tage');
       location.href = 'danke/';
     } catch (e) {
       err.hidden = false;
