@@ -36,6 +36,10 @@
   /* Auswahl der Praxisart unter dem Hero */
   .segmentwahl { display: grid; gap: var(--zd-s-3); margin-top: var(--zd-s-8); padding-top: var(--zd-s-5); border-top: 1px solid var(--zd-linie); }
 
+  /* Erklärvideos (1:1) in den Funktions-Tabs */
+  .tab-video { width: 100%; max-width: 560px; margin-inline: auto; border-radius: var(--zd-radius-l); overflow: hidden; border: 1px solid var(--zd-linie); box-shadow: var(--zd-schatten-l); background: var(--zd-linie); aspect-ratio: 1 / 1; }
+  .tab-video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
   /* Smart-Fields-Erklärvideo (1:1) neben den drei Schritten */
   .sf-video-reihe { display: grid; gap: var(--zd-s-5); align-items: center; }
   .sf-video { width: 100%; max-width: 560px; margin-inline: auto; border-radius: var(--zd-radius-l); overflow: hidden; border: 1px solid var(--zd-linie); box-shadow: var(--zd-schatten-l); background: var(--zd-linie); aspect-ratio: 1 / 1; }
@@ -352,7 +356,7 @@
 
       <div class="sf-video-reihe zd-mb-6">
         <div class="sf-video">
-          <video id="sf-erklaervideo" muted playsinline loop controls preload="none"
+          <video id="sf-erklaervideo" class="js-erklaervideo" data-name="smart-fields" muted playsinline loop controls preload="none"
                  poster="/assets/videos/smart-fields-poster.jpg" width="1080" height="1080"
                  aria-label="Erklärvideo: So funktionieren Smart Fields in zenday (50 Sekunden, ohne Ton verständlich)">
             <source src="/assets/videos/smart-fields.mp4" type="video/mp4">
@@ -478,15 +482,12 @@
               <li>Jeder Haken ist zugleich Ihr Nachweis</li>
             </ul>
           </div>
-          <div class="zd-app" aria-hidden="true">
-            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>Aufgabenkette · Sterilisator</strong><span class="zd-badge zd-badge--blau">läuft</span></div>
-            <div class="zd-app__inhalt">
-              <div class="zd-app-zeile zd-app-zeile--fertig"><span class="zd-haken zd-haken--fertig"></span><span>Vakuumtest durchführen<small>täglich · Lea</small></span><span class="zd-avatar">LW</span></div>
-              <div class="zd-app-zeile zd-app-zeile--fertig"><span class="zd-haken zd-haken--fertig"></span><span>Bowie-Dick-Test dokumentieren<small>täglich · Lea</small></span><span class="zd-avatar">LW</span></div>
-              <div class="zd-app-zeile"><span class="zd-haken"></span><span>Chargenfreigabe<small>nach jeder Charge · Vertretung: Tim</small></span><span class="zd-badge zd-badge--gelb">Heute</span></div>
-              <div class="zd-app-zeile"><span class="zd-haken"></span><span>Validierung beauftragen<small>jährlich · Praxismanagement</small></span><span class="zd-badge">in 6 Wochen</span></div>
-              <div class="zd-blase zd-blase--ki">Erinnerung an Tim gesendet: Lea ist heute nicht im Dienst.</div>
-            </div>
+          <div class="tab-video">
+            <video id="aufgabenketten-video" class="js-erklaervideo" data-name="aufgabenketten" muted playsinline loop controls preload="none"
+                   poster="/assets/videos/aufgabenketten-poster.jpg" width="1080" height="1080"
+                   aria-label="Erklärvideo: Aufgaben in zenday – Aufgabenketten, Vorlagen, Abhaken, Schichtübergabe, Erinnern und Eskalieren (53 Sekunden, ohne Ton verständlich)">
+              <source src="/assets/videos/aufgabenketten.mp4" type="video/mp4">
+            </video>
           </div>
         </div>
 
@@ -522,16 +523,12 @@
             </ul>
             <a class="zd-btn zd-btn--link" href="#warteliste">Auf die Warteliste setzen</a>
           </div>
-          <div class="zd-app" aria-hidden="true">
-            <div class="zd-app__kopf"><span class="zd-app__punkte"><i></i><i></i><i></i></span><strong>zenday KI Teamassistenz</strong><span class="zd-badge zd-badge--violett">im Test</span></div>
-            <div class="zd-app__inhalt">
-              <div class="zd-blase zd-blase--frage">Wie wird die Inzision vorbereitet?</div>
-              <div class="zd-blase zd-blase--ki">Die Schritte aus Ihrer Arbeitsanweisung, zusammengefasst: von der Tray-Vorbereitung bis zur Patientenaufklärung.<small>Quelle: Arbeitsanweisung Inzision</small></div>
-              <p class="zd-app__titel">Gefahrstoff-Assistent</p>
-              <div class="zd-app-zeile"><span class="zd-haken zd-haken--fertig"></span><span>Flächendesinfektion hinzugefügt<small>Hersteller und Produktname</small></span><span class="zd-badge zd-badge--tuerkis">H- und P-Sätze</span></div>
-              <div class="zd-app-zeile"><span class="zd-haken zd-haken--fertig"></span><span>Betriebsanweisung erzeugt<small>inklusive Notrufnummer</small></span><span class="zd-badge zd-badge--violett">automatisch</span></div>
-              <p class="zd-klein zd-leise">Darstellung beispielhaft</p>
-            </div>
+          <div class="tab-video">
+            <video id="ki-teamassistenz-video" class="js-erklaervideo" data-name="ki-teamassistenz" muted playsinline loop controls preload="none"
+                   poster="/assets/videos/ki-teamassistenz-poster.jpg" width="1080" height="1080"
+                   aria-label="Erklärvideo: zenday KI Teamassistenz beantwortet Fragen zu QM, Dokumenten, Geräten und Gefahrstoffen (40 Sekunden, ohne Ton verständlich, Darstellung beispielhaft)">
+              <source src="/assets/videos/ki-teamassistenz.mp4" type="video/mp4">
+            </video>
           </div>
         </div>
 
@@ -819,31 +816,31 @@
   });
 })();
 
-/* Smart-Fields-Erklärvideo: startet stumm, sobald es sichtbar ist; meldet Start, 50 % und 100 % an den Meta Pixel (falls geladen) */
+/* Erklärvideos: starten stumm, sobald sie sichtbar sind (auch nach Tab-Wechsel); melden Start, 50 % und 100 % an den Meta Pixel (falls geladen) */
 (function () {
-  var v = document.getElementById('sf-erklaervideo');
-  if (!v) return;
   var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var gemeldet = {};
-  var melden = function (schritt) {
-    if (gemeldet[schritt]) return;
-    gemeldet[schritt] = true;
-    if (typeof window.fbq === 'function') window.fbq('trackCustom', 'Video' + schritt, { content_name: 'smart-fields' });
-  };
-  if ('IntersectionObserver' in window && !ruhig) {
-    new IntersectionObserver(function (eintraege) {
-      eintraege.forEach(function (e) {
-        if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-        else v.pause();
-      });
-    }, { threshold: 0.5 }).observe(v);
-  }
-  v.addEventListener('play', function () { melden('Start'); });
-  v.addEventListener('timeupdate', function () {
-    if (!v.duration) return;
-    var anteil = v.currentTime / v.duration;
-    if (anteil >= 0.5) melden('50');
-    if (anteil >= 0.97) melden('100');
+  document.querySelectorAll('video.js-erklaervideo').forEach(function (v) {
+    var name = v.dataset.name || v.id, gemeldet = {};
+    var melden = function (schritt) {
+      if (gemeldet[schritt]) return;
+      gemeldet[schritt] = true;
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'Video' + schritt, { content_name: name });
+    };
+    if ('IntersectionObserver' in window && !ruhig) {
+      new IntersectionObserver(function (eintraege) {
+        eintraege.forEach(function (e) {
+          if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          else v.pause();
+        });
+      }, { threshold: 0.5 }).observe(v);
+    }
+    v.addEventListener('play', function () { melden('Start'); });
+    v.addEventListener('timeupdate', function () {
+      if (!v.duration) return;
+      var anteil = v.currentTime / v.duration;
+      if (anteil >= 0.5) melden('50');
+      if (anteil >= 0.97) melden('100');
+    });
   });
 })();
 </script>
