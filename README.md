@@ -9,6 +9,9 @@ Statische Seiten für **zen-day.ai**. Jeder Push auf `main` geht automatisch üb
 ├── index.html              Startseite (zen-day.ai)
 ├── zenday.css, zenday.js   gemeinsames Design und Script für alle Seiten
 ├── vercel.json             Weiterleitungen von alten Adressen
+├── robots.txt              erlaubt Suchmaschinen und KI-Crawlern alle Seiten
+├── sitemap.xml             alle indexierbaren Seiten (ohne Danke-Seiten)
+├── llms.txt                Kurzbeschreibung von zenday für KI-Assistenten
 ├── assets/                 seitenübergreifende Bilder (z. B. Foto Tilmann Förster)
 ├── learning-lab/           Hub für E-Books, Kurse, Mini-Apps (+ später blog/)
 ├── ebooks/
@@ -31,3 +34,4 @@ Statische Seiten für **zen-day.ai**. Jeder Push auf `main` geht automatisch üb
 6. **Footer** jeder Seite verlinkt `/impressum` und `/datenschutz`. Keine Links mehr auf zen-day.de.
 7. **Adresse geändert?** Alte URL in `vercel.json` auf die neue weiterleiten, damit Ads und Links nicht brechen.
 8. Keine Platzhalter-Dateien committen. Ein Ordner entsteht mit seiner ersten echten Datei.
+9. **SEO:** Jede Seite hat `<title>` mit Ziel-Keyword, `<meta name="description">`, `<link rel="canonical">` und einen JSON-LD-Block (`application/ld+json`). Neue indexierbare Seite → in `sitemap.xml` eintragen und in `llms.txt` verlinken.

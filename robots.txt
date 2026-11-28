@@ -1,0 +1,51 @@
+# robots.txt für zen-day.ai
+# Suchmaschinen und KI-Assistenten dürfen alle öffentlichen Seiten lesen.
+# Danke-Seiten sind per <meta name="robots" content="noindex"> von der Indexierung ausgenommen.
+
+User-agent: *
+Allow: /
+
+# OpenAI (ChatGPT-Suche, Nutzeranfragen, Training)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google (inkl. Gemini / AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft Bing (Copilot, Grundlage vieler KI-Suchen)
+User-agent: Bingbot
+Allow: /
+
+# Apple
+User-agent: Applebot-Extended
+Allow: /
+
+# xAI (Grok)
+User-agent: xAI-Bot
+Allow: /
+
+Sitemap: https://www.zen-day.ai/sitemap.xml

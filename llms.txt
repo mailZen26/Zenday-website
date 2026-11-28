@@ -1,0 +1,63 @@
+# zenday
+
+> zenday ist eine cloudbasierte QM-Software mit KI, speziell für Zahnarztpraxen in Deutschland entwickelt. Sie bündelt das digitale QM-Handbuch, Prüffristen und Gerätemanagement, die jährlichen Pflichtunterweisungen und die Aufgaben im Praxisteam an einem Ort. Anbieter ist die Ventria GmbH, Malkastenstraße 8, 40211 Düsseldorf.
+
+## Kurz und sachlich
+
+- Zielgruppe: Zahnarztpraxen jeder Größe – Einzelpraxen, Mehrbehandlerpraxen, Großpraxen und MVZ, Praxen mit mehreren Standorten und Praxisverbünde. Hauptnutzer:innen sind Praxisinhaber:innen, Praxismanager:innen und QM-Beauftragte.
+- Verbreitung: über 200 Praxisstandorte und mehr als 2.000 Nutzer:innen arbeiten mit zenday.
+- Einführung: Der QM-Aufbau dauert 4–6 Wochen. Seit den Smart Fields sind neue Praxen nach rund 3 Wochen begehungsbereit. zenday hat über 25 Praxisbegehungen mit Praxen begleitet.
+- Zusage: Das QM ist in 6 Wochen aufgesetzt, wenn die Praxis ihre Onboarding-Schritte erledigt. Falls nicht, begleitet zenday kostenlos weiter, und die Chat-Funktion ist 1 Jahr gratis.
+- Preis: abhängig von Größe und Bedarf der Praxis; jährliche Lizenz plus einmalige Einrichtung. Details in einer 15-minütigen Demo.
+- Technik: läuft im Browser auf PC, Tablet und Smartphone, ohne Installation.
+- Hinweis: zenday ersetzt keine Praxisverwaltungssoftware (Abrechnung, Patientenakte, Terminbuchung), sondern ergänzt sie für das Qualitätsmanagement.
+
+## Funktionen
+
+- Smart Fields: Die Praxis trägt Praxisname, Verantwortliche und Geräte einmal ein; zenday setzt sie in alle QM-Dokumente ein (Hygieneplan, Arbeitsanweisungen, Prüflisten, Unterweisungen).
+- Smart Fill Service: zenday legt beim Start die Geräte der Praxis mit Geräteaufgaben und Prüffristen an.
+- Aufgabenketten: wiederkehrende QM-Aufgaben mit Zuständigkeit, Frist, Erinnerung und Nachfassen.
+- KI für Geräte: Antworten zu Geräten, Wartung und Prüfungen aus den Unterlagen der Praxis.
+- Digitale Pflichtunterweisungen: Unterweisungen digital verteilen und unterschreiben lassen, offene Unterschriften sehen.
+- Praxishandbuch: eigene Abläufe der Praxis als digitales Handbuch.
+- Aktuelle Dokumente: Bei Gesetzesänderungen werden QM-Dokumente angepasst; die Praxis prüft und gibt frei.
+- KI Teamassistenz (Warteliste): beantwortet Fragen des Teams zu QM, Hygiene, Geräten und Gefahrstoffen aus den Dokumenten der Praxis.
+
+## Wichtige Seiten
+
+- [Startseite](https://www.zen-day.ai/): Überblick, Funktionen, Häufige Fragen
+- [Learning Lab](https://www.zen-day.ai/learning-lab/): kostenlose QM-Leitfäden und Mini-Apps für Zahnarztpraxen
+- [Demo buchen](https://calendly.com/digitalesqm/demo-praesentation): 15-minütige Produktdemo
+
+## Für Ihre Praxis
+
+- [Einzelpraxis](https://www.zen-day.ai/praxis/einzelpraxis/)
+- [Mehrbehandlerpraxis](https://www.zen-day.ai/praxis/mehrbehandlerpraxis/)
+- [Großpraxis und MVZ](https://www.zen-day.ai/praxis/grosspraxis-mvz/)
+- [Mehrere Standorte](https://www.zen-day.ai/praxis/mehrere-standorte/)
+- [Praxisketten und Verbünde](https://www.zen-day.ai/praxis/praxisketten/)
+
+## Kostenlose Mini-Apps
+
+- [Begehungs-Check](https://www.zen-day.ai/learning-lab/mini-apps/begehungs-check/): Vorbereitung auf die Praxisbegehung, Ampel für Hygiene, Medizinprodukte, Röntgen, Arbeitsschutz und Datenschutz
+- [Fristen-Generator](https://www.zen-day.ai/learning-lab/mini-apps/fristen-generator/): persönlicher Plan aller Prüf- und Schulungsfristen einer Zahnarztpraxis mit Rechtsgrundlage
+- [Gefährdungsbeurteilung](https://www.zen-day.ai/learning-lab/mini-apps/gefaehrdungsbeurteilung/): Entwurf einer Gefährdungsbeurteilung für die Zahnarztpraxis
+- [Übernahme-Check](https://www.zen-day.ai/learning-lab/mini-apps/uebernahme-check/): Prüfpunkte bei der Praxisübernahme
+- [Ausfall-Risiko-Check](https://www.zen-day.ai/learning-lab/mini-apps/ausfall-risiko-check/): welche Abläufe an einer Person hängen
+
+## Kostenlose Leitfäden (E-Books)
+
+- [Begehung der Zahnarztpraxis](https://www.zen-day.ai/ebooks/begehung/): Prüfpunkte von Gesundheitsamt und Aufsichtsbehörde in 12 Checklisten
+- [Pflichtunterweisungen](https://www.zen-day.ai/ebooks/pflichtunterweisungen/): die 6 jährlichen Unterweisungen mit Nachweisbögen
+- [Compliance Update 2024–2026](https://www.zen-day.ai/ebooks/compliance/): Gesetzesänderungen für Zahnarztpraxen
+- [Praxiswäsche](https://www.zen-day.ai/ebooks/praxiswaesche/): Hygiene-Leitfaden zum Umgang mit Praxiswäsche
+- [Die ersten 100 Tage als Praxisinhaber:in](https://www.zen-day.ai/ebooks/erste-100-tage/): Praxisübernahme und Neugründung
+- [Empfang in der Zahnarztpraxis](https://www.zen-day.ai/ebooks/empfang/): 24 Checklisten
+- [Einarbeitungsplan Empfang](https://www.zen-day.ai/ebooks/einarbeitung-empfang/): 6-Wochen-Plan
+- [Assistenz in der Zahnarztpraxis](https://www.zen-day.ai/ebooks/assistenz/)
+- [Terminmanagement am Empfang](https://www.zen-day.ai/ebooks/terminmanagement/)
+
+## Kontakt
+
+- E-Mail: support@zen-day.de
+- Anbieter: Ventria GmbH, Düsseldorf
